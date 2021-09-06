@@ -1,0 +1,13 @@
+﻿@model string
+@{
+    List<string> l = SF.GetBrand();
+}
+@(Html.Kendo().AutoComplete()
+    .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+    .Filter("startswith")
+    .Placeholder(RP.TVL("SelectBrand") + "...")
+    .BindTo(l)
+    .HighlightFirst(true)
+    .HtmlAttributes(new { @class = "text-box single-line" })
+    .Value(Model)
+)

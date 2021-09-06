@@ -1,0 +1,10 @@
+﻿@model int
+@{
+    List<SelectListItem> _list = SF.TravelInsurancePeriodOnlyOneWithPrices(Model.ToString());
+    if (_list.Count() == 0)
+    {
+        _list = SF.TravelInsurancePeriodListWithPrices(Model.ToString());
+    }
+}
+
+@Html.DropDownListFor(model => model, _list, new { @class = "drop_down" })

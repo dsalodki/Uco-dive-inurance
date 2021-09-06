@@ -1,0 +1,15 @@
+﻿@model Uco.Models.TravelInsurance
+
+@{
+    ViewBag.Title = Html.R("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@Html.R("Title")</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.EditorForModel()
+    <p class="clear">
+        <input type="submit" class="k-button" value="@Html.R("Save")" /> @Html.ActionLink(@Html.R("BackToList"), "Index")
+    </p>
+}

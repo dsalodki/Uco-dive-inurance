@@ -1,0 +1,31 @@
+﻿@if (ViewBag.DomainUpdated == false || ViewBag.PaymentUpdated == false || ViewBag.ShippingUpdated == false || ViewBag.InvoiceUpdated == false || ViewBag.AnaliticsUpdated == false || ViewBag.NewsletterUpdated == false)
+{
+    <div class="dashboard_block">
+        <div class="settings_warnings">
+            @if (ViewBag.DomainUpdated == false)
+            {
+                <a href="/Admin/ShopDashboard/DomainSettings">לא הוגדר דומיין. לחץ כאן כדי לעדכן הגדרות דומיין</a>
+            }
+            @if (ViewBag.PaymentUpdated == false)
+            {
+                <a href="/Admin/ShopDashboard/PaymentSettings">לא הוגדרו אפשריות תשלום. לחץ כאן כדי לעדכן הגדרות תשלום</a>
+            }
+            @if (ViewBag.ShippingUpdated == false)
+            {
+                <a href="/Admin/ShopDashboard/ShippingSettings">לא הוגדרו אפשריות משלוח. לחץ כאן כדי לעדכן הגדרות משלוח</a>
+            }
+            @if (ViewBag.InvoiceUpdated == false)
+            {
+                <a href="/Admin/ShopDashboard/InvoiceSettings">לא הוגדרו אפשריות חשבונית. לחץ כאן כדי לעדכן הגדרות חשבונית</a>
+            }
+            @if (ViewBag.AnaliticsUpdated == false)
+            {
+                <a href="/Admin/ShopDashboard/AnaliticsSettings">לא הוגדר גוגל אנליטיקס. לחץ כאן כדי לעדכן הגדרות אנליטיקס</a>
+            }
+            @if (ViewBag.NewsletterUpdated == false)
+            {
+                <a href="/Admin/ShopDashboard/NewsletterSettings">לא הוגדר משלוח ניוזלטר. לחץ כאן כדי לעדכן הגדרות ניוזלטר</a>
+            }
+        </div>
+    </div>
+}

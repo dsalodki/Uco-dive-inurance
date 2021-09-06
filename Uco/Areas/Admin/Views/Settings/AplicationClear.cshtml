@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "AplicationClear";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>@Html.R("H2")</h2>
+@using (Html.BeginForm())
+{
+    @Html.CheckBox("Memory",true) @Html.R("Memory")<br />
+    @Html.CheckBox("Search", false) @Html.R("Search")<br />
+    @Html.CheckBox("Images", false) @Html.R("Images")<br />
+    <br />
+    <input type="submit" value="@Html.R("Save")" class="k-button" />
+}

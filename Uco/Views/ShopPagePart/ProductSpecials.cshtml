@@ -1,0 +1,29 @@
+﻿@model List<Uco.Models.ShopProductPage>
+@if (Model.Count > 0)
+{
+    <h3>@RP.T("Views.ShopPagePart.ProductSpecials.Title")</h3>
+    <div class="product_page_specials_list">
+        @foreach (var item in Model)
+        {
+
+
+            <div class="product_page_specials_item">
+                <div class="product_page_specials_item_pictures">
+                    <a href="@Url.Content(item.Url)">
+                        <img src="@Url.Content(SF.GetImageUrl(item.Pic, 157, 106, false, true))" alt="@Url.Content(item.Title)" />
+                    </a>
+                </div>
+                <div class="product_page_specials_item_title">
+                    <a href="@Url.Content(item.Url)">
+                        @Url.Content(item.Title)
+                    </a>
+                </div>
+                <div class="product_page_specials_item_more">
+                    <a href="@Url.Content(item.Url)">
+                        לפרטים נוספים
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+}

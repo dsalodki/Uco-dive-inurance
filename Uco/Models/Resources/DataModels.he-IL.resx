@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BirthDateDay" xml:space="preserve">
+    <value>תאריך לידה - יום</value>
+  </data>
+  <data name="BirthDateMonth" xml:space="preserve">
+    <value>תאריך לידה - חודש</value>
+  </data>
+  <data name="BirthDateYear" xml:space="preserve">
+    <value>תאריך לידה - שנה</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>עיר</value>
+  </data>
+  <data name="CityRequired" xml:space="preserve">
+    <value>הכנס עיר</value>
+  </data>
+  <data name="CustomerAddress" xml:space="preserve">
+    <value>כתובת</value>
+  </data>
+  <data name="CustomerAddressRequired" xml:space="preserve">
+    <value>הכנס כתובת</value>
+  </data>
+  <data name="DivingRank" xml:space="preserve">
+    <value>דרגת צולל</value>
+  </data>
+  <data name="DivingRankRequired" xml:space="preserve">
+    <value>בחר דרגת צולל</value>
+  </data>
+  <data name="Entrance" xml:space="preserve">
+    <value>כניסה</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>זכר/נקבה</value>
+  </data>
+  <data name="GenderRequired" xml:space="preserve">
+    <value>בחר מין</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>בריא</value>
+  </data>
+  <data name="IdNumber" xml:space="preserve">
+    <value>מספר ת.ז</value>
+  </data>
+  <data name="IdNumberLimit9" xml:space="preserve">
+    <value>נא להזין מספר תעודת זהות של 9 ספרות בלבד</value>
+  </data>
+  <data name="IdNumberRequired" xml:space="preserve">
+    <value>הכנס מספר תעודת זהות</value>
+  </data>
+  <data name="InsuranceDate" xml:space="preserve">
+    <value>תאריך תחילת הביטוח</value>
+  </data>
+  <data name="InsuranceDateDay" xml:space="preserve">
+    <value>תאריך תחילת ביטוח - יום</value>
+  </data>
+  <data name="InsuranceDateMonth" xml:space="preserve">
+    <value>תאריך תחילת ביטוח - חודש</value>
+  </data>
+  <data name="InsuranceDateYear" xml:space="preserve">
+    <value>תאריך תחילת ביטוח - שנה</value>
+  </data>
+  <data name="InsuranceGenderFemale" xml:space="preserve">
+    <value>נקבה</value>
+  </data>
+  <data name="InsuranceGenderMale" xml:space="preserve">
+    <value>זכר</value>
+  </data>
+  <data name="InsuranceGenderNone" xml:space="preserve">
+    <value>לא הוזן</value>
+  </data>
+  <data name="IsRenew" xml:space="preserve">
+    <value>חידוש</value>
+  </data>
+  <data name="Magazine" xml:space="preserve">
+    <value>מגזין</value>
+  </data>
+  <data name="MagazineArticle" xml:space="preserve">
+    <value>מאמר במגזין</value>
+  </data>
+  <data name="Magazines" xml:space="preserve">
+    <value>מגזינים</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>דואר אלקטרוני</value>
+  </data>
+  <data name="MailCorrect" xml:space="preserve">
+    <value>נא להזין מבנה תקין של דואר אלקטרוני</value>
+  </data>
+  <data name="MailRequired" xml:space="preserve">
+    <value>הכנס דואר אלקטרוני</value>
+  </data>
+  <data name="Newsletter" xml:space="preserve">
+    <value>ניוזליטר</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>טלפון</value>
+  </data>
+  <data name="PhoneCorrect" xml:space="preserve">
+    <value>הכנס טלפון במבנה תקין, לדוגמא: 0501234567</value>
+  </data>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>הכנס מספר טלפון</value>
+  </data>
+  <data name="Pregnant" xml:space="preserve">
+    <value>הריון</value>
+  </data>
+  <data name="SearchInsuranceDateYear" xml:space="preserve">
+    <value>שנת לידה</value>
+  </data>
+  <data name="SearchInsuranceDateYearLimit4" xml:space="preserve">
+    <value>הכנס שנת לידה בארבע ספרות</value>
+  </data>
+  <data name="SearchInsuranceDateYearRequired" xml:space="preserve">
+    <value>הכנס שנת לידה</value>
+  </data>
+  <data name="Takanon" xml:space="preserve">
+    <value>הסכמה לתנאי הפוליסה</value>
+  </data>
+  <data name="TravelInsurancePeriods" xml:space="preserve">
+    <value>סוג ביטוח</value>
+  </data>
+  <data name="TravelInsurancePeriodsRequired" xml:space="preserve">
+    <value>בחר סוג ביטוח</value>
+  </data>
+  <data name="UserFname" xml:space="preserve">
+    <value>שם פרטי בעברית</value>
+  </data>
+  <data name="UserFnameEng" xml:space="preserve">
+    <value>שם פרטי באנגלית</value>
+  </data>
+  <data name="UserFnameEngRequired" xml:space="preserve">
+    <value>הכנס שם פרטי באנגלית</value>
+  </data>
+  <data name="UserFnameRequired" xml:space="preserve">
+    <value>הכנס שם פרטי בעברית</value>
+  </data>
+  <data name="UserLname" xml:space="preserve">
+    <value>שם משפחה בעברית</value>
+  </data>
+  <data name="UserLnameEng" xml:space="preserve">
+    <value>שם משפחה באנגלית</value>
+  </data>
+  <data name="UserLnameEngRequired" xml:space="preserve">
+    <value>הכנס שם משפחה באנגלית</value>
+  </data>
+  <data name="UserLnameRequired" xml:space="preserve">
+    <value>הכנס שם משפחה בעברית</value>
+  </data>
+  <data name="Zip" xml:space="preserve">
+    <value>מיקוד</value>
+  </data>
+</root>

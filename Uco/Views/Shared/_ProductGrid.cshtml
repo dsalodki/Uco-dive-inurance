@@ -1,0 +1,43 @@
+﻿@model List<Uco.Models.ShopProductPage>
+@if(Model.Count > 0)
+{
+    using (Ajax.BeginForm("_AjaxGrid", "PagePart", null, new AjaxOptions
+    {
+        UpdateTargetId = "ajax_grid",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "ajax_grid_loading",
+        HttpMethod = "POST"
+    }, new { @id = "ajax_grid_form" }))
+    {
+        @Html.Hidden("GridPageID", ViewData["ID"])
+        @Html.Hidden("GridPageNum", "1")
+        @Html.Hidden("GridShow", "9")
+        @Html.Hidden("GridOrder", "2")
+        @Html.Hidden("GridType", "2")
+        @Html.Hidden("GridCount", Model.Count)
+    }
+    <div id="ajax_grid">
+        @Html.Partial("_ProductGrid1",Model, new ViewDataDictionary { { "GridPageNum", 1 },{ "GridShow", 9 },{ "GridOrder", 1 },{ "GridType", 2 },{ "GridCount", Model.Count } })
+    </div>
+    <span id="ajax_grid_loading" class="dn">...Loading...</span>
+}
+<script type="text/javascript">
+    $(".SelectGridShow").live("change", function(){ 
+        $("#GridShow").attr("value",$(this).val());
+        $('#ajax_grid_form').submit();
+    });
+    $(".OlGridPageNum a").live("click", function(){ 
+        $("#GridPageNum").attr("value", $(this).attr("data-GridPageNum"));
+        $('#ajax_grid_form').submit();
+        return false;
+    });
+    $(".AGridType").live("click", function(){ 
+        $("#GridType").attr("value",$(this).attr("data-GridType"));
+        $('#ajax_grid_form').submit();
+        return false;
+    });
+    $(".selectGridOrder").live("change", function(){ 
+        $("#GridOrder").attr("value",$(this).val());
+        $('#ajax_grid_form').submit();
+    });
+    </script>

@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = RP.T("Admin.Views.Translation.Index.Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+    string Lang = ViewBag.Lang;
+}
+<h2>@ViewBag.Title</h2>
+@{
+    SelectList Items = new SelectList(System.Configuration.ConfigurationManager.AppSettings["Languages"].Split(',').ToList(), Lang);
+}
+@(Html.Kendo().DropDownList()
+    .Name("Languages")
+    .DataTextField("Text")
+    .DataValueField("Value")
+    .BindTo(Items)
+    .Value(Lang)
+)
+<br />
+<div class="div_2">
+    <br />
+    @(Html.Kendo().Grid<Uco.Models.Translation>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource
+            .Ajax()
+            .Model(model => { model.Id(item => item.ID); })
+            .Read(r => r.Action("_AjaxIndex", "Translation", new { Lang = Lang }))
+            .Destroy(r => r.Action("_AjaxDelete", "Translation", new { Lang = Lang }))
+            .Update(r => r.Action("_AjaxSave", "Translation", new { Lang = Lang }))
+            .Create(r => r.Action("_AjaxInsert", "Translation", new { Lang = Lang }))
+            .Events(events => events.Error("error_handler"))
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.SystemName);
+        columns.Bound(r => r.Text);
+        columns.Command(commands =>
+        {
+            commands.Edit();
+            commands.Destroy();
+        })
+        .Width(200);
+    })
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Groupable()
+    .Editable(editing => editing.Mode(GridEditMode.InLine))
+    .Groupable()
+    .ToolBar(commands => commands.Create())
+    )
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#Languages").change(function () {
+            window.location = "/Admin/Translation/Index?lang=" + $(this).val();
+        });
+    });
+
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>

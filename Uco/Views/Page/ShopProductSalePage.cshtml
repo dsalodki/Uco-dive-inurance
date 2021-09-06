@@ -1,0 +1,16 @@
+﻿@model Uco.Models.ShopProductSalePage
+@{
+    Layout = ViewBag.Layout;
+}
+<div class="page_box">
+    <div class="page_title"><span class="block_title_arrow"><span></span></span><h1>@Model.Title</h1></div>
+    <div class="page_content">
+        <ul>
+            @foreach (Uco.Models.ShopProductPage item in ViewBag.Items)
+            {
+                <li><a href="@Url.Content(item.Url)">@item.Title</a></li>
+            }
+        </ul>
+        @Html.Raw(Model.Text)
+    </div>
+</div>

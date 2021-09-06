@@ -1,0 +1,31 @@
+﻿@{
+    Uco.Models.ShopProductPage _PrevProduct = ViewBag.PrevProduct;
+    Uco.Models.ShopProductPage _NextProduct = ViewBag.NextProduct;
+}
+
+
+<div class="product_arrows">
+    <div class="product_arrows_prev">
+        <div class="product_arrows_title">
+            <a href="@Url.Content(_PrevProduct.Url)">
+                @RP.T("Views.ShopPagePart.PrevAndNextOfProductPage.Prev")
+            </a>
+        </div>
+        <div class="product_arrows_image_prev">
+            <a href="@Url.Content(_PrevProduct.Url)">
+            </a>
+        </div>
+    </div>
+    <div class="product_prev_next">
+        <div class="product_arrows_image_next">
+            <a href="@Url.Content(_NextProduct.Url)">
+            </a>
+        </div>
+        <div class="product_arrows_title">
+            <a href="@Url.Content(_NextProduct.Url)">
+                @RP.T("Views.ShopPagePart.PrevAndNextOfProductPage.Next")
+            </a>
+        </div>
+        
+    </div>
+</div>

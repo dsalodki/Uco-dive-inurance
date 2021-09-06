@@ -1,0 +1,42 @@
+﻿@model List<Uco.Models.CartItem>
+<div class="block block-cart">
+    <div class="block_title"><span class="block_title_arrow"><span></span></span>סל קיות</div>
+    <div class="block_content">
+        @if (Model.Count > 0)
+        {
+            <div class="summary">
+                <p>קיימים <a href="/cart/index">@ViewBag.ProductNumber מוצרים</a> בסל קניות.</p>
+                <p class="subtotal">
+                    <span class="label">סה"כ:</span> <span class="price">₪@ViewBag.TotalPrice</span>
+                </p>
+            </div>
+            <div class="actions">
+                <a href="/cart/index#payment" class="button" title="Checkout" type="button"><span><span>לקופה</span></span></a>
+            </div>
+            <p class="block-subtitle">רשימת מוצרים</p>
+            <ol class="mini-products-list" id="cart-sidebar">
+            @foreach(Uco.Models.CartItem item in Model)
+            {
+                <li class="item">
+                    <div class="product_details_right">
+                        <a class="product_details_right_image" href="@Url.Content(item.Url)"><img alt="@item.Title" src="@Url.Content(item.Pic)"></a>
+                    </div>
+                    <div class="product_details_left">
+                        <div class="product_details_right_actions">
+                            <a class="btn-remove" onclick="return confirm('האם אתה בטוח?');" href="/cart/delete/@item.ID">מחיקה</a>
+                            <a class="btn-edit" href="/cart/index">עריכה</a>
+                        </div>
+                        <a class="product_details_left_name" href="@Url.Content(item.Url)">@item.Title</a>
+                        <div class="product_details_price"><strong>@item.Quantity</strong> - <span class="price">₪@item.Price</span></div>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+            }
+            </ol>
+        }
+        else
+        {
+            <p class="empty">אין מוצרים בסל קניות.</p>
+        }
+    </div>
+</div>

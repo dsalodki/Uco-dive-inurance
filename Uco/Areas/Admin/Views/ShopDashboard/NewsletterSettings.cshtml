@@ -1,0 +1,16 @@
+﻿@model Uco.Models.Settings
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    @*<div class="editor-label">@Html.LabelFor(m => m.NewsletterUse)</div>
+    <div class="editor-field">@Html.EditorFor(m => m.NewsletterUse)</div>
+    
+    <div class="editor-label">@Html.LabelFor(m => m.NewsletterUser)</div>
+    <div class="editor-field">@Html.EditorFor(m => m.NewsletterUser)</div>*@
+    <p class="clear editor-submit"><input type="submit" class="k-button" value="שמור" /></p>
+}

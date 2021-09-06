@@ -1,0 +1,10 @@
+﻿<div class="nav">
+    <a href="#my-menu" id="mobileMenuOpnenBtn">&nbsp;</a>
+    @Html.Action("_Menu", "PagePart", new { maxLevel = 2, CurrentPageID = 1, UlClass = "sf-menu" })
+    <div class="clear"></div>
+</div>
+
+
+<nav id="my-menu">
+    @Html.Action("_Menu", "PagePart", new { maxLevel = 2, CurrentPageID = 1, UlClass = "" })
+</nav>

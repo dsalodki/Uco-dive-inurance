@@ -1,0 +1,36 @@
+﻿@{
+    string Skin = System.Configuration.ConfigurationManager.AppSettings["SkinDefault"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+	<meta charset="utf-8" />
+    @Html.CssBundle(
+        "~/Content/Kendo/2014.1.318/kendo.common.min.css",
+        "~/Content/kendo/2014.1.318/kendo." + Skin + ".min.css",
+        "~/Content/Login.css"
+    )
+    @Html.ScriptBundle(
+        "~/Scripts/Kendo/2014.1.318/jquery.min.js",
+        "~/Scripts/Kendo/2014.1.318/kendo.web.min.js",
+        "~/Scripts/Kendo/2014.1.318/kendo.aspnetmvc.min.js",
+        "~/Scripts/kendo/2014.1.318/cultures/kendo.culture." + SF.GetLangCodeThreading() + ".min.js",
+        "~/Areas/Admin/Content/admin.js"
+    )
+    @RenderSection("scripts", required: false)
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+</head>
+<body class="login">
+    <!--[if lt IE 7]><div class="ie67"><p style='font-weight:bold; font-size:20px; padding:0 10px; text-align:center; margin:20px 0 20px; color:red;'>Your using old and unsuported browser. Upgrade you browser!<br/><a href='http://www.microsoft.com/windows/internet-explorer/default.aspx'>Click here to upgrade.</a></p></div><![endif]-->
+    <div id="login-container" class="@(RP.GetCurrentSettings().LanguageRTL ? "t-rtl" : "t-ltr")">
+        <img src="@Url.Content("~/Content/DesignFiles/System/login_logo.png")" alt="UCO" />
+        <div class="inner">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,298 @@
+﻿@model string
+@{
+    string GalleryPath = Server.MapPath("~/Content/UserFiles/" + Model + "/");
+
+    int sw = 169; // small picture width
+    int sh = 104; // small picture height
+    int bw = 730; // big picture width
+    int bh = 409; // big picture height
+    int Counter = 0;  // don't change
+    int CounterPaging = 0; // don't change
+    int PicturesPerPage = 4;  // this is how much small picture per page
+
+    List<Uco.Models.ImageGalleryItem> allImages = SF.GalleryFile2List(GalleryPath, sw, sh, true, false);
+
+
+    List<Uco.Models.ImageGalleryItem> allImagesBig = SF.GalleryFile2List(GalleryPath, bw, bh, true, false);
+
+
+
+
+    //List<string> allImages = new List<string>();
+    //List<string> allImagesBig = new List<string>();
+    //if (@Model != string.Empty && @Model != null)
+    //{
+    //    string GalleryPath = Server.MapPath("~/Content/UserFiles/" + @Model + "/");
+    //    if (!Directory.Exists(GalleryPath))
+    //    {
+    //        Directory.CreateDirectory(GalleryPath);
+    //    }
+
+    //    string RootPath = Server.MapPath("~");
+    //    string[] AllFiles = Directory.GetFiles(Server.UrlDecode(GalleryPath));
+
+    //    for (int i = 0; i < AllFiles.Length; i++)
+    //    {
+    //        AllFiles[i] = AllFiles[i].Replace(RootPath, "");
+    //        AllFiles[i] = AllFiles[i].Replace("\\", "/").ToLower();
+    //        if (AllFiles[i].EndsWith(".jpg") || AllFiles[i].EndsWith(".png") || AllFiles[i].EndsWith(".gif") || AllFiles[i].EndsWith(".bmp"))
+    //        {
+    //            allImages.Add("/Image?img=/" + HttpUtility.UrlEncode(AllFiles[i]) + "&w=" + sw + "&h=" + sh + "&t=0&c=1");
+    //            allImagesBig.Add("/Image?img=/" + HttpUtility.UrlEncode(AllFiles[i]) + "&w=" + bw + "&h=" + bh + "&t=0&c=0");
+    //        }
+    //    }
+    //}
+    //int total_picture_width = allImages.Count * 110;
+}
+
+
+@if (allImages.Count() > 0)
+{
+    <div class="one_gal_big">@*<img alt="" src="/Content/DesignFiles/one_gal_big.png">*@</div>
+    <div id="picture_gallery_view_big_Picture_temp" class="dn">
+    </div>
+    <div class="one_gal_strip1">
+        @if (allImages.Count > PicturesPerPage)
+        {
+            <div class="on_gal_stip_ri_1">
+                <div class="arow one_gal_arrow_next"><a href="#"><img alt="" src="/Content/DesignFiles/Idive/arrow_right1.png"></a></div>
+                <div class="arow one_gal_arrow_prev"><a href="#"><img alt="" src="/Content/DesignFiles/Idive/arrow_left.png"></a></div>
+                <div class="clear"></div>
+            </div>
+        }
+        @if (allImages.Count > 0)
+        {
+            <div class="on_gal_stip_ri_2"></div>
+        }
+        <div class="zoom_icon1"><a href="javascript:void(0)"><img alt="" src="/Content/DesignFiles/Idive/zoom_icon1.png"></a></div>
+        <div class="clear"></div>
+    </div>
+    <div class="one_gal_imgs_wrap">
+        <ul>
+            @for (int i = 0; i < allImagesBig.Count; i++)
+            {
+                <li class="one_gal_imgs one_gal_imgs_@((Counter / PicturesPerPage) + 1) @(Counter + 1 > PicturesPerPage ? " dn" : "")">
+                    <a href="@Url.Content(allImagesBig[i].SmallImageUrl)" data-fancybox="@Url.Content(allImagesBig[i].BigImageUrl)" data-title="@allImagesBig[i].Title">
+                        <img alt="" src="@Url.Content(allImages[i].SmallImageUrl)">
+                    </a>
+                </li>
+                Counter++;
+            }
+
+        </ul>
+        <div class="clear"></div>
+    </div>
+    @*<div class="topics2_pagination">
+            <ul>
+                @for (int i = 0; i < ((allImagesBig.Count - 1) / PicturesPerPage + 1); i++)
+                {
+                    <li>
+                        <a id="topics2_pagination_@(CounterPaging + 1)" class="@(i == 0 ? "active" : "")">
+                            @(i + 1)
+                        </a>
+                    </li>
+                    CounterPaging++;
+                }
+            </ul>
+            <div class="clear"></div>
+        </div>*@
+    @*<div class="btns_faltu"><img alt="" src="/Content/DesignFiles/Idive/btns_faltu.png"></div>*@
+
+
+
+
+
+    @*@if (allImages.Count > 0)
+        {
+            <ul>
+                @foreach (Uco.Models.ImageGalleryItem item in allImages)
+                {
+                    <li><a href="@Url.Content(item.BigImageUrl)"><img src="@Url.Content(item.SmallImageUrl)" alt="@item.Title" /></a></li>
+                }
+            </ul>
+        }*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".zoom_icon1 a").fancybox();
+            ShowBigPicture($('.one_gal_imgs a:first'));
+
+            $(".topics2_pagination a").on("click", function () {
+                var galleryPage = $(this).attr("id").replace("topics2_pagination_", "");
+
+                $(".one_gal_imgs").addClass('dn');
+
+                $(".one_gal_imgs_" + galleryPage).removeClass('dn');
+                $(".topics2_pagination a").removeClass('active');
+                $("#topics2_pagination_" + galleryPage).addClass('active');
+            });
+
+
+            function ShowBigPicture(ActiveDiv) {
+                $("#picture_gallery_view").removeClass("dn");
+
+
+                $('.one_gal_imgs').removeClass('active');
+                ActiveDiv.closest('.one_gal_imgs').addClass('active');
+
+
+
+                var activePicture = $('.one_gal_imgs_wrap .active');
+                var CurrentPictureUrl = activePicture.children('a').attr('href');
+                var CurrentPictureTitle = activePicture.children('a').data('title');
+                var FullSizePicture = activePicture.children('a').data('fancybox');
+                var BigPictreUrl = "";
+
+                //preload image 2 after and 2 before - start
+                var PictureToTemp = "";
+
+                if (activePicture.next().length > 0) {
+                    BigPictreUrl = activePicture.next().children('a').attr('href');
+                    PictureToTemp = PictureToTemp + "<img src='" + BigPictreUrl + "'/>";
+                }
+                else if ($('.one_gal_imgs:first').length > 0) {
+                    BigPictreUrl = $('.one_gal_imgs:first').children('a').attr('href');
+                    PictureToTemp = PictureToTemp + "<img src='" + BigPictreUrl + "'/>";
+                }
+                if (activePicture.next().next().length > 0) {
+                    BigPictreUrl = activePicture.next().next().children('a').attr('href');
+                    PictureToTemp = PictureToTemp + "<img src='" + BigPictreUrl + "'/>";
+                }
+                else {
+                    BigPictreUrl = $('.one_gal_imgs:eq(1)').children('a').attr('href');
+                    PictureToTemp = PictureToTemp + "<img src='" + BigPictreUrl + "'/>";
+                }
+
+                if (activePicture.prev().length > 0) {
+                    BigPictreUrl = activePicture.prev().children('a').attr('href');
+                    PictureToTemp = PictureToTemp + "<img src='" + BigPictreUrl + "'/>";
+                }
+                else if ($('.one_gal_imgs:last').length > 0) {
+                    BigPictreUrl = $('.one_gal_imgs:last').children('a').attr('href');
+                    PictureToTemp = PictureToTemp + "<img src='" + BigPictreUrl + "'/>";
+                }
+                if (activePicture.prev().prev().length > 0) {
+                    BigPictreUrl = activePicture.prev().prev().children('a').attr('href');
+                    PictureToTemp = PictureToTemp + "<img src='" + BigPictreUrl + "'/>";
+                }
+                else if ($('.one_gal_imgs:last').prev().length > 0) {
+                    BigPictreUrl = $('.one_gal_imgs:last').prev().children('a').attr('href');
+                    PictureToTemp = PictureToTemp + "<img src='" + BigPictreUrl + "'/>";
+                }
+
+
+                //
+
+                $(".one_gal_big").html("<img src='" + CurrentPictureUrl + "'" + "/>");
+                $(".zoom_icon1 a").attr("href", FullSizePicture);
+                $(".on_gal_stip_ri_2").html(CurrentPictureTitle);
+
+
+                $("#picture_gallery_view_big_Picture_temp").html(PictureToTemp);
+                return false;
+            }
+            //preload image 2 after and 2 before - end
+
+
+            $(".one_gal_imgs a").on("click", function () {
+                ShowBigPicture($(this));
+                return false;
+            });
+
+
+            //$(".topics2_pagination a").on("click", function () {
+            //    var galleryPage = $(this).attr("id").replace("topics2_pagination_", "");
+
+            //    $(".one_gal_imgs").addClass('dn');
+
+            //    $(".one_gal_imgs_" + galleryPage).removeClass('dn');
+            //    $(".topics2_pagination a").removeClass('active');
+            //    $("#topics2_pagination_" + galleryPage).addClass('active');
+            //});
+            var i = 1;
+            var countPages = @((allImages.Count() + 4 - 1) /4)
+
+
+            $(".one_gal_arrow_next").on("click", function () {
+                i++;
+                if (i > countPages)
+                    i = 1;
+                var galleryPage = i;
+                $(".one_gal_imgs").addClass('dn');
+
+                $(".one_gal_imgs_" + galleryPage).removeClass('dn');
+                $(".topics2_pagination a").removeClass('active');
+                //$("#topics2_pagination_" + galleryPage).addClass('active');
+
+
+                //var activePicture = $('.one_gal_imgs_wrap .active');
+                //var targetPicture = "";
+                //if (activePicture.next().length > 0) {
+                //    targetPicture = activePicture.next();
+                //}
+                //else {
+                //    targetPicture = $('.one_gal_imgs:first');
+                //}
+
+                //ShowBigPicture(targetPicture);
+                return false;
+            });
+
+            $(".one_gal_arrow_prev").on("click", function () {
+                i--;
+                if (i <= 0)
+                    i = countPages;
+                var galleryPage = i;
+                $(".one_gal_imgs").addClass('dn');
+
+                $(".one_gal_imgs_" + galleryPage).removeClass('dn');
+                $(".topics2_pagination a").removeClass('active');
+
+                //var activePicture = $('.one_gal_imgs_wrap .active');
+                //var targetPicture = "";
+                //if (activePicture.prev().length > 0) {
+                //    targetPicture = activePicture.prev();
+                //}
+                //else {
+                //    targetPicture = $('.one_gal_imgs:last');
+                //}
+
+                //ShowBigPicture(targetPicture);
+                return false;
+            });
+
+
+
+            //$(".one_gal_arrow_next").on("click", function () {
+
+            //    var activePicture = $('.one_gal_imgs_wrap .active');
+            //    var targetPicture = "";
+            //    if (activePicture.next().length > 0) {
+            //        targetPicture = activePicture.next();
+            //    }
+            //    else {
+            //        targetPicture = $('.one_gal_imgs:first');
+            //    }
+
+            //    ShowBigPicture(targetPicture);
+            //    return false;
+            //});
+
+            //$(".one_gal_arrow_prev").on("click", function () {
+
+            //    var activePicture = $('.one_gal_imgs_wrap .active');
+            //    var targetPicture = "";
+            //    if (activePicture.prev().length > 0) {
+            //        targetPicture = activePicture.prev();
+            //    }
+            //    else {
+            //        targetPicture = $('.one_gal_imgs:last');
+            //    }
+
+            //    ShowBigPicture(targetPicture);
+            //    return false;
+            //});
+
+
+        });
+    </script>
+}

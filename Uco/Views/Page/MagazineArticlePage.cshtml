@@ -1,0 +1,183 @@
+﻿@using Uco.Models
+@model Uco.Models.MagazineArticlePage
+@{
+    Layout = ViewBag.Layout;
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+    var galleryImages = new List<ImageGalleryItem>();
+    var otherArticles = ViewBag.OtherArticles as List<MagazineArticlePage>;
+    otherArticles = otherArticles.Take(2).ToList();
+}
+
+<header class="header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="img"><a href="/"><img src="/Content/DesignFiles/Magazines/logo.png" alt="iDive"></a></div>
+                <div class="slogan">
+                    <div class="slogan-t">@RP.T("Views.Page.MagazineArticlePage.Title", "מגזין הצוללים הישראלי")</div>
+                    <div class="slogan-b">@ViewBag.ParentTitle</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<nav class="topbar">
+    <div class="container">
+        <div class="toggler">
+            <div class="toggler-icon"></div>
+        </div>
+        <div class="topmenu">
+            @RP.Text("Views.Page.MagazinePage.TopMenu")
+        </div>
+        <div class="search-block">
+            <form action="">
+                <input type="text" class="form-control">
+                <button type="submit" class="btn-search">@RP.T("Views.Page.MagazinePage.Search", "לחפש")</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<main class="main">
+    <div class="container">
+        <article class="article-inner">
+            <div class="bnr bnr-w2">
+                @Html.Action("_Banner", "PagePart", new { Num = 2, BannerGroup = "MagazineArtricleBanner_Top", pageId = ViewBag.ID })
+            </div>
+            <div class="two-cols">
+                <div class="maincol">
+                    <section class="section-article">
+                        <div class="article-heading">
+                            <h1>@Model.Title</h1>
+                            <div class="subtitle">@Model.SubTitle</div>
+                        </div>
+
+                        <div class="article-info">
+                            <div class="article-info-l">
+                                <span class="userpic"><a href="/"><img src="@(string.IsNullOrWhiteSpace(Model.AuthorPic) ? "/Content/DesignFiles/Magazines/tmp/userpic-47.jpg": Model.AuthorPic)" alt=""></a></span>
+                                @if (string.IsNullOrEmpty(Model.Author))
+                                {
+                                    <div class="user-info">@Model.CreateTime.ToString("dd MMMM, yyyy")</div>
+                                }
+                                else
+                                {
+                                    <div class="user-info">@Model.Author // @Model.CreateTime.ToString("dd MMMM, yyyy")</div>
+                                }
+                            </div>
+                            <div class="article-info-r">
+                                @RP.Text("Views.Page.MagazineArticlePage.Social")
+                            </div>
+                        </div>
+                        <div class="article-body">
+                            <div class="txt">
+                                @Html.Raw(Model.Text)
+                                @if (!string.IsNullOrEmpty(Model.Gallery))
+                                {
+                                    {
+                                        var folder = Model.Gallery;
+                                        string UserFolder = string.Format("~/Content/UserFiles/{0}/", folder);
+
+                                        string GalleryPath = Server.MapPath(UserFolder);
+                                        galleryImages = @SF.GalleryFile2List(GalleryPath, 120, 120, false, false);
+                                    }
+                                    if (galleryImages != null && galleryImages.Count > 0)
+                                    {
+                                <div class="container">
+                                    <section class="section-slider">
+                                        <div class="item item-slider">
+                                            <div class="slider slick-slider-1-rtl" dir="rtl">
+                                                @foreach (var image in galleryImages)
+                                                {
+                                                    <div class="img">
+                                                        <img src="@image.BigImageUrl" alt="@image.Title">
+                                                        <div class="img-info">
+                                                            <div class="img-desc">@image.Description</div>
+                                                            <div class="img-author">@image.Author</div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                    }
+                                }
+                                @if (galleryImages == null || galleryImages.Count == 0)
+                                {
+                                    <div class="img">
+                                        <img src="@Model.Pic" alt="@Model.Title">
+                                        <div class="img-info">
+                                            <div class="img-desc">@Model.ImageDescription</div>
+                                            <div class="img-author">@Model.ImageAuthor</div>
+                                        </div>
+                                    </div>
+                                }
+                                @Html.Raw(Model.Text2)
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="sidecol">
+                    <div class="bnr bnr-s1">
+                        @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "MagazineArtricleBanner_TopLeft", pageId = ViewBag.ID })
+                    </div>
+                </div>
+            </div>
+
+            <div class="bnr bnr-w1">
+                @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "MagazineArtricleBanner_Middle", pageId = ViewBag.ID })
+            </div>
+            <div class="two-cols">
+                <div class="maincol">
+                    @if (!string.IsNullOrWhiteSpace(Model.VideoHtmlCode))
+                    {
+                    <div class="section-video-2">
+                        <div class="video-heading">
+                            <h3 class="title">@Model.VideoTitle</h3>
+                            <div class="subtitle">@Model.VideoSubTitle</div>
+                        </div>
+                        <div class="video">
+                            @Html.Raw(Model.VideoHtmlCode)
+                        </div>
+                        @*<div class="btn-block">
+                            <a href="" class="btn btn-blue"><i class="icon icon-doc"></i> <span>ביטוח צלילה</span></a>
+                            <a href="" class="btn btn-blue"><i class="icon icon-user"></i> <span>העבר לחבר</span></a>
+                        </div>*@
+                    </div>
+                    }
+                </div>
+                <div class="sidecol">
+                    <div class="bnr bnr-s1">
+                        @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "MagazineArtricleBanner_MiddleLeft", pageId = ViewBag.ID })
+                    </div>
+                </div>
+            </div>
+            <div class="two-cols">
+                <div class="maincol">
+                    @if (otherArticles != null && otherArticles.Count > 0)
+                    {
+                    <section class="section-similar">
+                        <h2>@RP.T("Views.Page.MagazineArticlePage.OtherArticles", "עוד בגיליון")</h2>
+                        <div class="similar-list">
+                            @*<div class="gallery slick-slider-4-rtl" dir="rtl">*@
+                            @foreach (var item in otherArticles)
+                            {
+                                <div class="item">
+                                    <a href="@item.UrlFix">
+                                        <span class="img"><img src="@item.Pic" alt=""></span>
+                                        <span class="title">@item.Title</span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </section>
+                    }
+                </div>
+                <div class="sidecol">
+                    <div class="bnr bnr-s1">
+                        @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "MagazineArtricleBanner_Bottom", pageId = ViewBag.ID })
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</main>

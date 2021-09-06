@@ -1,0 +1,18 @@
+﻿@model Uco.Models.DomainPage
+@{
+    Layout = ViewBag.Layout;
+    Page.PageType = "homepage";
+}
+@section bannerFirst
+{
+    @Html.Action("_HomeBanner", "PagePart")
+}
+@Html.Action("_NewsBox", "PagePart")
+@Html.Action("_HomeProducts", "PagePart")
+@Html.Action("_HomeProducts2", "PagePart")
+
+<div class="banner_small1" style="margin-bottom: 50px;">@Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "באנר אמצעי בעמוד הבית" })</div>
+@Html.Action("_NewProducts", "ShopPagePart")
+@Html.Action("_ArticleBox", "PagePart")
+@Html.Action("_Gallerys", "PagePart")
+

@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/Html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/semantic-ui-rtl/semantic.rtl.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/semantic/calendar/calendar.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/css/DivePage.css" />
+</head>
+<body style="direction: rtl;">
+    <div class="ui fixed inverted menu hide-on-mobile-tablet pager_menu" id="desctop_menu">
+        <div class="ui container">
+            <a href="@Url.Action("Index", "DivePage")#page_1" class="header item">
+                <img class="logo" src="~/Content/assets/images/logo.png">
+                Idive
+            </a>
+            <a href="@Url.Action("Index", "DivePage")#page_1" class="item" name="firstItem">תעודות</a>
+            <a href="@Url.Action("Index", "DivePage")#page_2" class="item">ביטוח</a>
+            <a href="@Url.Action("Index", "DivePage")#page_3" class="item">צלילה אחרונה</a>
+            <a href="@Url.Action("Index", "DivePage")#page_4" class="item">פרופיל</a>
+            <a href="@Url.Action("Index", "DivePage")#page_5" class="item">תמיכה</a>
+        </div>
+    </div>
+    <div class="ui inverted menu hide-on-mobile-tablet" id="mobile_logo">
+        <div class="ui container">
+            <span class="header item">
+                <img class="logo" src="~/Content/assets/images/logo.png">
+                Idive
+            </span>
+        </div>
+    </div>
+
+    @RenderBody()
+
+    <div class="ui modal" id="image_popup">
+        <i class="close icon"></i>
+        <div class="header text-centered" id="image_popup_header">#</div>
+        <div class="image content easyzoom">
+            <a id="image_popup_link" href="#">
+                <img class="ui fluid image" id="image_popup_image" src="#">
+            </a>
+        </div>
+        <div class="ui segment centered" id="move_mobile_note">לחץ על התמונה וגרור כדי להגדיל</div>
+    </div>
+    <div class="ui five item menu hide-on-desktop bottom pager_menu" id="mobile_menu">
+        <a href="@Url.Action("Index", "DivePage")#page_1" class="item" name="firstItem">תעודות</a>
+        <a href="@Url.Action("Index", "DivePage")#page_2" class="item">ביטוח</a>
+        <a href="@Url.Action("Index", "DivePage")#page_3" class="item">צלילה אחרונה</a>
+        <a href="@Url.Action("Index", "DivePage")#page_4" class="item">פרופיל</a>
+        <a href="@Url.Action("Index", "DivePage")#page_5" class="item">תמיכה</a>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/easyzoom/easyzoom.js"></script>
+    <script src="~/Content/semantic-ui-rtl/semantic.min.js"></script>
+    <script src="~/Scripts/semantic/calendar/calendar.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

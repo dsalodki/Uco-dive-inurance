@@ -1,0 +1,24 @@
+﻿@model Uco.Models.InsuranceSendEmail
+@{
+    ViewBag.Title = "הזמנות ביטוח";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPopup.cshtml";
+}
+<div class="admin_send_insurance">
+    @if (TempData["Success"] == null)
+    {
+        using (Html.BeginForm())
+        {
+
+            <div>כתובות אימיילים:</div>
+        <br />
+            <div>@Html.EditorFor(r => r.Text)</div>
+    <br />
+            @Html.HiddenFor(r => r.OrderID)
+            <input type="submit" class="k-button" value="שלח" />
+        }
+    }
+    else
+    {
+        @TempData["Success"];
+    }
+</div>

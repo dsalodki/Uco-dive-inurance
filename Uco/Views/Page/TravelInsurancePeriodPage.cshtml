@@ -1,0 +1,31 @@
+﻿@model Uco.Models.TravelInsurancePeriodPage
+@{
+    Layout = "~/Views/Shared/_LayoutInsurance.cshtml";
+}
+
+<div class="edit4_right_sec">
+    @Html.Action("_InnerInsuranceList", "PagePart")
+
+</div>
+<div class="edit4_left_sec">
+    <div class="brdcms">
+        <ul>
+            <li><a href="/">@RP.T("Homepage.Breadcrumb")</a></li>
+            <li>@Model.Title - @Model.Price ש”ח</li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <h1 class="edit4_heading">@Model.Title - @Model.Price ש”ח</h1>
+    <div class="edit4_text1">@Html.Raw(item.ShortDescriptionFix)</div>
+    <div class="edit4_img">
+        <a href="@Url.Action("Buy", "Insurance", new { InsuranceId = Model.ID })">
+            <img alt="@Model.Title" src="@Url.Content(SF.GetImageUrl(Model.Pic,258, 227, false, false))">
+        </a>
+    </div>
+    <div class="text_on_img"><a href="@Url.Action("Buy", "Insurance", new { InsuranceId = Model.ID })">לרכישת ביטוח צלילה</a></div>
+    <div class="insurance_text">
+        @Html.Raw(Model.Text)
+
+    </div>
+</div>
+<div class="clear"></div>

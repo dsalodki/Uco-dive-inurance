@@ -1,0 +1,14 @@
+﻿@model string
+@{
+    List<string> l = SF.GetRelatedProducts();
+}
+@(Html.Kendo().AutoComplete()
+    .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+    .Filter("startswith")
+    .Placeholder(RP.TVL("SelectReletedProducts") + "...")
+    .BindTo(l)
+    .Separator(",")
+    .HighlightFirst(true)
+    .HtmlAttributes(new { @class = "text-box single-line" })
+    .Value(Model)
+)

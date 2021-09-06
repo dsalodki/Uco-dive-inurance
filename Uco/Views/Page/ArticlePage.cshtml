@@ -1,0 +1,98 @@
+﻿@model Uco.Models.ArticlePage
+@{
+    Layout = ViewBag.Layout;
+    Page.PageType = "article";
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+    string link = Request.Url.Scheme + "://" + Request.Url.Authority + Request.RawUrl;
+}
+
+
+<div class="brdcms">
+    <ul>
+        <li>
+            <a href="/">@RP.T("Homepage.Breadcrumb")</a>
+        </li>
+        @foreach (var b in bradcrumbs)
+        {
+            <li>
+                <a href="@Url.Content(b.Url)">@b.Title</a>
+            </li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>
+
+<div class="page_main_heading"><h2>@ViewBag.H1</h2></div>
+
+<div class="artile_text2">@Html.Raw(Model.Text)</div>
+@Html.DisplayFor(model => model.Gallery)
+@if (Model.AddingFacebookComments == true)
+{
+
+    @section BodyStart
+    {
+        @*facebook comments*@
+        <div id="fb-root"></div>
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v2.3&appId=203720779674228";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        @*facebook comments*@
+    }
+
+    <div id="facebook_comment_box_page">
+        <div class="fb-comments" data-href="http://insurance.idive.co.il@(Url.Content(Model.Url))" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+    </div>
+}
+
+@if (ViewBag.relatedArticle != null && ((List<Uco.Models.ArticlePage>)ViewBag.relatedArticle).Count > 0)
+{
+    <div class="article_slider">
+        <h3 class="heading">@RP.T("Views.Page.ArticlePage.Heading")</h3>
+        <div class="article_slider_in">
+            <ul>
+                @foreach (var article in (List<Uco.Models.ArticlePage>)ViewBag.relatedArticle)
+                {
+                    <li>
+                        <div class="article_slider_img">
+                            <a href="#">
+                                @if (!string.IsNullOrEmpty(article.Pic))
+                                {
+                                    <img src="@Url.Content(SF.GetImageUrl(article.Pic, 163, 111, false, false))" alt="">
+                                }
+                            </a>
+                        </div>
+                        <div class="article_slider_img_head">
+                            <a href="@Url.Content(article.Url)">@article.Title</a>
+                        </div>
+                        <div class="article_slider_img_text">
+
+                        </div>
+                        <div class="article_slider_img_more"><a href="@Url.Content(article.Url)">@RP.T("Views.Page.ArticlePage.More") >></a></div>
+                    </li>
+                }
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+}
+
+<div class="cmptns_srch1_bott">
+    <ul>
+        <li>
+            <a href="mailto:?subject=Idive - @(Model.Title)&body=@(link)"><img src="/Content/DesignFiles/Idive/user_icon1.png" alt=""></a>
+        </li>
+        <li>
+            <a href="https://twitter.com/share" @(SF.GetLangCodeThreading() == "he-IL" ? "data-lang=he" : "") class="twitter-share-button">Tweet</a>
+            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+        </li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="topic1_load_more">
+    @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "באנר בתחתית עמודי התוכן", pageId = ViewBag.ID })
+</div>

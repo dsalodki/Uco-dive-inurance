@@ -1,0 +1,20 @@
+﻿@model List<Uco.Models.AbstractPage>
+@if (Model.Count() > 0)
+{
+    <div class="left_sec_part2">
+        <div class="heading"><h3>@RP.T("View.ShopPagePart._HomeProducts2.Title")</h3></div>
+
+        <div class="three_boxes1">
+            @foreach (Uco.Models.AbstractPage product in Model)
+            {
+                <div class="item_box">
+                    <div class="product_box1_img"><a href="@Url.Content(product.Url)"><img src="@Url.Content(SF.GetImageUrl(product.Pic, 229, 169, false, true))" alt=""></a></div>
+                    <div class="product_box1_credit"><a href="@Url.Content(product.Url)">@product.Author</a></div>
+                    <div class="product_box1_name"><a href="@Url.Content(product.Url)">@product.Title</a></div>
+                </div>
+            }
+            <div class="clear"></div>
+        </div>
+
+    </div>
+}

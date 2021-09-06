@@ -1,0 +1,25 @@
+﻿@model List<Uco.Models.AbstractPage>
+
+@*@if (Model.Any()) {
+    <div class="page_main_heading"><h2>@RP.T("View.PagePart._ArticleBox.Main.Title")</h2></div>
+}*@
+@{
+    int i = 0;
+  }
+@foreach (var item in Model)
+{
+    i++;
+    <div class="left_sec_part1 left_sec_part1_article_@(i)">
+        <div class="lft_sec1_right @(i % 2 == 0 ? "left_new1" : "")">
+            <div class="heading_anc"><a href="@Url.Content(item.Url)">@item.Title</a></div>
+            <div class="lft_sec_rht_text2">@Html.Raw(item.ShortDescriptionFix)</div>
+            <div class="read_more"><a href="@Url.Content(item.Url)">@RP.T("View.PagePart._ArticleBox.Main.ReadMore") >></a></div>
+        </div>
+        @if (!string.IsNullOrEmpty(item.Pic))
+        {
+            <div class="lft_sec1_left @(i % 2 == 0 ? "right_new1" : "")"><a href="@Url.Content(item.Url)"><img src="@Url.Content(SF.GetImageUrl(item.Pic, 255, 180, false, true))" alt=""></a></div>
+        }
+        <div class="clear"></div>
+    </div>
+}
+

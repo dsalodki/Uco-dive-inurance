@@ -1,0 +1,75 @@
+﻿@model Uco.Models.InsurancesFilter
+
+@{
+    ViewBag.Title = "הזמנות ביטוח";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+@Html.ScriptBundle(
+        "~/Scripts/Custum/InsuranceRenewMessage.js"
+    )
+<h2>דו"ח חידושים - ביטוחים שפג תוקפם ולאותו אדם אין ביטוח אחר בתוקף</h2>
+@using (Html.BeginForm())
+{
+    <div class="report_filter">
+        <div class=" report_filter_row">
+            <div class="report_filter_row_span">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="report_filter_row_date">
+                @Html.EditorFor(model => model.StartDate)
+            </div>
+        </div>
+        <div class=" report_filter_row">
+            <div class="report_filter_row_span">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="report_filter_row_date">
+                @Html.EditorFor(model => model.EndDate)
+            </div>
+        </div>
+        <div class=" report_filter_row report_filter_agents">
+            @Html.EditorFor(model => model.Insurance)
+        </div>
+        <div class=" report_filter_row report_filter_agents">
+            @Html.EditorFor(model => model.Agent)
+        </div>
+        <div class=" report_filter_button">
+            <input class="k-button" type="submit" value="חפש" />
+        </div>
+    </div>
+}
+
+@(Html.Kendo().Grid<Uco.Models.TravelInsurance>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource.Ajax()
+            .Model(model => { model.Id(item => item.ID); })
+                            .Sort(sort => sort.Add("InsuranceDateEnd").Descending())
+                            .Read(r => r.Action("_AjaxIndex", "InsuranceRenewMessages", new { Agent = Model.Agent, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+                            .PageSize(20)
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.ID).Width(20);
+        columns.Bound(r => r.SumForPay).Title("תשלום");
+        columns.Bound(r => r.IdNumber).Title("ת.ז"); ; ;
+        columns.Bound(r => r.UserFname).Width(20).Title("ש.פ"); ;
+        columns.Bound(r => r.UserLname).Width(20).Title("ש.מ");
+        columns.Bound(r => r.SubmitDate).Format("{0:dd/MM/yyyy}").Title("ת.הזמנה");
+        columns.Bound(r => r.InsuranceDate).Format("{0:dd/MM/yyyy}").Title("ת.ת ביטוח");
+        columns.Bound(r => r.InsuranceDateEnd).Format("{0:dd/MM/yyyy}").Title("ס. ביטוח");
+        columns.Bound(r => r.AgentID).ClientTemplate("# if (AgentID != 0) { # #= AgentID # # } #").Width(20);
+        columns.Bound(r => r.AutorizationNum).Title("טרנז'"); ;
+
+        columns.Template(r => r.ID).ClientTemplate(
+            "<a class='k-button' href='" + Url.Action("Edit", "InsuranceOrder") + "?ID=#= ID #'" + ">" + "פרטים" + "</a>"
+        ).Width(100);
+    })
+            .Pageable()
+    .Sortable()
+    .Filterable()
+    .Groupable()
+    .ToolBar(commands => commands.Custom().Text("יצוא לאקסל").Action("CSVExportInsurances", "InsuranceRenewMessages", new { Agent = Model.Agent, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+)
+<br />
+@Html.Partial("RenewMessagesBox", new Uco.Models.InsureanceRenewMessage(Model))

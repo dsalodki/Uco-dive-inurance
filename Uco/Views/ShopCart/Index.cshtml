@@ -1,0 +1,236 @@
+﻿@model Uco.Models.ShopCart
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Url = "/ShopCart/Index";
+    ViewBag.Title = "סל קניות";
+    ViewBag.ID = 0;
+    ViewBag.LanguageRTL = true;
+    decimal Total = SF.GetCartTotal();
+}
+
+<div class="page_main_heading ">
+    <h2>@ViewBag.Title</h2>
+</div>
+<p></p>
+@if (SF.GetCartTotal() != 0)
+{
+    <div class="table cart_page_top_table">
+        <div class="tablerow tablerow_head">
+            <div class="tablecell aligncenter">&nbsp;</div>
+            <div class="tablecell" style="width:30%;">שם מוצר</div>
+            <div class="tablecell aligncenter">מחיר ליחידה</div>
+            <div class="tablecell aligncenter" style="width:80px;">כמות</div>
+            <div class="tablecell aligncenter">מחיר</div>
+            <div class="tablecell aligncenter">&nbsp;</div>
+        </div>
+        @foreach (Uco.Models.ShopCartItem item in ViewBag.Items)
+        {
+            <div class="tablerow">
+                <div class="tablecell aligncenter"><a href="@Url.Content(item.ShopUrl)"><img alt="@item.ShopProductTitle" src="@Url.Content(@SF.GetImageUrl(item.ShopPic, 85, 85, false, false))"></a></div>
+                <div class="tablecell"><a href="@Url.Content(item.ShopUrl)">@item.ShopProductTitle</a></div>
+                <div class="tablecell aligncenter bold">
+                    <span class="cart-price"><span data-shipping_price="@(item.ShopPriceShipping * item.ShopQuantity)" class="price item_shipping_price">₪@item.ShopPrice</span></span>
+                </div>
+                <div class="tablecell aligncenter">
+                    <a class="cart_page_top_table_input_qty_a" href="/ShopCart/index/@(item.ID)?Quantity=1">+</a>
+                    <input readonly="readonly" class="cart_page_top_table_input_qty" size="4" value="@item.ShopQuantity" />
+                    <a class="cart_page_top_table_input_qty_a" href="/ShopCart/index/@(item.ID)?Quantity=-1">-</a>
+                </div>
+                <div class="tablecell aligncenter bold">
+                    <span class="cart-price">
+                        <span class="price">₪@(item.ShopPrice * item.ShopQuantity)</span>
+                    </span>
+                </div>
+                <div class="tablecell aligncenter"><a class="cart_page_top_table_remove" href="~/ShopCart/delete/@(item.ID)">הסרה</a></div>
+            </div>
+        }
+    </div>
+    <div class="cart_page_bott_part">
+        <div class="cart_page_bott_right">
+            <div class="cart_page_bott_right_form">
+                <a name="payment"></a>
+                <div class="cart_page_bott_right_heading">קופה</div>
+                @using (Html.BeginForm())
+                {
+                    <div class="cart_page_form_inner">
+                        @*@Html.ValidationSummary(false, "תקן שגיאות הבאות")*@
+                        @if (RP.GetCurrentSettings().ShopPaymentUse)
+                        {
+                            <div class="row">
+                                <div class="editor-label">@Html.LabelFor(m => m.ShopPayType) * :</div>
+                                <div class="editor-field">
+                                    <select name="ShopPayType" id="pay_type">
+                                        @if (RP.GetCurrentSettings().ShopPaymentCreditGuardUse)
+                                        {
+                                            <option value="4">אשראי באתר</option>}
+                                        @if (RP.GetCurrentSettings().ShopPaymentZCreditUse)
+                                        {
+                                            <option value="5">אשראי באתר</option>}
+                                        @if (RP.GetCurrentSettings().ShopPaymentPayPalUse)
+                                        {
+                                            <option value="3">PayPal</option>}
+                                        @if (RP.GetCurrentSettings().ShopPaymentPhoneUse)
+                                        {
+                                            <option value="2">תתקשרו אלי (אשראי דרך הטלפון)</option>}
+                                        @if (RP.GetCurrentSettings().ShopPaymentInstoreUse)
+                                        {
+                                            <option value="1">תשלום בחנות (איסוף עצמי)</option>}
+                                    </select>
+                                </div>
+                            </div>
+                        }
+                        @if (RP.GetCurrentSettings().ShopShippingUse == true)
+                        {
+                            <div class="row">
+                                <div class="editor-label">@Html.LabelFor(m => m.ShopShippingType) * :</div>
+                                <div class="editor-field">
+                                    <select class="all_shipping_price" name="ShopShippingType" id="delivery_type">
+                                        <option value="2" data-shipping_text="@RP.GetCurrentSettings().ShopShippingText" data-shipping_price="@RP.GetCurrentSettings().ShopShippingPrice">@RP.GetCurrentSettings().ShopShippingName</option>
+                                        @if (RP.GetCurrentSettings().ShopShippingSelfUse)
+                                        {
+                                            <option value="1" data-shipping_text="@RP.GetCurrentSettings().ShopShippingSelfText" data-shipping_price="0">איסוף עצמי</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopFirstName) * :</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopFirstName)
+                                @Html.ValidationMessageFor(m => m.ShopFirstName)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopLastName) * :</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopLastName)
+                                @Html.ValidationMessageFor(m => m.ShopLastName)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopPhone1) *:</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopPhone1)
+                                @Html.ValidationMessageFor(m => m.ShopPhone1)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopPhone2) :</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopPhone2)
+                                @Html.ValidationMessageFor(m => m.ShopPhone2)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopAdressStreet) * :</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopAdressStreet)
+                                @Html.ValidationMessageFor(m => m.ShopAdressStreet)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopAdressCity) * :</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopAdressCity)
+                                @Html.ValidationMessageFor(m => m.ShopAdressCity)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopCompanyName):</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopCompanyName)
+                                @Html.ValidationMessageFor(m => m.ShopCompanyName)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopEmail):</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopEmail)
+                                @Html.ValidationMessageFor(m => m.ShopEmail)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="editor-label">@Html.LabelFor(m => m.ShopOther):</div>
+                            <div class="editor-field">
+                                @Html.EditorFor(m => m.ShopOther)
+                                @Html.ValidationMessageFor(m => m.ShopOther)
+                            </div>
+                        </div>
+                        <div class="cart_page_bott_right_submit">
+                            @Html.EditorFor(m => m.ShopTearm) @RP.Text("סל קניה - טקסט כפתור אישור") @Html.ValidationMessageFor(m => m.ShopTearm)
+                            <br /><br />
+                            <input class="button" type="submit" value="רכישה" />
+                            @Html.Partial("_InvisibleCaptcha", new Uco.Models.InvisibleCaptcha())
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="cart_page_bott_left">
+            <div class="cart_page_bott_left_box">
+                <div class="table">
+                    <div class="tablerow">
+                        <div class="tablecell">סה"כ ללא משלוח</div>
+                        <div class="tablecell"><span class="price">₪<span class="total_notshipping_price">@(Total)</span></span></div>
+                    </div>
+                    <div class="tablerow">
+                        <div class="tablecell">משלוח</div>
+                        <div class="tablecell"><span class="price">₪<span class="total_shipping_price">0</span></span></div>
+                    </div>
+                    <div class="tablerow">
+                        <div class="tablecell">סה"כ</div>
+                        <div class="tablecell"><span class="price">₪<span class="total_price">@(Total)</span></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart_page_bott_left_shipping shipping_text_div dn">
+                <br />
+                <div>משלוח</div>
+                <div class="shipping_text"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <div>סל קניות ריק</div>
+}
+
+<script type="text/javascript">
+    CartUpdatePrice();
+    $('.all_shipping_price').change(function () {
+        CartUpdatePrice();
+    });
+
+
+    function CartUpdatePrice() {
+        var totalShippingPrice = 0;
+
+        var allShippingPrice = $('option:selected', $(".all_shipping_price"));
+        totalShippingPrice = totalShippingPrice + parseInt(allShippingPrice.attr('data-shipping_price'));
+
+        var shipping_text = allShippingPrice.attr('data-shipping_text');
+        if (shipping_text == "") {
+            $(".shipping_text_div").addClass("dn");
+        }
+        else {
+            $(".shipping_text").html(shipping_text);
+            $(".shipping_text_div").removeClass("dn");
+        }
+
+        if (allShippingPrice.attr('value') == '2') {
+            $(".item_shipping_price").each(function () {
+                totalShippingPrice = totalShippingPrice + parseInt($(this).attr("data-shipping_price"));
+            });
+        }
+
+        var total_notshipping_price = parseInt($(".total_notshipping_price").html());
+
+        $(".total_shipping_price").html(totalShippingPrice.toFixed(2));
+        $(".total_price").html((total_notshipping_price + totalShippingPrice).toFixed(2));
+    }
+
+</script>

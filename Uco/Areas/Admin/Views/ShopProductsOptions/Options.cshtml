@@ -1,0 +1,41 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "עריכת אפשרות מוצר";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+@(Html.Kendo().Grid<Uco.Models.ShopProductOptionItem>()
+    .Name("FormFildGrid")
+    .DataSource(dataSource =>
+                dataSource.Ajax()
+                    .Model(model => { model.Id(item => item.ID); })
+                                    .Read(r => r.Action("_AjaxIndex", "ShopProductsOptions", new { ParentID = Model }))
+                                    .Destroy(r => r.Action("_AjaxDelete", "ShopProductsOptions", new { ParentID = Model }))
+                                    .Create(r => r.Action("_Item_AjaxInsert", "ShopProductsOptions", new { ParentID = Model }))
+                                    .Update(r => r.Action("_Item_AjaxSave", "ShopProductsOptions", new { ParentID = Model }))
+                         .PageSize(20)
+            )
+            .Columns(columns =>
+            {
+                columns.Bound(r => r.ID).Width(50);
+                columns.Bound(r => r.ShopOrder).Width(200);
+                columns.Bound(r => r.ShopTitle);
+                columns.Bound(r => r.ShopPrice).Width(150);
+                columns.Template(r => r.ID).ClientTemplate(
+                    "<a class='k-button' href='" + Url.Action("Edit", "ShopProductsOptions") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+                ).Width(100);
+                columns.Command(commands =>
+                {
+                    commands.Edit();
+                    commands.Destroy();
+                })
+                 .Width(210)
+                .Title("פקודות");
+            })
+    .Editable(editing => editing.Mode(GridEditMode.InLine))
+)
+<br />
+<div class="clear">
+    @Html.ActionLink("חזרה לרשימה", "Index", new { ParentID = ViewBag.ParentID, ReturnUrl = ViewBag.ReturnUrl })
+</div>

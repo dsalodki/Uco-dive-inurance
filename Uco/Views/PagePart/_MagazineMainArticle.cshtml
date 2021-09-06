@@ -1,0 +1,19 @@
+﻿@model Uco.Models.MagazineArticlePage
+
+@if (Model != null)
+{
+    <div class="item item-lead">
+        <div class="img"><a href="@Model.UrlFix"><img src="@Model.Pic" alt=""></a></div>
+        <div class="info">
+            <div class="info-t">
+                <span class="cat"><a href="@Model.UrlFix">@Model.Subject</a></span>
+                <span class="date">@Model.CreateTime.ToString("dd MMMM, yyyy")</span>
+            </div>
+            <div class="title"><a href="@Model.UrlFix">@Model.Title</a></div>
+            <div class="teaser">
+                @Model.ShortDescription<a href="@Model.UrlFix" class="more">@RP.T("Views.Page.MagazinePage.ReadMore", "להמשך הכתבה >>")</a>
+            </div>
+            <div class="photo-desc">@Model.Author</div>
+        </div>
+    </div>
+}

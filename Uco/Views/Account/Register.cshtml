@@ -1,0 +1,116 @@
+﻿@model Uco.Models.RegisterModel
+@{
+    ViewBag.Title = RP.T("Views.Account.Register.ViewBagTitle");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="brdcms">
+    <ul>
+        <li><a href="/">@RP.T("MainPageText")</a></li>
+        <li>@RP.T("Views.Account.Register.H2Text")</li>
+    </ul>
+    <div class="clear"></div>
+</div>
+
+<div class="page_main_heading"><h2>@RP.T("Views.Account.Register.H2Text")</h2></div>
+<div class="votes_text1">@RP.Text("Views.Account.Register.Text")</div>
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form3" }))
+{
+    <div class="new_pge3_row1">       
+        @Html.ValidationSummary(true)
+        <div class="row">
+            <div class="editor-label">@Html.LabelFor(x => x.Email)</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Email, new { @class = "single-line" })
+            </div>
+            <div class="clear"></div>
+            <span class="field-validation-error" data-valmsg-for="name">
+                @Html.ValidationMessageFor(m => m.Email)
+            </span>
+        </div>
+        <div class="row">
+            <div class="editor-label">@Html.LabelFor(x => x.FirstName)</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "single-line" })
+            </div>
+            <div class="clear"></div>
+            <span class="field-validation-error" data-valmsg-for="name">
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </span>
+        </div>
+        <div class="row">
+            <div class="editor-label">@Html.LabelFor(x => x.LastName)</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "single-line" })
+            </div>
+            <div class="clear"></div>
+            <span class="field-validation-error" data-valmsg-for="name">
+                @Html.ValidationMessageFor(m => m.LastName)
+            </span>
+        </div>
+        <div class="row">
+            <div class="editor-label">@Html.LabelFor(x => x.City)</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.City, new { @class = "single-line" })
+            </div>
+            <div class="clear"></div>
+            <span class="field-validation-error" data-valmsg-for="name">
+                @Html.ValidationMessageFor(m => m.City)
+            </span>
+        </div>
+        <div class="row">
+            <div class="editor-label">@Html.LabelFor(x => x.Password)</div>
+            <div class="editor-field">
+                @Html.PasswordFor(m => m.Password, new { @class = "single-line" })
+            </div>
+            <div class="clear"></div>
+            <span class="field-validation-error" data-valmsg-for="name">
+                @Html.ValidationMessageFor(m => m.Password)
+            </span>
+        </div>
+        <div class="row">
+            <div class="editor-label">@Html.LabelFor(x => x.ConfirmPassword)</div>
+            <div class="editor-field">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "single-line" })
+            </div>
+            <div class="clear"></div>
+            <span class="field-validation-error" data-valmsg-for="name">
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+            </span>
+        </div>
+    </div>
+
+    <div class="new_pge3_row1">
+    
+            <div class="row">
+                <div class="editor-label">@Html.LabelFor(x => x.Phone)</div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "single-line" })
+                </div>
+                <div class="clear"></div>
+                <span class="field-validation-error" data-valmsg-for="name">
+                    @Html.ValidationMessageFor(m => m.Phone)
+                </span>
+            </div>
+
+    </div>
+
+    <div class="new_pge3_row1 no_border">
+            <div class="row">
+                @Html.Partial("_Captcha", new Uco.Models.Captcha())
+                @Html.Partial("_InvisibleCaptcha", new Uco.Models.InvisibleCaptcha())
+            </div>
+            <div class="check_part2">
+                <div class="right">
+                    @Html.CheckBoxFor(x => x.SendNewsletters, new { @checked = "checked" })
+                </div>
+                <div class="left">@Html.LabelFor(x => x.SendNewsletters)</div>
+                <div class="clear"></div>
+            </div>
+            <div class="send_btn">
+                <input type="image" src="/Content/DesignFiles/Idive/form3_btn.png" width="81" height="37" alt="Send">
+            </div>
+        </div>
+}
+
+

@@ -1,0 +1,14 @@
+﻿@model Uco.Models.ShopProductPage
+@{
+    ViewBag.Title = RP.TVL("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(false)
+    @Html.EditorForModel()
+    <p class="clear">
+        <input type="submit" class="k-button" value="@RP.TVG("Save")" />
+        @Html.ActionLink(RP.TVG("BackToList"), "Index")
+    </p>
+}

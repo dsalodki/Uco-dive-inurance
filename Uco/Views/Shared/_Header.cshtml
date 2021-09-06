@@ -1,0 +1,29 @@
+﻿<div class="header_top1">
+    <div class="logo"><a href="~/"><img src="~/Content/DesignFiles/Idive/logo.png" alt="Idive"></a></div>
+    <div class="header_top_left">
+        <div class="header_top_text1">
+            @RP.Text("TopHeaderLink1")
+        </div>
+        <div class="header_top_text2">
+            @RP.Text("TopHeaderLink2")
+        </div>
+        @Html.Partial("_SearchForm")
+        @if (!LS.isLogined())
+        {
+            <div class="header_top_text3"><a href="@Url.Action("LogOn", "Account")">@RP.T("View.Shared.Header.Login")</a></div>
+            <div class="header_top_text4"><a href="@Url.Action("Register", "Account")">@RP.T("View.Shared.Header.Register")</a></div>
+        }
+        else
+        {
+            <div class="header_top_text5"><a href="@Url.Action("LogOff", "Account")">@RP.T("View.Shared.Header.LofOff")</a></div>
+            <div class="header_top_text6">
+                <a href="@Url.Action("ProfileEdit", "Account")">
+                    <span style=" display: block; white-space: nowrap; width: auto; overflow: hidden">@RP.T("View.Shared.Header.WelcomeText")</span>
+                </a>
+            </div>
+        }
+
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>

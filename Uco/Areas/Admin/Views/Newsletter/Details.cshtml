@@ -1,0 +1,13 @@
+﻿@model Uco.Models.Newsletter
+@{
+    ViewBag.Title = Html.R("Title"); 
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>@Html.R("Title")</h2>
+
+@Html.DisplayForModel()
+
+<p>
+    @Html.ActionLink(Html.R("BackToList"), "Index")
+</p>

@@ -1,0 +1,320 @@
+@using Uco.Infrastructure.Livecycle;
+@using Uco.Models;
+@using System;
+
+@{
+    ViewBag.Title = RP.T("DivePage.Index.Title");
+    Layout = "~/Views/Shared/_LayoutDivePage.cshtml";
+
+    var insurance = ViewBag.Insurance != null ? (Insurance)ViewBag.Insurance : null;
+    var lastDive = ViewBag.LastDive != null ? (Dive)ViewBag.LastDive : null;
+    var curUser = LS.CurrentUser;
+
+    var certificates = ViewBag.Certificates == null ? new List<Certificate>() : (IEnumerable<Certificate>)ViewBag.Certificates;
+
+    string linkToInternalInsurancePDF = null;
+    if (insurance != null && !insurance.ExternalInsurance)
+    {
+        linkToInternalInsurancePDF = "https://insurance.idive.co.il/Insurance/DownloadAsPdf?OrderID=" + insurance.OrderId + "&IdNumber=" + LS.CurrentUser.IdNumber + "&birthyear=" + LS.CurrentUser.Password;
+    }
+}
+
+<div class="ui modal" style="" id="showHelp">
+    <i class="close icon"></i>
+    <div class="header">@RP.T("DivePage.Support.Header", "איך להשתמש במערכת?")</div>
+    <div class="scrolling content">
+        <div id="measureModal"></div>
+        <div>
+            <iframe id="iModal" width="560" height="315" src="@RP.T("DivePage.Support.Video", "https://www.youtube.com/embed/AWNoNAWbIAw")"></iframe>
+        </div>
+        <h3 class="ui header"><a href="@RP.T("DivePage.Support.Email", "mailto:991@uco.co.il")">@RP.T("DivePage.Support.Content", "לתמיכה פניה במייל ל 199@uco.co.il")</a></h3>
+    </div>
+</div>
+
+<div class="circle-share">
+    <a href="@Url.Action("Share", "DivePage")">
+        @RP.T("DivePage.Index.ShareText", "שלח למועדון צלילה")
+    </a>
+</div>
+
+<div class="ui main text container pages" id="page_1">
+    <h1 class="ui header">
+        @RP.T("DivePage.Index.Certificates", "תעודות")
+        <a class="float" href="@Url.Action("CertificateList", "DivePage")" data-tooltip="@RP.T("DivePage.Index.Certificate.AddOrEdit", "לחץ כדי לערוך או להוסיף")" data-position="bottom center"><i class="edit icon"></i></a>
+    </h1>
+    <div class="ui positive message" style="display: none" id="isSuccessfullNewUserRegistration">
+        <i class="close icon"></i>
+        <div class="header">
+            @RP.T("DivePage.Index.SuccessRegistrationHeader", "רישום המשתמש שלך היה מוצלח.")
+        </div>
+        <p>@RP.T("DivePage.Index.SuccessRegistrationContent", "עכשיו אתה יכול להיכנס עם שם המשתמש שבחרת")</p>
+    </div>
+    <div class="ui floating message">
+        <p>@RP.T("DivePage.Index.User.Name", "שם:") @curUser.FirstName @curUser.LastName</p>
+        <p>@RP.T("DivePage.Index.User.IdNumber", "ת.ז.:") @curUser.IdNumber</p>
+    </div>
+    @if (certificates.Count() == 0)
+    {
+        <div class="ui info message">
+            <p>@RP.T("DivePage.Index.User.Certificates.Empty", "אין רשומות. הוסיפו בלחיצה על עפרון מצד שמאל של הכותרת.")</p>
+        </div>
+    }
+    @foreach (var certificate in certificates)
+    {
+        <h3 class="ui header">@certificate.TypeOfCertificate</h3>
+        <div class="ui stackable two column grid">
+            <div class="column">
+                <a href="#" class="image_popup_open" data-image="@Url.Content(SF.GetImageUrl(certificate.CertificateImageFront, 1200, 1200, false, true))" data-header="@certificate.TypeOfCertificate">
+                    <img class="ui fluid image" src="@Url.Content(SF.GetImageUrl(certificate.CertificateImageFront, 600, 600, false, true))">
+                    <span class="image_icon" data-tooltip="@RP.T("DivePage.Index.Certificate.ClickToIncrease", "לחץ כדי להגדיל")" data-position="top center"><i class="zoom-in icon"></i></span>
+                </a>
+            </div>
+            <div class="column">
+                @if (!string.IsNullOrEmpty(certificate.CertificateImageBack))
+                {
+                    <a href="#" class="image_popup_open" data-image="@Url.Content(SF.GetImageUrl(certificate.CertificateImageBack, 1200, 1200, false, true))" data-header="@certificate.TypeOfCertificate">
+                        <img class="ui fluid image" src="@Url.Content(SF.GetImageUrl(certificate.CertificateImageBack, 600, 600, false, true))">
+                        <span class="image_icon" data-tooltip="@RP.T("DivePage.Index.Certificate.ClickToIncrease", "לחץ כדי להגדיל")" data-position="top center"><i class="zoom-in icon"></i></span>
+                    </a>
+                }
+            </div>
+        </div>
+    }
+</div>
+<div class="ui main text container pages dn" id="page_2">
+    <h1 class="ui header">
+        @RP.T("DivePage.Index.Insurance", "ביטוח")
+        @if (insurance == null || insurance.ExternalInsurance)
+        {
+            <a class="float" href="@Url.Action("InsuranceEdit", "DivePage")" data-tooltip="@RP.T("DivePage.Index.Certificate.AddOrEdit", "לחץ כדי לערוך או להוסיף")" data-position="bottom center"><i class="edit icon"></i></a>
+        }
+    </h1>
+    <div class="ui floating message">
+        <p>@RP.T("DivePage.Index.User.Name", "שם:") @curUser.FirstName @curUser.LastName</p>
+        <p>@RP.T("DivePage.Index.User.IdNumber", "ת.ז.:") @curUser.IdNumber</p>
+    </div>
+    @if (insurance != null)
+    {
+        <div class="ui floating message">
+            <p>@RP.T("DivePage.Index.Insurance.Organization", "חברת ביטוח:") @insurance.Organization</p>
+            <p>@RP.T("DivePage.Index.Insurance.Type", "סוג ביטוח:") @insurance.TypeOfInsurance</p>
+            <p>@RP.T("DivePage.Index.Insurance.InsuranceStartDate", "תוקף מ:") @insurance.InsuranceStartDate.ToShortDateString() @RP.T("DivePage.Index.Insurance.InsuranceEndDate", "עד") @insurance.InsuranceEndDate.ToShortDateString()</p>
+        </div>
+        <div class="ui one column grid">
+            <div class="column">
+                <a href="#" class="image_popup_open" data-image="@insurance.FilePath" data-header="@RP.T("DivePage.Index.Insurance.File", "שם תעודה")">
+                    @if (!string.IsNullOrEmpty(linkToInternalInsurancePDF))
+                    {
+                        <a href="@linkToInternalInsurancePDF" target="_blank" download class="ui button fluid text-centered">
+                            @RP.T("DivePage.Index.Insurance.DownloadPDF", "צפיה בקובץ PDF")
+                        </a>
+                    }
+                    @if (Path.GetExtension(insurance.FilePath) == ".pdf")
+                    {
+                        <a href="@insurance.FilePath" target="_blank" download class="ui button fluid text-centered">
+                            @RP.T("DivePage.Index.Insurance.DownloadPDF", "צפיה בקובץ PDF")
+                        </a>
+                    }
+                    else if (!string.IsNullOrEmpty(insurance.FilePath))
+                    {
+                        <img class="ui fluid image" src="@insurance.FilePath">
+                    }
+                    <span class="image_icon" data-tooltip="@RP.T("DivePage.Index.Insurance.ClickToIncrease", "לחץ כדי להגדיל")" data-position="top center"><i class="zoom-in icon"></i></span>
+                </a>
+            </div>
+        </div>
+        if (insurance.FileType == FileType.Pdf)
+        {
+            <a class="ui button fluid" href="@insurance.FilePath" target="_blank" rel="noopener noreferrer">
+                @RP.T("DivePage.Index.Insurance.TypePdf", "לצפיה ב PDF של תעודת ביטוח")
+            </a>
+        }
+    }
+    else
+    {
+        <div class="ui info message">
+            <p>@RP.T("DivePage.Index.User.Insurance.Empty", "אין רשומות. הוסיפו בלחיצה על עפרון מצד שמאל של הכותרת.")</p>
+        </div>
+    }
+</div>
+<div class="ui main text container pages dn" id="page_3">
+    <h1 class="ui header">
+        @RP.T("DivePage.Index.LastDiving", "צלילה אחרונה")
+        <a class="float" href="@Url.Action("DiveAdd", "DivePage")" data-tooltip="@RP.T("DivePage.Index.Certificate.AddOrEdit", "לחץ כדי לערוך או להוסיף")" data-position="bottom center"><i class="edit icon"></i></a>
+    </h1>
+    <div class="ui floating message">
+        <p>@RP.T("DivePage.Index.User.Name", "שם:") @curUser.FirstName @curUser.LastName</p>
+        <p>@RP.T("DivePage.Index.User.IdNumber", "ת.ז.:") @curUser.IdNumber</p>
+    </div>
+    @if (lastDive != null)
+    {
+        <div class="ui floating message">
+            <p>@RP.T("DivePage.Index.LastDiving.Date", "תאריך צלילה:") @lastDive.DateOfDive</p>
+            <p>@RP.T("DivePage.Index.LastDiving.Place", "מיקום:") @lastDive.DivePlace</p>
+            <p>@RP.T("DivePage.Index.LastDiving.Site", "אתר צלילה:") @lastDive.DivingSite</p>
+            <p>@RP.T("DivePage.Index.LastDiving.ClubShip", "מועדון צלילה / ספינת צוללים:") @lastDive.Organization</p>
+            <p>
+                @RP.T("DivePage.Index.LastDiving.AirContainer", "מיכל אוויר:")
+                @switch (lastDive.AirTank)
+                {
+                    case AirTank.None:
+                        <code>0</code>
+                        break;
+                    case AirTank.Ten:
+                        <code>10</code>
+                        break;
+                    case AirTank.Fifteen:
+                        <code>15</code>
+                        break;
+                    case AirTank.Twenty:
+                        <code>20</code>
+                        break;
+                }
+            </p>
+            <p>
+                @RP.T("DivePage.Index.LastDiving.AirDiveOrNitrox", "צלילת אוויר או נייטרוקס:") @switch (lastDive.AirDiveOrNitrox)
+                {
+                    case AirDiveOrNitrox.None:
+                        <code>@RP.T("AirDiveOrNitrox.None", "אף אחד")</code>
+                        break;
+                    case AirDiveOrNitrox.Air:
+                        <code>@RP.T("AirDiveOrNitrox.Air", "﻿אוויר")</code>
+                        break;
+                    case AirDiveOrNitrox.Nitrox:
+                        <code>@RP.T("AirDiveOrNitrox.Nitrox", "נייטרוקס")</code>
+                        break;
+                }
+            </p>
+            <p>@RP.T("DivePage.Index.LastDiving.MaximumDivingDepthMeter", "עומק צלילה מקסימלי:") @lastDive.MaximumDivingDepthMeter @RP.T("DivePage.Index.LastDiving.Meters", "מטר")</p>
+            <p>@RP.T("DivePage.Index.LastDiving.DiveTimeMinutes", "זמן צלילה:") @lastDive.DiveTimeMinutes @RP.T("DivePage.Index.LastDiving.Minutes", "דקות")</p>
+            <p>@RP.T("DivePage.Index.LastDiving.Partner", "בן זוג לצלילה:") @lastDive.DivingPartner</p>
+            <p>@RP.T("DivePage.Index.LastDiving.ImpressionsFromDive", "רשמים מהצלילה:") @lastDive.ImpressionsFromDive</p>
+        </div>
+        <div class="ui one column grid">
+            <div class="column">
+                <a href="#" class="image_popup_open" data-image="@lastDive.ValidateImage" data-header="@RP.T("DivePage.Index.LastDive.ValidateImage", "שם תעודה")">
+                    <img class="ui fluid image" src="@lastDive.ValidateImage">
+                    <span class="image_icon" data-tooltip="@RP.T("DivePage.Index.LastDive.ClickToIncrease", "לחץ כדי להגדיל")" data-position="top center"><i class="zoom-in icon"></i></span>
+                </a>
+            </div>
+        </div>
+        <div class="ui one column grid">
+            <div class="column">
+                <a href="#" class="image_popup_open" data-image="@lastDive.Signature" data-header="@RP.T("DivePage.Index.LastDive.Signature")">
+                    <img class="ui fluid image" src="@lastDive.Signature">
+                    <span class="image_icon" data-tooltip="@RP.T("DivePage.Index.LastDive.ClickToIncrease", "לחץ כדי להגדיל")" data-position="top center"><i class="zoom-in icon"></i></span>
+                </a>
+            </div>
+        </div> }
+    else
+    {
+        <div class="ui info message">
+            <p>@RP.T("DivePage.Index.User.LastDive.Empty", "אין רשומות. הוסיפו בלחיצה על עפרון מצד שמאל של הכותרת.")</p>
+        </div>
+    }
+</div>
+<div class="ui main text container pages dn" id="page_4">
+    <h1 class="ui header">
+        @RP.T("DivePage.Index.Profile", "פרופיל")
+        <a class="float" href="@Url.Action("ProfileEdit", "DivePage")" data-tooltip="@RP.T("DivePage.Index.Certificate.AddOrEdit", "לחץ כדי לערוך או להוסיף")" data-position="bottom center"><i class="edit icon"></i></a>
+    </h1>
+    <div class="ui floating message">
+        <p>@RP.T("DivePage.Index.User.Name", "שם:") @curUser.FirstName @curUser.LastName</p>
+        <p>@RP.T("DivePage.Index.User.FullNameEnglish", "שם באנגלית:") @curUser.FullNameEnglish</p>
+        <p>@RP.T("DivePage.Index.User.IdNumber", "ת.ז.:") @curUser.IdNumber</p>
+        <p>@RP.T("DivePage.Index.User.Phone", "טלפון:") @curUser.Phone</p>
+        <p>@RP.T("DivePage.Index.User.Email", @"דוא""ל: ") @curUser.Email</p>
+    </div>
+</div>
+<div class="ui main text container pages dn" id="page_5">
+    <h1 class="ui header">@RP.T("DivePage.Support.Header", "איך להשתמש במערכת?")</h1>
+    <div id="measurePage"></div>
+    <div>
+        <iframe id="iPage" width="560" height="315" src="@RP.T("DivePage.Support.Video", "https://www.youtube.com/embed/AWNoNAWbIAw")"></iframe>
+    </div>
+    <h3 class="ui header"><a href="@RP.T("DivePage.Support.Email", "mailto:991@uco.co.il")">@RP.T("DivePage.Support.Content", "לתמיכה פניה במייל ל 199@uco.co.il")</a></h3>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            // first menu item should be active only on Index page
+            $(".pager_menu a.item").removeClass("active");
+            $('a[name="firstItem"]').addClass("active");
+
+            var url = window.location.href;
+            if (url.indexOf("isSuccessfullNewUserRegistration=True") > 0) {
+                $('#showHelp').modal({
+                    onHide: function () {
+                        $('#showHelp.scrolling.content').remove();
+
+                    }
+                }).modal('show');
+
+                $('#isSuccessfullNewUserRegistration').show();
+
+                var iframe = $("#iModal");
+                var width = iframe.width();
+                var height = iframe.height();
+                var shouldBeWidth = $('#measureModal').width();
+                var coef = shouldBeWidth / width;
+                iframe.width(shouldBeWidth);
+                iframe.height(height * coef);
+            }
+
+            $('#showHelp .close.icon').click(function () {
+                $('#showHelp').modal('hide');
+            });
+
+            $('.message .close').on('click', function () { $(this).parent().hide(); });
+
+            var $easyzoom = $('.easyzoom').easyZoom();
+            var api = $easyzoom.data('easyZoom');
+            $(".image_popup_open").click(function (event) {
+                event.preventDefault();
+                $("#image_popup_header").html($(this).data("header"));
+                $("#image_popup_image").attr("src", $(this).data("image"));
+                $("#image_popup_link").attr("href", $(this).data("image"));
+                $("#image_popup").modal("show");
+                api.teardown();
+                $easyzoom = $('.easyzoom').easyZoom();
+            });
+            $(".pager_menu a.item").click(function (event) {
+                event.preventDefault();
+                $(".pager_menu a.item").removeClass("active");
+                $(this).addClass("active");
+                $(".pages").addClass("dn");
+
+                var link = $(this).attr("href");
+                var index = link.indexOf('#');
+                var id = link.substr(index);
+                $(id).removeClass("dn");
+
+                if (id == "#page_5") {
+                    var iframe = $("#iPage");
+                    var width = iframe.width();
+                    var height = iframe.height();
+                    var shouldBeWidth = $('#measurePage').width();
+                    var coef = shouldBeWidth / width;
+                    iframe.width(shouldBeWidth);
+                    iframe.height(height * coef);
+                }
+            });
+
+            var url = document.location.href;
+            var pathname = document.location.pathname;
+            var index = url.indexOf(pathname);
+            var relativeUrl = url.substr(index);
+            index = relativeUrl.indexOf('#');
+            if (index >= 0) {
+                $(".pager_menu a.item").removeClass("active");
+                $(".pager_menu a.item[href='" + relativeUrl + "']").addClass("active");
+
+                $(".pages").addClass("dn");
+
+                var id = relativeUrl.substr(index);
+                $(id).removeClass("dn");
+            }
+        });
+    </script>
+}

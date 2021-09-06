@@ -1,0 +1,53 @@
+﻿@model Uco.Models.Certificate[]
+
+@{
+    ViewBag.Title = RP.T("DivePage.CertificateList.Title");
+    Layout = "~/Views/Shared/_LayoutDivePage.cshtml";
+}
+
+<div class="ui main text container">
+    <h1 class="ui header">
+        @RP.T("DivePage.CertificateList.Edit", "עריכת תעודות")
+        <a class="float" href="@Url.Action("Index", "DivePage")" data-tooltip="@RP.T("DivePage.CertificateList.Back", "חזרה")" data-position="bottom center"><i class="arrow alternate left icon"></i></a>
+    </h1>
+
+    <div class="ui fluid vertical menu hand-cursor">
+        @if (Model.Length == 0)
+        {
+            <div class="ui info message">
+                <p>@RP.T("DivePage.CertificateList.Empty", "אין רשומות")</p>
+            </div>
+        }
+        @foreach (var certificate in Model)
+        {
+            <div class="item" data-href="@Url.Action("CertificateEdit", "DivePage", new { ID = certificate.ID })">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <p class="float-right">
+                            @(certificate.TypeOfCertificate)
+                        </p>
+                    </div>
+                    <div class="column">
+                        <p class="float-left"><i class="chevron left icon"></i></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <button class="ui button primary fluid button-marging" onclick="AddNew()">
+        @RP.T("DivePage.CertificateList.AddNew", "הוסף תעודה")
+    </button>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $('.item').click(function () {
+            window.location.href = $(this).data('href');
+        });
+
+        function AddNew() {
+            window.location.href = '@Url.Action("CertificateEdit", "DivePage")';
+        }
+    </script>
+}

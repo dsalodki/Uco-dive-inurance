@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "יבוא משרות";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+@if (!string.IsNullOrEmpty(ViewBag.FinalError))
+{
+    <div>
+        @Html.Raw(ViewBag.FinalError)
+    </div>
+    <br /><br />
+}
+@using (Html.BeginForm("Import", "ShopProductImport", FormMethod.Post, new { id = "uploadForm", enctype = "multipart/form-data" }))
+{ 
+    <div>
+        יש לטעון קובצי EXCEL בלבד.<br />
+        נתונים חייבים להיות בגליון ראשון של הקובץ. <br />
+        נתונים חייבים להיות בפורמט זהה ליצוא מוצרים<br />
+    </div>
+    <br />
+    @(Html.Kendo().Upload()
+        .Name("attachments")
+        .Multiple(false)
+        .Async(async => async
+                .Save("ImportSave", "ShopProductImport")
+                .Remove("ImportRemove", "ShopProductImport")
+            .AutoUpload(true)            
+        )
+        .Events(events => events
+            .Success("onImportUploadSuccess")
+            .Cancel("onImportUploadCancel")
+            .Remove("onImportUploadRemove"))
+    )
+    @Html.Hidden("FileName", "", new { id = "FileName"})
+
+    <div>מספר רשומות לטעינה בכל שאילתה. ניתן לשים על 1 לבדיקות</div>
+    @(Html.Kendo().IntegerTextBox()
+        .Name("row")
+            .Value(10000)
+            .Min(1)
+            .Max(100000)
+        //.MinValue(1)
+        //.MaxValue(100000)
+    )
+    <div><input type="checkbox" name="AllowErrors" />להמשיך בשגיאה</div>
+    <div style="margin: 20px 0 0 0;">
+        <input type="submit" value="טען" class="k-button submit" />
+    </div>
+}
+
+<script type="text/javascript">
+
+    function onImportUploadSuccess(e) {
+        $("#FileName").attr("value", getFileName(e));
+        alert("אפשר לטעון את הקובץ - " + getFileName(e));
+    }
+    function onImportUploadRemove(e) {
+        $("#FileName").attr("value", "");
+    }
+    function onImportUploadCancel(e) {
+        $("#FileName").attr("value", "");
+    }
+    function getFileName(e) {
+        return $.map(e.files, function (file) {
+            var info = file.name;
+            return info;
+        }).join(", ");
+    }
+</script>

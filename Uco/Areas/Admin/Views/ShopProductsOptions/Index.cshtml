@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Uco.Models.ShopProductOption>
+@{
+    ViewBag.Title = "אפשרות מוצרים";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid<Uco.Models.ShopProductOption>()
+        .Name("Grid") 
+        .DataSource(dataSource =>
+                dataSource.Ajax()
+                    .Model(model => { model.Id(item => item.ID); })
+                                .Read(r => r.Action("_AjaxIndex", "ShopProductsOptions", new { ParentID = ViewBag.ParentID }))
+                                .Destroy(r => r.Action("_AjaxDelete", "ShopProductsOptions", new { ParentID = ViewBag.ParentID }))
+                         .PageSize(20)
+            )
+            .Columns(columns =>
+            {
+                columns.Bound(r => r.ID).Width(50);
+                columns.Bound(r => r.ShopTitle);
+                columns.Template(r => r.ID).ClientTemplate(
+                    "<a class='k-button' href='" + Url.Action("Edit", "ShopProductsOptions") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+                ).Width(100);
+                columns.Command(commands =>
+                {
+                    commands.Destroy();
+                }).Width(100);
+            })
+            .Pageable()
+            .Sortable()
+            .Filterable()
+            .Groupable()
+)
+<br />
+@Html.ActionLink("הוספה", "Create", "ShopProductsOptions", new { Area = "Admin", ParentID = ViewBag.ParentID, ReturnUrl = ViewBag.ReturnUrl }, new { @class = "k-button k-state-default" })
+<br />
+<br />
+<div class="clear">
+    <a href="@ViewBag.ReturnUrl">חזרה לרשימה</a>
+</div>

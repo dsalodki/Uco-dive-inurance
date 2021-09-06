@@ -1,0 +1,5 @@
+﻿@model string
+@{
+    SelectList Items = new SelectList(RP.GetCurrentSettings().ContactSubjects.Split(',').ToList(), Model);
+}
+@Html.DropDownListFor(model => model, Items, new { @style = "border: medium none; border-radius: 0; margin: 0; padding: 0; width: 100%;" })

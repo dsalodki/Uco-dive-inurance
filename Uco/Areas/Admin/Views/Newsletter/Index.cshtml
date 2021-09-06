@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = Html.R("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>@Html.R("Title")</h2>
+
+@(Html.Kendo().Grid<Uco.Models.Newsletter>()
+        .Name("Grid")
+        .DataSource(dataSource => dataSource.Ajax()
+            .Model(model => { model.Id(item => item.ID); })
+            .Read(r => r.Action("_AjaxIndex", "Newsletter"))
+            .Sort(sort =>
+            {
+                sort.Add(r => r.NewsletterDate).Descending();
+            })
+            .Destroy(r => r.Action("_AjaxDelete", "Newsletter"))
+            .PageSize(20)
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(r => r.NewsletterDate).Width(200).Format("{0:MM/dd/yyyy}");
+            columns.Bound(r => r.NewsletterName);
+            columns.Bound(r => r.NewsletterEmail);
+            columns.Bound(r => r.NewsletterIdNumber);
+            columns.Bound(r => r.NewsletterData);
+            columns.Bound(r => r.RoleDefault);
+            columns.Template(r => r.ID).ClientTemplate(
+                "<a class='k-button' href='" + Url.Action("Details", "Newsletter") + "?ID=#= ID #'" + ">" + Html.R("Details") + "</a>"
+            ).Width(100);
+            columns.Command(commands =>
+            {
+                commands.Destroy();
+            })
+            .Width(100);
+        })
+        .Pageable()
+        .Sortable()
+        .Filterable()
+        .Groupable()
+        //.ToolBar(commands => commands.Custom().Text(@Html.R("ExportToCSV")).Action("CSVExport", "Newsletter"))
+		.ToolBar(toolBar => toolBar.Template("<input type='button' class='k-button k-button-icontext' value='" + @Html.R("ExportToCSV") + "' id='exportcsv' onclick='exportcsv();' />" +
+		                                     "<input type='button' class='k-button k-button-icontext' value='" + @Html.R("ExcelImport") + "' onclick='ExcelImport();' />"
+		))
+)
+
+<!-- <button class="k-button" onclick="exportcsv();">CSVExport</button>
+<input type="button" class="k-button" value="@Html.R("ExcelImport")" onclick="ExcelImport();" /> -->
+
+<div class="excel_import_container">
+ <form action="/Admin/ImportExport/ImportNewslettersFromExcel" method="POST" enctype="multipart/form-data">
+  <div class="excel_import_subcontainer">
+    <input type="file" id="newslettersToImport" name="newslettersToImport" class="k-button" value="@Html.R("ExcelImportButton")" accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+	<input type="submit" class="k-button" value="@Html.R("ExcelUpload")" onclick="return CheckFileHasBeenSelected();" />
+	<input class="k-button" type="button" value="@Html.R("ExcelImportClose")" onclick="ExcelImportClose();" />
+  </div>
+ </form>
+</div>
+<div class="popup_background"></div>
+
+<script>
+
+    function exportcsv () {
+
+            var grid = $("#Grid").data('kendoGrid');
+
+            data = { filter: grid.dataSource.filter() };
+
+            data = new kendo.data.transports["aspnetmvc-ajax"]({ prefix: "" }).parameterMap(data, 'read');
+
+            location.href = "/Admin/Newsletter/CSVExport?filter=" + data.filter;
+
+    };
+	
+	function ExcelImport() {
+	      $(".popup_background").css({ "display":"block" });
+	      $(".excel_import_container").css({ "display":"block" });
+	}
+	
+	function ExcelImportClose() {
+	      $(".popup_background").css({ "display":"none" });
+	      $(".excel_import_container").css({ "display":"none" });
+	}
+	
+	function CheckFileHasBeenSelected() {
+	    if ($("#newslettersToImport").val() == "") {
+		   alert("@Html.R("PleaseChooseFile")");
+		   return false;
+		}
+	}
+
+</script>

@@ -1,0 +1,35 @@
+﻿@model Uco.Models.ShopCart
+@{
+    Layout = ViewBag.Layout;
+    ViewBag.Url = "/Shopcart/PayDone";
+    ViewBag.Title = "סיום הזמנה";
+    ViewBag.ID = 0;
+    ViewBag.LanguageRTL = true;
+}
+<div class="brdcms">
+    <ul>
+        <li>
+            <a href="/">@RP.T("Homepage.Breadcrumb")</a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="page_main_heading"><h2>תודה על הזמנה</h2></div>
+<div class="artile_text2">
+    @if (string.IsNullOrEmpty(ViewBag.PayDoneText))
+    {
+        <div>
+            תודה על הזמנה. נציגינו יצרו איתכם קשר בהקדם האפשרי לתאום המשלוח
+        </div>
+    }
+    else
+    {
+        @ViewBag.PayDoneText
+    }
+</div>
+<script>
+	fbq('track', 'Purchase');
+</script>

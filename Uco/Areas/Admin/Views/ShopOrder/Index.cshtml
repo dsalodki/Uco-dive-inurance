@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = RP.TVL("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+@if(!string.IsNullOrEmpty(ViewBag.M))
+{
+<div style="color:red; font-weight:bold; margin: 0 0 10px 0;">
+    @ViewBag.M
+</div>
+}
+
+@(Html.Kendo().Grid<Uco.Models.ShopOrder>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource.Ajax()
+        .Model(model => { model.Id(item => item.ID); })
+            .Read(r => r.Action("_AjaxIndex", "ShopOrder"))
+            .Destroy(r => r.Action("_AjaxDelete", "ShopOrder"))
+        .PageSize(20)
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.ID).Width(50);
+        columns.Bound(r => r.ShopStatus);
+        columns.Bound(r => r.ShopApprovedDate).Format("{0:dd/MM/yyyy}");
+        columns.Bound(r => r.ShopPayType);
+        columns.Bound(r => r.ShopShippingType);
+        columns.Bound(r => r.ShopDeliveryDate).Format("{0:dd/MM/yyyy}");
+        columns.Bound(r => r.ShopTotal);
+        columns.Template(r => r.ID).ClientTemplate(
+            "<a class='k-button' href='" + Url.Action("Edit", "ShopOrder") + "?ID=#= ID #'" + ">" + RP.TVG("Edit") + "</a>"
+        ).Width(100);
+        columns.Command(commands =>
+        {
+            commands.Destroy();
+        })
+        .Width(100);
+    })
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Groupable()
+)

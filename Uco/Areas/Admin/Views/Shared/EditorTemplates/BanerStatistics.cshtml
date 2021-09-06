@@ -1,0 +1,75 @@
+﻿<style>
+    .banenr_statistics_textbox, .banenr_statistics_button
+    {
+        display: inline-block;
+        margin: 0 10px;
+    }
+    .banenr_statistics_textbox span
+    {
+        display: inline-block;
+        margin: 0 5px;
+    }
+    #banner_statistics_result, #banner_statistics_loading
+    {
+        margin: 20px 200px 0 0
+    }
+</style>
+
+<div class="banenr_statistics_textbox">
+    @{
+        var dateMinuts30 = DateTime.Now.AddDays(-30);
+    }
+    <span>תאריך התחלה:</span><input type="text" value="@(String.Format("{0:dd/MM/yyyy}",dateMinuts30))" id="bannerStatistics_date_start" />
+</div>
+<div class="banenr_statistics_textbox">
+    <span>תאריך סיום:</span><input type="text" value="@(String.Format("{0:dd/MM/yyyy}", DateTime.Now))" id="bannerStatistics_date_end" />
+</div>
+<div class="banenr_statistics_button"><input type="button" id="banenr_statistics_button" value="בצע" /></div>
+
+<div style="display: none" id="banner_statistics_loading">
+    <img src="~/Content/DesignFiles/ajax-loader.gif" />
+</div>
+<div id="banner_statistics_result">
+    
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#bannerStatistics_date_start").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+        $("#bannerStatistics_date_end").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+
+
+        $("#banenr_statistics_button").click(function () {
+            $("#banner_statistics_loading").show();
+            var bannnerIDValue = $("#ID").val();
+            var startDateValue = $("#bannerStatistics_date_start").val();
+            var endDateValue = $("#bannerStatistics_date_end").val();
+            var banner = { bannnerID: bannnerIDValue, startDate: startDateValue, endDate: endDateValue };
+            $('#banner_statistics_result').html("");
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Banner/getstatistics",
+                data: banner,
+                datatype: "html",
+                success: function (data) {
+                    $('#banner_statistics_result').html(data);
+                    $("#banner_statistics_loading").hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#banner_statistics_loading").hide();
+                    alert("שגיאה");
+                }
+            });
+        });
+    });
+
+</script>

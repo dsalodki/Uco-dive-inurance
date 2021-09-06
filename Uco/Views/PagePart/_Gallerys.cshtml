@@ -1,0 +1,59 @@
+﻿@model List<Uco.Models.AbstractPage>
+
+
+<div class="h_left_scroling_slider">
+    <div class="heading">
+        <h3><a href="@RP.T("View.PagePart._Gallerys.Link")">@RP.T("View.PagePart._Gallerys.Title")</a></h3>
+    </div>
+    <div class="h_left_slider_in" style="position:relative;">
+        <div class="next"></div>
+
+        <div class="my-slider_home_gallery" style="width:640px; margin-right:50px;">
+
+            @foreach (var m in Model)
+            {
+                <div class="my-slider_home_gallery-item">
+                    <div class="slider_img1"><a href="@Url.Content(m.Url)"><img src="@Url.Content(SF.GetImageUrl(m.Pic, 137, 121, false, false))" alt=""></a></div>
+                    <div class="slider_linsk_a"><a href="@Url.Content(m.Url)"><span>@m.Title</span></a></div>
+                </div>
+            }
+        </div>
+        <div class="prev" style="position:absolute; left:0px;top: 0px"></div>
+        <div class="center_div"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.my-slider_home_gallery').slick({
+            rtl: false,
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            arrows: true,
+            swipe: true,
+        });
+
+        $(".h_left_slider_in .prev").on("click", function () {
+            $(".slick-next")[0].click();
+        });
+
+        $(".h_left_slider_in .next").on("click", function () {
+            $(".slick-prev")[0].click();
+        });
+    });
+
+
+</script>
+<style>
+    .my-slider_home_gallery, .my-slider_home_gallery * 
+    {
+        text-align: left;
+        direction: ltr;
+    }
+    .slider_img1, .slider_linsk_a 
+    {
+        text-align: center;
+        direction: rtl;
+    }
+</style>

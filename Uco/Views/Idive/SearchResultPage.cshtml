@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Uco.Models.AbstractPage>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";   
+    Uco.Models.Pagination paging = ViewBag.Pagination;
+    
+}
+
+<div class="page_main_heading"><h2>@ViewBag.H1</h2></div>
+@*<div class="topic1_text1">@Html.Raw(Model.Text)</div>*@
+
+<div class="topic1_listing">
+    <ul>
+        @foreach (Uco.Models.AbstractPage item in Model)
+        {
+            <li>
+                @if (!string.IsNullOrEmpty(item.Pic))
+                {
+                    <div class="topic_lstng_img"><a href="@Url.Content(item.Url)"><img src="@Url.Content(SF.GetImageUrl(item.Pic, 127, 123, false, true))" alt=""></a></div>
+                }
+                <div class="topic_lstng_left" style="@(string.IsNullOrEmpty(item.Pic) ? "float:right; width: 100%;" : "")">
+                    <div class="topic_lstng_head"><a href="@Url.Content(item.Url)">@item.Title</a></div>
+                    <div class="topic1_lstng_text1">@Html.Raw(item.ShortDescriptionFix)</div>                   
+                </div>
+                <div class="clear"></div>
+            </li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>
+@Html.Partial("_Pagination", paging)
+<div class="topic1_load_more">
+    @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "באנר בתחתית עמודי התוכן", pageId = ViewBag.ID })
+</div>
+
+

@@ -1,0 +1,30 @@
+﻿@model List<Uco.Models.ShopProductPage>
+
+
+@if (Model.Any())
+{
+    <div class="left_sec_part3">
+        <div class="heading"><h3>@RP.T("View.Idive.PagePart._NewProducts.Title")</h3></div>
+        <div class="four_prdct_boxes_h">
+            @foreach (var item in Model)
+            {
+                <div class="item_box2">
+                    <div class="small_prdtc_img">
+                        <a href="@Url.Content(item.Url)">
+                            <img src="@Url.Content(SF.GetImageUrl(item.Pic, 163, 111, true, true))" alt="">
+                        </a>
+                    </div>
+                    <div class="small_prdct_ancr">
+                        <a href="@Url.Content(item.Url)">@item.Title</a>
+                    </div>
+                    <div class="product-price">
+                        @if (item.ShopOldPrice > 0)
+                        { <span class="strike-through">@item.ShopOldPrice</span> } @item.ShopPrice
+                    </div>
+                </div>
+
+            }
+            <div class="clear"></div>
+        </div>
+    </div>
+}

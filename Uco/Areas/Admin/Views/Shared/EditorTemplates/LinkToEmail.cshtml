@@ -1,0 +1,9 @@
+﻿@model System.String
+@if (!string.IsNullOrEmpty(Model))
+{
+    @Html.Raw(Model)
+}
+else
+{
+    <span>&nbsp;</span>
+}

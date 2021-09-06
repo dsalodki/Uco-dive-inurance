@@ -1,0 +1,14 @@
+﻿@model Uco.Models.HomeBanner
+
+@{
+    ViewBag.Title = RP.T("Edit_banner");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@RP.T("Edit_banner")</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.EditorForModel()
+    <p>
+        <input type="submit" value="@RP.T("Admin.Save")" class="k-button k-state-default" /> @Html.ActionLink(RP.T("Admin.BackToList"), "Index")
+    </p>
+}

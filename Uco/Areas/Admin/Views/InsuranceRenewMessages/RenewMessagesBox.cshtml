@@ -1,0 +1,31 @@
+﻿@model Uco.Models.InsureanceRenewMessage
+
+<div class="renew_renewmessage">
+    @using (Html.BeginForm("SendMessages", "InsuranceRenewMessages"))
+    {
+        @Html.HiddenFor(model => model.Filter.Agent)
+        @Html.HiddenFor(model => model.Filter.EndDate)
+        @Html.HiddenFor(model => model.Filter.StartDate)
+        @Html.HiddenFor(model => model.Filter.Insurance)
+
+        <div class="renew_renewmessage_row">
+            <div class="renew_renewmessage_message_name">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="renew_renewmessage_message">
+                @Html.EditorFor(model => model.Title)
+            </div>
+        </div>
+        <div class="renew_renewmessage_row">
+            <div class="renew_renewmessage_message_name">
+                @Html.LabelFor(model => model.Text)
+            </div>
+            <div class="renew_renewmessage_message">
+                @Html.EditorFor(model => model.Text)
+            </div>
+        </div>
+        <div class="renew_renewmessage_button">
+            <input type="submit" class="k-button" value="שלח">
+        </div>
+    }
+</div>

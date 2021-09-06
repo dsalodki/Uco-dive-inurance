@@ -1,0 +1,112 @@
+﻿@using Uco.Models;
+
+@model Insurance
+
+@{
+    ViewBag.Title = RP.T("Admin.DivePage.InsuranceEdit.Title");
+    Layout = "~/Views/Shared/_LayoutDivePage.cshtml";
+
+    var error = (string)ViewBag.Error;
+}
+
+<div class="ui main text container">
+    <h1 class="ui header">
+        @RP.T("DivePage.InsuranceEdit.Edit", "עידכון ביטוח צלילה")
+        <a class="float" href="@Url.Action("Index", "DivePage")#page_2" data-tooltip="@RP.T("DivePage.CertificateEdit.Back", "חזרה")" data-position="bottom center"><i class="arrow alternate left icon"></i></a>
+    </h1>
+    @if (error != null)
+    {
+        <div class="ui negative message">
+            <i class="close icon"></i>
+            <div class="header">
+                @error
+            </div>
+        </div>
+    }
+    @if (Model != null && !Model.ExternalInsurance) { }
+    else
+    {
+        using (Html.BeginForm("InsuranceEdit", "DivePage", FormMethod.Post, new { @class = "ui form", enctype = "multipart/form-data" }))
+        {
+            <div class="field">
+                <label>@RP.T("DivePage.InsuranceEdit.Organization", "חברת ביטוח *")</label>
+                @Html.DropDownListFor(model => model.Organization, (SelectList)ViewBag.Organizations, new { @class = "ui fluid dropdown" })
+            </div>
+            <div class="field">
+                <label>@RP.T("DivePage.InsuranceEdit.Type", "סוג ביטוח *")</label>
+                @Html.DropDownListFor(model => model.TypeOfInsurance, (SelectList)ViewBag.TypesOfInsurance, new { @class = "ui fluid dropdown" })
+            </div>
+            <div class="field">
+                <label>@RP.T("DivePage.InsuranceEdit.InsuranceStartDate", "תאריך התחלה *")</label>
+                <div class="ui calendar" id="startDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        @Html.TextBoxFor(model => model.InsuranceStartDate, "{0:dd/MM/yyyy}", new { @class = "text-centered" })
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>@RP.T("DivePage.InsuranceEdit.InsuranceEndDate", "תאריך סיום *")</label>
+                <div class="ui calendar" id="endDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        @Html.TextBoxFor(model => model.InsuranceEndDate, "{0:dd/MM/yyyy}", new { @class = "text-centered" })
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>@RP.T("DivePage.InsuranceEdit.Diploma", "תעודה *")</label>
+                <input type="hidden" id="File" />
+                @if (Path.GetExtension(Model.FilePath) != ".pdf")
+                {
+                    <img class="ui fluid image" src="@Model.FilePath" />
+                }
+                <div class="ui message" id="messageFilePath" style="display: none">
+                    <div class="header">
+                        @RP.T("DivePage.InsuranceEdit.FileSelected", "קובץ שנבחר")
+                    </div>
+                    <p id="nameFilePath"></p>
+                </div>
+                @Html.TextBoxFor(model => model.FilePath, null, new { type = "file", @class = "input-file-hidden", accept = ".jpg,.png,.pdf" })
+                <label for="FilePath" class="text-centered fluid ui button basic">@RP.T("DivePage.InsuranceEdit.UploadInsuranceCertificate", "העלאה תעודת ביטוח")</label>
+            </div>
+            <div class="field">
+                <button type="submit" class="ui primary button fluid button-marging">@RP.T("DivePage.InsuranceEdit.Update", "עדכן")</button>
+            </div>
+        }
+    }
+</div>
+@section Scripts {
+    <script>
+        (function () {
+            $('#File').val('@Model.FilePath');
+
+            $('#startDate').calendar({
+                type: 'date',
+                monthFirst: false
+            });
+            $('#endDate').calendar({
+                type: 'date',
+                monthFirst: false
+            });
+
+            $('.ui.form')
+                .form({
+                    fields: {
+                        TypeOfInsurance: 'empty',
+                        Organization: 'empty',
+                        InsuranceStartDate: 'empty',
+                        InsuranceEndDate: 'empty',
+                        File: 'empty'
+                    }
+                });
+
+            $('#FilePath').change(function () {
+                var fileName = $(this).val();
+                $('#messageFilePath').show();
+                $('#nameFilePath').text(fileName);
+                $('#File').val(fileName);
+            });
+        })(jQuery)
+    </script>
+}

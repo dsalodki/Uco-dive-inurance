@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "סוכנים";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+
+}
+
+
+<h2>סוכנים</h2>
+
+@(Html.Kendo().Grid<Uco.Models.Agent>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource.Ajax()
+            .Model(model => { model.Id(item => item.ID); })
+                        .Read(r => r.Action("_AjaxIndex", "Agent"))
+                            .Destroy(r => r.Action("_AjaxDelete", "Agent"))
+                                .PageSize(20)
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.ID).Width(20);
+        columns.Bound(r => r.ClubName);
+        columns.Bound(r => r.Address);
+        columns.Bound(r => r.Phone);
+        columns.Bound(r => r.ContactName);
+        columns.Bound(r => r.Mail);
+
+        columns.Template(r => r.ID).ClientTemplate(
+            "<a class='k-button' href='" + Url.Action("Edit", "Agent") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+        ).Width(100);
+        columns.Command(commands =>
+        {
+            commands.Destroy();
+        }).Width(100);
+    })
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Groupable()
+)
+<br />
+@Html.ActionLink(Html.R("Create"), "Create", null, new { @class = "k-button" })

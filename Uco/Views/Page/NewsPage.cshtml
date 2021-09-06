@@ -1,0 +1,45 @@
+﻿@model Uco.Models.NewsPage
+@{
+    Layout = ViewBag.Layout;
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+}
+<div class="brdcms">
+    <ul>
+        <li>
+            <a href="/">@RP.T("Homepage.Breadcrumb")</a>
+        </li>
+        @foreach (var b in bradcrumbs)
+        {
+            <li>
+                <a href="@Url.Content(b.Url)">@b.Title</a>
+            </li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>
+
+<div class="page_main_heading"><h2>@ViewBag.H1</h2></div>
+<div class="artile_text2">@Html.Raw(Model.Text)</div>
+
+@if (Model.AddingFacebookComments == true)
+{
+
+    @section BodyStart
+    {
+        @*facebook comments*@
+        <div id="fb-root"></div>
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v2.3&appId=203720779674228";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        @*facebook comments*@
+    }
+
+    <div id="facebook_comment_box_page">
+        <div class="fb-comments" data-href="http://insurance.idive.co.il@(Url.Content(Model.Url))" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+    </div>
+}

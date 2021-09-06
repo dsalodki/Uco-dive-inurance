@@ -1,0 +1,190 @@
+﻿@using Uco.Models
+@model Uco.Models.MagazinePage
+@{
+    Layout = ViewBag.Layout;
+    var galleryImages = new List<ImageGalleryItem>();
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+    var articles = ViewBag.Items as List<MagazineArticlePage>;
+    var main1 = articles.Where(x => x.MagazineArticleGroup == "MainArtice1").ToList();
+    var second1 = articles.Where(x => x.MagazineArticleGroup == "SecondArticle1").ToList();
+    var main2 = articles.Where(x => x.MagazineArticleGroup == "MainArtice2").ToList();
+    var second2 = articles.Where(x => x.MagazineArticleGroup == "SecondArticle2").ToList();
+    var videoArticles = articles.Where(x => x.MagazineArticleGroup == "VideoArticle").ToList();
+    var galleryArticles = articles.Where(x => x.MagazineArticleGroup == "GalleryArticle").ToList();
+    var otherArticles = articles.Where(x => string.IsNullOrWhiteSpace(x.MagazineArticleGroup)).ToList();
+
+    var otherMagazines = ViewBag.OtherMagazines as List<MagazinePage>;
+}
+
+<header class="header header-front">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="img"><img src="~/Content/DesignFiles/Magazines/logo.png" alt="iDive"></div>
+                <div class="slogan">
+                    <div class="slogan-t">@RP.T("Views.Page.MagazinePage.Title", "מגזין הצוללים הישראלי")</div>
+                    <div class="slogan-b">@Model.Title</div>
+                </div>
+            </div>
+            @Html.Action("_MagazineBanner1", "PagePart", new { Num = 1, pageId = ViewBag.ID })
+        </div>
+    </div>
+</header>
+<nav class="topbar">
+    <div class="container">
+        <div class="toggler">
+            <div class="toggler-icon"></div>
+        </div>
+        <div class="topmenu">
+            @RP.Text("Views.Page.MagazinePage.TopMenu")
+        </div>
+        <div class="search-block">
+            <form action="">
+                <input type="text" class="form-control">
+                <button type="submit" class="btn-search">@RP.T("Views.Page.MagazinePage.Search", "לחפש")</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<main class="main">
+    <div class="container">
+        <article class="article-home">
+            @Html.Action("_MagazineBanner2", "PagePart", new { Num = 3, pageId = ViewBag.ID })
+            <div class="bnr bnr-w1">
+                @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "MagazineBanner_Top", pageId = ViewBag.ID })
+            </div>
+            <section class="section-articles">
+                @if (main1 != null && main1.Count > 0)
+                {
+                    foreach (var item in main1)
+                    {
+                        @Html.Partial("~/Views/PagePart/_MagazineMainArticle.cshtml", item)
+                    }
+                }
+                @if (second1 != null && second1.Count > 0)
+                {
+                    foreach (var item in second1)
+                    {
+                        @Html.Partial("~/Views/PagePart/_MagazineSecondArticle.cshtml", item)
+                    }
+                }
+            </section>
+            <div class="bnr bnr-w1">
+                @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "MagazineBanner_TopMiddle", pageId = ViewBag.ID })
+            </div>
+            <section class="section-articles">
+                @if (main2 != null && main2.Count > 0)
+                {
+                    foreach (var item in main2)
+                    {
+                        @Html.Partial("~/Views/PagePart/_MagazineMainArticle.cshtml", item)
+                    }
+                }
+                @if (second2 != null && second2.Count > 0)
+                {
+                    foreach (var item in second2)
+                    {
+                        @Html.Partial("~/Views/PagePart/_MagazineSecondArticle.cshtml", item)
+                    }
+                }
+            </section>
+            @if (galleryArticles != null && galleryArticles.Count > 0)
+            {
+                <section class="section-slider">
+                    @foreach (var item in galleryArticles)
+                    {
+                        <div class="item item-slider">
+                            @if (!string.IsNullOrWhiteSpace(item.Gallery))
+                            {
+                                {
+                                    var folder = item.Gallery;
+                                    string UserFolder = string.Format("~/Content/UserFiles/{0}/", folder);
+
+                                    string GalleryPath = Server.MapPath(UserFolder);
+                                    galleryImages = @SF.GalleryFile2List(GalleryPath, 120, 120, false, false);
+                                }
+                                if (galleryImages != null && galleryImages.Count > 0)
+                                {
+                                <div class="slider slick-slider-1-rtl" dir="rtl">
+                                    @foreach (var image in galleryImages)
+                                    {
+                                        <img src="@image.BigImageUrl" alt="@image.Title">
+                                    }
+                                </div>
+                                }
+                            }
+                            <div class="info">
+                                <div class="info-t">
+                                    <span class="cat"><a href="@item.UrlFix">@item.Subject</a></span>
+                                    <span class="date">@item.CreateTime.ToString("dd MMMM, yyyy")</span>
+                                </div>
+                                <div class="title"><a href="@item.UrlFix">@item.Title</a></div>
+                                <div class="teaser">
+                                    @item.ShortDescriptionFix<a href="@item.UrlFix" class="more">@RP.T("Views.Page.MagazinePage.ReadMore", "להמשך הכתבה >>")</a>
+                                </div>
+                                <div class="photo-desc">@item.Author</div>
+                            </div>
+                        </div>
+
+                    }
+                </section>
+            }
+            <div class="bnr bnr-w1">
+                @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "MagazineBanner_BottomMiddle", pageId = ViewBag.ID })
+            </div>
+            @if (videoArticles != null && videoArticles.Count > 0)
+            {
+                <section class="section-video">
+                    @foreach (var item in videoArticles)
+                    {
+                        <div class="item item-video">
+                            <div class="info">
+                                <div class="info-t">
+                                    <span class="cat"><a href="@item.UrlFix">@item.Subject</a></span>
+                                    <span class="date">@item.CreateTime.ToString("dd MMMM, yyyy")</span>
+                                </div>
+                                <div class="title"><a href="@item.UrlFix">@item.Title</a></div>
+                                <div class="teaser">
+                                    @item.ShortDescriptionFix<a href="@item.UrlFix" class="more">@RP.T("Views.Page.MagazinePage.ReadMore", "להמשך הכתבה >>")</a>
+                                </div>
+                                <div class="photo-desc">@item.Author</div>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(item.VideoHtmlCode))
+                            {
+                                <div class="video">
+                                    @Html.Raw(item.VideoHtmlCode)
+                                </div>
+                            }
+                            @*<div class="btn-block">
+                                    <a href="" class="btn btn-blue"><i class="icon icon-email"></i> <span>צור קשר</span></a>
+                                    <a href="" class="btn btn-blue"><i class="icon icon-user"></i> <span>העבר לחבר</span></a>
+                                </div>*@
+                        </div>
+                    }
+                </section>
+            }
+            <div class="bnr bnr-w1">
+                @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "MagazineBanner_Bottom", pageId = ViewBag.ID })
+            </div>
+            @if (otherMagazines != null && otherMagazines.Count > 0)
+            {
+                <section class="section-previous">
+                    <h2>@RP.T("Views.Page.MagazinePage.OtherMagazines", "מגזינים קודמים")</h2>
+                    <div class="gallery slick-slider-4-rtl" dir="rtl">
+                        @foreach (var item in otherMagazines)
+                        {
+                            <div class="item">
+                                <a href="@item.UrlFix">
+                                    <span class="img"><img src="@item.Pic" alt=""></span>
+                                    <span class="title">@item.Title</span>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </section>
+            }
+        </article>
+    </div>
+</main>

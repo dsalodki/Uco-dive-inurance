@@ -1,0 +1,238 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap');
+
+body {
+    background-color: #FFFFFF;
+}
+
+    body * {
+        font-family: 'Assistant',Arial, sans-serif !important;
+    }
+
+.wireframe {
+    margin-top: 2em;
+}
+
+.ui.footer.segment {
+    margin: 5em 0em 0em;
+    padding: 5em 0em;
+}
+
+.ui.inverted.menu {
+    background: #4d5fc4;
+}
+
+.ui.header .float {
+    float: left;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.ui.menu .item img.logo {
+    margin-left: 1.5em;
+}
+
+.icon {
+    font-family: "Icons" !important;
+}
+
+.edit.icon {
+    font-size: 20px;
+    color: #000;
+}
+
+.image_icon {
+    font-size: 20px;
+    position: absolute !important;
+    top: 20px;
+    left: 20px;
+    color: #000;
+}
+
+@media only screen and (min-width: 768px) {
+    .hide-on-desktop {
+        display: none !important;
+    }
+
+    .ui.menu .item img.logo {
+        margin-left: 1.5em;
+    }
+
+    .main.container {
+        padding-top: 70px;
+        padding-bottom: 15px;
+    }
+
+    .ui.menu .item {
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .easyzoom-flyout {
+        display: none !important;
+    }
+
+    #move_mobile_note {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .hide-on-mobile-tablet {
+        display: none !important;
+    }
+
+    .main.container {
+        padding-top: 15px;
+        padding-bottom: 55px;
+    }
+
+    .ui.menu.item .item {
+        text-align: center;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    #mobile_menu .item {
+        padding: 5px 0;
+    }
+
+    .image_icon {
+        left: 8px;
+    }
+}
+
+.bottom {
+    position: fixed;
+    bottom: -14px;
+    z-index: 1000;
+}
+
+.ui.modal {
+    text-align: center;
+}
+
+.dn {
+    display: none !important;
+}
+
+#mobile_logo {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+/* Shrink wrap strategy 2 */
+.easyzoom {
+    position: relative;
+    /* 'Shrink-wrap' the element */
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    overflow: hidden;
+}
+
+    .easyzoom img {
+        vertical-align: bottom;
+    }
+
+    .easyzoom img {
+        vertical-align: bottom;
+    }
+
+    .easyzoom.is-loading img {
+        cursor: progress;
+    }
+
+    .easyzoom.is-ready img {
+        cursor: crosshair;
+    }
+
+    .easyzoom.is-error img {
+        cursor: not-allowed;
+    }
+
+.easyzoom-notice {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 150;
+    width: 10em;
+    margin: -1em 0 0 -5em;
+    line-height: 2em;
+    text-align: center;
+    background: #FFF;
+    box-shadow: 0 0 10px #888;
+}
+
+.easyzoom-flyout {
+    z-index: 100;
+    overflow: hidden;
+    background: #FFF;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.text-centered {
+    text-align: center !important;
+}
+
+.input-file-hidden {
+    display: none;
+}
+
+.hand-cursor {
+    cursor: pointer;
+}
+
+.top-padding {
+    padding-top: 1rem !important;
+}
+
+.border {
+    border: 1px solid rgba(34,36,38,.15);
+    border-radius: .28571429rem;
+}
+
+.arrow.alternate.left.icon {
+    margin-left: 0px !important;
+}
+
+.circle-share {
+    height: 60px;
+    width: 60px;
+    border: 1px solid black;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+    text-align: center;
+    z-index: 1001;
+    background-color: white;
+    line-height: 13px;
+    padding: 8px 0;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.circle-div {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#embededLink {
+    width: 100%;
+    height: 100%;
+}
+
+.button-marging {
+    margin-bottom: 30px !important;
+}

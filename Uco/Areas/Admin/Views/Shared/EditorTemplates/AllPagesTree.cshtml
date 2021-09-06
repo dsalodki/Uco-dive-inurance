@@ -1,0 +1,79 @@
+﻿@model string
+
+@{
+    List<Kendo.Mvc.UI.TreeViewItemModel> Items = Uco.Infrastructure.SF.GetTreeViewItemModelForAllPages(Model);
+    string FieldName = ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty);
+}
+
+@Html.Hidden("", ViewData.TemplateInfo.FormattedModelValue.ToString(), new { @class = "hidden_tree_data_" + FieldName })
+
+@(Html.Kendo().TreeView()
+    .Name("Tree_" + FieldName)
+    .Checkboxes(settings => settings
+        .CheckChildren(true)
+    )
+    .ItemAction(item =>
+    {
+        item.Checked = Model.Contains("," + item.Id + ",");
+    })
+    .BindTo(Items)
+)
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#Tree_@(FieldName)').on("change", ":checkbox", function (e) {
+            var treeview = $("#Tree_@(FieldName)").data('kendoTreeView');
+            var checkbox = $(this);
+            var checkbox_item = treeview.dataItem(checkbox);
+            var value = checkbox_item.id;
+            //alert("value: " + value);
+
+            if (checkbox.is(":checked")) addValue_@(FieldName)(value);
+            else removeValue_@(FieldName)(value);
+
+            setNodeChilds_@(FieldName)($(this));
+
+        });
+
+        function setNodeChilds_@(FieldName)(node) {
+            var treeview = $("#Tree_@(FieldName)").data('kendoTreeView');
+            var items = node.closest(".k-item").find(".k-group:first > .k-item > div input[type=checkbox]");
+            if (items.length > 0) {
+                items.each(function () {
+                    var getNode = $(this).closest(".k-item");
+                    var item = treeview.dataItem(getNode);
+                    var value = item.id;
+                    if ($(this).is(":checked")) {
+                        //alert("checked: " + value);
+                        addValue_@(FieldName)(value);
+                    }
+                    else {
+                        //alert("not_checked: " + value);
+                        removeValue_@(FieldName)(value);
+                    }
+                    setNodeChilds_@(FieldName)($(this));
+                });
+
+            }
+        }
+
+        function addValue_@(FieldName)(valueToAdd) {
+            //alert("addValue:" + valueToAdd);
+            var valueAll = $(".hidden_tree_data_@(FieldName)").val();
+            if (valueAll.indexOf(",") == -1) valueAll = valueAll + ",";
+            if (valueAll.indexOf("," + valueToAdd + ",") == -1) {
+                $(".hidden_tree_data_@(FieldName)").val(valueAll + valueToAdd + ",");
+            }
+        }
+        function removeValue_@(FieldName)(valueToRomove) {
+            //alert("removeValue:" + valueToRomove);
+            var valueAll = $(".hidden_tree_data_@(FieldName)").val();
+            if (valueAll.indexOf(",") == -1) valueAll = valueAll + ",";
+            if (valueAll.indexOf("," + valueToRomove + ",") != -1) {
+                $(".hidden_tree_data_@(FieldName)").val(valueAll.replace(valueToRomove + ",", ""));
+            }
+        }
+
+    });
+</script>

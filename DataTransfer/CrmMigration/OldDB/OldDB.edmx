@@ -1,0 +1,1321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OldDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Competitions">
+          <Key>
+            <PropertyRef Name="CompetitionID" />
+          </Key>
+          <Property Name="CompetitionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompetitionTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CompetitionFileName" Type="nvarchar" MaxLength="100" />
+          <Property Name="StartRegisterDate" Type="datetime" Nullable="false" />
+          <Property Name="EndRegisterDate" Type="datetime" Nullable="false" />
+          <Property Name="StartVotingDate" Type="datetime" Nullable="false" />
+          <Property Name="EndVotingDate" Type="datetime" Nullable="false" />
+          <Property Name="CompetitionShowWinnerDate" Type="datetime" Nullable="false" />
+          <Property Name="Body" Type="ntext" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="Summary" Type="ntext" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="EndMsg" Type="ntext" />
+          <Property Name="AfterVoteMsg" Type="ntext" />
+          <Property Name="AdminPercent" Type="nvarchar" MaxLength="100" />
+          <Property Name="WinnerDescription" Type="ntext" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompetitorPhotos">
+          <Key>
+            <PropertyRef Name="CompetitorPhotoID" />
+          </Key>
+          <Property Name="CompetitorPhotoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhotoText" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PhotoURL" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CompetitorsID" Type="nvarchar" MaxLength="100" />
+          <Property Name="OrderKey" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CompetitionID" Type="int" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Competitors">
+          <Key>
+            <PropertyRef Name="CompetitorsID" />
+          </Key>
+          <Property Name="CompetitorsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompetitorNickname" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="CompetitionID" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" />
+          <Property Name="IsWinner" Type="bit" />
+          <Property Name="NumberOfVotes" Type="nvarchar" MaxLength="100" />
+          <Property Name="CarNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Model" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PhotographerName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="DiveSite" Type="nvarchar" MaxLength="200" />
+          <Property Name="Location" Type="nvarchar" MaxLength="200" />
+          <Property Name="PhotographerComment" Type="nvarchar" MaxLength="4000" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompetitorVotes">
+          <Key>
+            <PropertyRef Name="CompetitorVoteID" />
+          </Key>
+          <Property Name="CompetitorVoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VoteTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="CompetitorsID" Type="int" />
+          <Property Name="CompetitionID" Type="int" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsArticles">
+          <Key>
+            <PropertyRef Name="ArticleID" />
+          </Key>
+          <Property Name="ArticleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="260" Nullable="false" />
+          <Property Name="Summary" Type="nvarchar" MaxLength="3000" />
+          <Property Name="Body" Type="nvarchar(max)" />
+          <Property Name="ArticleDate" Type="datetime" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="TitleLink" Type="varchar" MaxLength="140" />
+          <Property Name="DisplayLink" Type="bit" />
+          <Property Name="MarketPrice" Type="money" />
+          <Property Name="SalePrice" Type="money" />
+          <Property Name="PriceWithDiscount" Type="money" />
+          <Property Name="SalePriceDesc" Type="nvarchar" MaxLength="20" />
+          <Property Name="Weight" Type="money" />
+          <Property Name="SupplierID" Type="int" />
+          <Property Name="ShippingFee" Type="money" />
+          <Property Name="FormID" Type="int" />
+          <Property Name="FormLinkTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="ArticleAuthor" Type="nvarchar" MaxLength="100" />
+          <Property Name="DiaplaySummaryAtArticle" Type="bit" />
+          <Property Name="EnableQuantity" Type="bit" />
+          <Property Name="FullImg" Type="nvarchar" MaxLength="100" />
+          <Property Name="DisplayFullImgAsIs" Type="bit" />
+          <Property Name="FullImgCaption" Type="nvarchar" MaxLength="50" />
+          <Property Name="DisplayFullImgCaption" Type="bit" />
+          <Property Name="AutoFullImgCaption" Type="bit" />
+          <Property Name="MainImg" Type="nvarchar" MaxLength="100" />
+          <Property Name="DisplayMainImgAsIs" Type="bit" />
+          <Property Name="MainImgCaption" Type="nvarchar" MaxLength="50" />
+          <Property Name="DisplayMainImgCaption" Type="bit" />
+          <Property Name="AutoMainImgCaption" Type="bit" />
+          <Property Name="MainImgSmall" Type="nvarchar" MaxLength="100" />
+          <Property Name="ListImgCaption" Type="nvarchar" MaxLength="50" />
+          <Property Name="DisplayListImgAsIs" Type="bit" />
+          <Property Name="CreateMainImgSmall" Type="bit" />
+          <Property Name="AutoListImgCaption" Type="bit" />
+          <Property Name="DisplayListImgCaption" Type="bit" />
+          <Property Name="Status" Type="int" />
+          <Property Name="DisplayDate" Type="datetime" />
+          <Property Name="DisplayEndDate" Type="datetime" />
+          <Property Name="OrderKey" Type="int" />
+          <Property Name="TitleInH1Tag" Type="bit" />
+          <Property Name="CatalogNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsArticlesAttached">
+          <Key>
+            <PropertyRef Name="ArticlesAttachedID" />
+          </Key>
+          <Property Name="ArticlesAttachedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticlesAttachedTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="AttchedFile" Type="varchar" MaxLength="100" />
+          <Property Name="ArticleID" Type="int" Nullable="false" />
+          <Property Name="OrderNo" Type="int" />
+          <Property Name="ParentType" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsCategories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryTitle" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="CategoryShortDesc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CategoryDesc" Type="ntext" />
+          <Property Name="TemplateID" Type="bigint" Nullable="false" />
+          <Property Name="TemplateConfig" Type="int" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="CategoryLevel" Type="int" />
+          <Property Name="OrderKey" Type="int" />
+          <Property Name="IsLocked" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDivisionCat" Type="bit" />
+          <Property Name="HideChilds" Type="bit" />
+          <Property Name="CategoryURL" Type="varchar" MaxLength="300" />
+          <Property Name="NewWin" Type="bit" />
+          <Property Name="MoreTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmailTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="LangID" Type="bigint" />
+          <Property Name="PageSize" Type="varchar" MaxLength="10" />
+          <Property Name="EnableShoppingChart" Type="bit" />
+          <Property Name="EnableResponses" Type="bit" />
+          <Property Name="FormID" Type="int" />
+          <Property Name="GUIID" Type="int" />
+          <Property Name="SystemPage" Type="varchar" MaxLength="50" />
+          <Property Name="EnableTicker" Type="bit" />
+          <Property Name="EnableQuickSurvey" Type="bit" />
+          <Property Name="IsRootCategory" Type="bit" />
+          <Property Name="TickerTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="QuickSurveyTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="CategoryImgName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AttachedFile" Type="nvarchar" MaxLength="50" />
+          <Property Name="SourceCatDisplay" Type="int" />
+          <Property Name="OrderField" Type="int" />
+          <Property Name="EnableMedia" Type="bit" />
+          <Property Name="EnableFreeBox" Type="bit" />
+          <Property Name="AutoSelectionType" Type="int" />
+          <Property Name="AutoSelectionQuantity" Type="int" />
+          <Property Name="RandomAutoSelection" Type="bit" />
+          <Property Name="CreateRSSChannel" Type="bit" />
+          <Property Name="NettingCode" Type="varchar" MaxLength="20" />
+          <Property Name="SSLRequired" Type="bit" />
+          <Property Name="AbsoluteOrder" Type="varchar" MaxLength="100" />
+          <Property Name="FullTitle" Type="nvarchar" MaxLength="200" />
+          <Property Name="TitleInH1Tag" Type="bit" />
+          <Property Name="NewWinWidth" Type="int" />
+          <Property Name="NewWinHeight" Type="int" />
+          <Property Name="PrintBreadcrumbs" Type="bit" />
+          <Property Name="EnableSearch" Type="bit" />
+          <Property Name="DisableDirectLink" Type="bit" />
+          <Property Name="EnableRatings" Type="bit" />
+          <Property Name="IsHorizontalCat" Type="bit" />
+          <Property Name="EnableComparison" Type="bit" />
+          <Property Name="Discount" Type="tinyint" />
+          <Property Name="EnableParams" Type="bit" />
+          <Property Name="EnableSocial" Type="bit" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsEvents">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventTitle" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="TitleLink" Type="nvarchar" MaxLength="110" />
+          <Property Name="Summary" Type="nvarchar" MaxLength="3000" />
+          <Property Name="DiaplaySummaryAtArticle" Type="bit" />
+          <Property Name="Body" Type="ntext" />
+          <Property Name="EventStartDate" Type="datetime" Nullable="false" />
+          <Property Name="EventEndDate" Type="datetime" Nullable="false" />
+          <Property Name="FormLinkTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="FormID" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="TitleInH1Tag" Type="bit" />
+          <Property Name="DisplayInArch" Type="bit" />
+          <Property Name="EventConclusion" Type="text" />
+          <Property Name="OrderKey" Type="int" />
+          <Property Name="Location" Type="nvarchar" MaxLength="180" />
+          <Property Name="Organizer" Type="nvarchar" MaxLength="80" />
+          <Property Name="OrganizerWWW" Type="varchar" MaxLength="110" />
+          <Property Name="EventWWW" Type="varchar" MaxLength="110" />
+          <Property Name="ExternalSubsrWWW" Type="varchar" MaxLength="110" />
+          <Property Name="FormAsInfo" Type="bit" />
+          <Property Name="SummaryAsInfo" Type="bit" />
+          <Property Name="LocationAsInfo" Type="bit" />
+          <Property Name="OrganizerAsInfo" Type="bit" />
+          <Property Name="EventWWWAsInfo" Type="bit" />
+          <Property Name="ExternalSubsrWWWAsInfo" Type="bit" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'idive_HE_V2.dbo.dbsEvents_dbsCategories' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="dbsEvents_dbsCategories">
+          <Key>
+            <PropertyRef Name="EventID" />
+            <PropertyRef Name="HorizontalCatID" />
+          </Key>
+          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="HorizontalCatID" Type="int" Nullable="false" />
+          <Property Name="OrderNo" Type="int" />
+        </EntityType>
+        <EntityType Name="dbsExtraImg">
+          <Key>
+            <PropertyRef Name="ExtraImgID" />
+          </Key>
+          <Property Name="ExtraImgID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleKey" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" />
+          <Property Name="FileName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsPhotoGallery">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Summary" Type="nvarchar" MaxLength="3000" />
+          <Property Name="MainImg" Type="nvarchar" MaxLength="200" />
+          <Property Name="StartingDate" Type="datetime" />
+          <Property Name="OrderKey" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="MainImgSmall" Type="nvarchar" MaxLength="200" />
+          <Property Name="FullImg" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="int" />
+          <Property Name="PrintTitle" Type="bit" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsSearch">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="600" Nullable="false" />
+          <Property Name="Body" Type="ntext" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="SystemPg" Type="varchar" MaxLength="100" />
+          <Property Name="SourceCategoryID" Type="int" />
+          <Property Name="AutoKeyWords" Type="bit" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="dbsTemplates">
+          <Key>
+            <PropertyRef Name="TemplateID" />
+          </Key>
+          <Property Name="TemplateID" Type="bigint" Nullable="false" />
+          <Property Name="TemplateTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TemplateTitleEng" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="AdminPage" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SiteIndexPage" Type="varchar" MaxLength="100" />
+          <Property Name="SiteItemPage" Type="varchar" MaxLength="100" />
+          <Property Name="TemplateTblName" Type="varchar" MaxLength="50" />
+          <Property Name="TblIndexKey" Type="varchar" MaxLength="50" />
+          <Property Name="TblTitleKey" Type="varchar" MaxLength="50" />
+          <Property Name="IsMultiple" Type="bit" Nullable="false" />
+          <Property Name="IsActiveTemplate" Type="int" Nullable="false" />
+          <Property Name="Searchable" Type="bit" Nullable="false" />
+          <Property Name="AutoImportIdentifier" Type="varchar" MaxLength="20" />
+          <Property Name="RSSChannelPage" Type="varchar" MaxLength="100" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UniqueID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="dbsTemplatesTrans">
+          <Key>
+            <PropertyRef Name="SourceTemplateID" />
+            <PropertyRef Name="TargetTemplateID" />
+          </Key>
+          <Property Name="SourceTemplateID" Type="bigint" Nullable="false" />
+          <Property Name="TargetTemplateID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ImageGallerySubjects">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectTitle" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ImagesGallery">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageTitle" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="3200" />
+          <Property Name="SubjectID" Type="int" />
+          <Property Name="ImgFileName" Type="varchar" MaxLength="100" />
+          <Property Name="SourceURL" Type="varchar" MaxLength="200" />
+          <Property Name="CaptionFileName" Type="varchar" MaxLength="100" />
+          <Property Name="CaptionURL" Type="varchar" MaxLength="200" />
+          <Property Name="SourceWidth" Type="int" />
+          <Property Name="SourceHeight" Type="int" />
+          <Property Name="HiddenMedia" Type="bit" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MetaTags">
+          <Key>
+            <PropertyRef Name="MetaTagID" />
+          </Key>
+          <Property Name="MetaTagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="ArticleID" Type="int" />
+          <Property Name="Content" Type="nvarchar" MaxLength="4000" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbsCategories_dbsTemplates">
+          <End Role="dbsTemplates" Type="Self.dbsTemplates" Multiplicity="1" />
+          <End Role="dbsCategories" Type="Self.dbsCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbsTemplates">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="dbsCategories">
+              <PropertyRef Name="TemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbsPhotoGallery_dbsCategories">
+          <End Role="dbsCategories" Type="Self.dbsCategories" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="dbsPhotoGallery" Type="Self.dbsPhotoGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbsCategories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="dbsPhotoGallery">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbsSearch_dbsCategories">
+          <End Role="dbsCategories" Type="Self.dbsCategories" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="dbsSearch" Type="Self.dbsSearch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbsCategories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="dbsSearch">
+              <PropertyRef Name="SourceCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbsTemplatesTrans_dbsTemplates">
+          <End Role="dbsTemplates" Type="Self.dbsTemplates" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="dbsTemplatesTrans" Type="Self.dbsTemplatesTrans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbsTemplates">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="dbsTemplatesTrans">
+              <PropertyRef Name="SourceTemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImagesGallery_ImageGallerySubjects">
+          <End Role="ImageGallerySubjects" Type="Self.ImageGallerySubjects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImagesGallery" Type="Self.ImagesGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageGallerySubjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="ImagesGallery">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OldDBModelStoreContainer">
+          <EntitySet Name="Competitions" EntityType="Self.Competitions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompetitorPhotos" EntityType="Self.CompetitorPhotos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Competitors" EntityType="Self.Competitors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompetitorVotes" EntityType="Self.CompetitorVotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsArticles" EntityType="Self.dbsArticles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsArticlesAttached" EntityType="Self.dbsArticlesAttached" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsCategories" EntityType="Self.dbsCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsEvents" EntityType="Self.dbsEvents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsExtraImg" EntityType="Self.dbsExtraImg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsPhotoGallery" EntityType="Self.dbsPhotoGallery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsSearch" EntityType="Self.dbsSearch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsTemplates" EntityType="Self.dbsTemplates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsTemplatesTrans" EntityType="Self.dbsTemplatesTrans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageGallerySubjects" EntityType="Self.ImageGallerySubjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImagesGallery" EntityType="Self.ImagesGallery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetaTags" EntityType="Self.MetaTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dbsEvents_dbsCategories" EntityType="Self.dbsEvents_dbsCategories" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [dbsEvents_dbsCategories].[EventID] AS [EventID], 
+    [dbsEvents_dbsCategories].[HorizontalCatID] AS [HorizontalCatID], 
+    [dbsEvents_dbsCategories].[OrderNo] AS [OrderNo]
+    FROM [dbo].[dbsEvents_dbsCategories] AS [dbsEvents_dbsCategories]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_dbsCategories_dbsTemplates" Association="Self.FK_dbsCategories_dbsTemplates">
+            <End Role="dbsTemplates" EntitySet="dbsTemplates" />
+            <End Role="dbsCategories" EntitySet="dbsCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbsPhotoGallery_dbsCategories" Association="Self.FK_dbsPhotoGallery_dbsCategories">
+            <End Role="dbsCategories" EntitySet="dbsCategories" />
+            <End Role="dbsPhotoGallery" EntitySet="dbsPhotoGallery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbsSearch_dbsCategories" Association="Self.FK_dbsSearch_dbsCategories">
+            <End Role="dbsCategories" EntitySet="dbsCategories" />
+            <End Role="dbsSearch" EntitySet="dbsSearch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbsTemplatesTrans_dbsTemplates" Association="Self.FK_dbsTemplatesTrans_dbsTemplates">
+            <End Role="dbsTemplates" EntitySet="dbsTemplates" />
+            <End Role="dbsTemplatesTrans" EntitySet="dbsTemplatesTrans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImagesGallery_ImageGallerySubjects" Association="Self.FK_ImagesGallery_ImageGallerySubjects">
+            <End Role="ImageGallerySubjects" EntitySet="ImageGallerySubjects" />
+            <End Role="ImagesGallery" EntitySet="ImagesGallery" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OldDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Competitions">
+          <Key>
+            <PropertyRef Name="CompetitionID" />
+          </Key>
+          <Property Name="CompetitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompetitionTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompetitionFileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StartRegisterDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndRegisterDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartVotingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndVotingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompetitionShowWinnerDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="EndMsg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AfterVoteMsg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AdminPercent" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WinnerDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompetitorPhotos">
+          <Key>
+            <PropertyRef Name="CompetitorPhotoID" />
+          </Key>
+          <Property Name="CompetitorPhotoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhotoText" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhotoURL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompetitorsID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderKey" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CompetitionID" Type="Int32" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Competitors">
+          <Key>
+            <PropertyRef Name="CompetitorsID" />
+          </Key>
+          <Property Name="CompetitorsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompetitorNickname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="CompetitionID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="IsWinner" Type="Boolean" />
+          <Property Name="NumberOfVotes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CarNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhotographerName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="DiveSite" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PhotographerComment" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompetitorVotes">
+          <Key>
+            <PropertyRef Name="CompetitorVoteID" />
+          </Key>
+          <Property Name="CompetitorVoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VoteTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="CompetitorsID" Type="Int32" />
+          <Property Name="CompetitionID" Type="Int32" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsArticles">
+          <Key>
+            <PropertyRef Name="ArticleID" />
+          </Key>
+          <Property Name="ArticleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="260" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Summary" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ArticleDate" Type="DateTime" Precision="3" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="TitleLink" Type="String" MaxLength="140" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayLink" Type="Boolean" />
+          <Property Name="MarketPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PriceWithDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalePriceDesc" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="ShippingFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FormID" Type="Int32" />
+          <Property Name="FormLinkTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ArticleAuthor" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DiaplaySummaryAtArticle" Type="Boolean" />
+          <Property Name="EnableQuantity" Type="Boolean" />
+          <Property Name="FullImg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayFullImgAsIs" Type="Boolean" />
+          <Property Name="FullImgCaption" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayFullImgCaption" Type="Boolean" />
+          <Property Name="AutoFullImgCaption" Type="Boolean" />
+          <Property Name="MainImg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayMainImgAsIs" Type="Boolean" />
+          <Property Name="MainImgCaption" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayMainImgCaption" Type="Boolean" />
+          <Property Name="AutoMainImgCaption" Type="Boolean" />
+          <Property Name="MainImgSmall" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ListImgCaption" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayListImgAsIs" Type="Boolean" />
+          <Property Name="CreateMainImgSmall" Type="Boolean" />
+          <Property Name="AutoListImgCaption" Type="Boolean" />
+          <Property Name="DisplayListImgCaption" Type="Boolean" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="DisplayDate" Type="DateTime" Precision="3" />
+          <Property Name="DisplayEndDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderKey" Type="Int32" />
+          <Property Name="TitleInH1Tag" Type="Boolean" />
+          <Property Name="CatalogNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsArticlesAttached">
+          <Key>
+            <PropertyRef Name="ArticlesAttachedID" />
+          </Key>
+          <Property Name="ArticlesAttachedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticlesAttachedTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AttchedFile" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ArticleID" Type="Int32" Nullable="false" />
+          <Property Name="OrderNo" Type="Int32" />
+          <Property Name="ParentType" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsCategories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryTitle" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryShortDesc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TemplateID" Type="Int64" Nullable="false" />
+          <Property Name="TemplateConfig" Type="Int32" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryLevel" Type="Int32" />
+          <Property Name="OrderKey" Type="Int32" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDivisionCat" Type="Boolean" />
+          <Property Name="HideChilds" Type="Boolean" />
+          <Property Name="CategoryURL" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="NewWin" Type="Boolean" />
+          <Property Name="MoreTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmailTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LangID" Type="Int64" />
+          <Property Name="PageSize" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EnableShoppingChart" Type="Boolean" />
+          <Property Name="EnableResponses" Type="Boolean" />
+          <Property Name="FormID" Type="Int32" />
+          <Property Name="GUIID" Type="Int32" />
+          <Property Name="SystemPage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EnableTicker" Type="Boolean" />
+          <Property Name="EnableQuickSurvey" Type="Boolean" />
+          <Property Name="IsRootCategory" Type="Boolean" />
+          <Property Name="TickerTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuickSurveyTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryImgName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AttachedFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SourceCatDisplay" Type="Int32" />
+          <Property Name="OrderField" Type="Int32" />
+          <Property Name="EnableMedia" Type="Boolean" />
+          <Property Name="EnableFreeBox" Type="Boolean" />
+          <Property Name="AutoSelectionType" Type="Int32" />
+          <Property Name="AutoSelectionQuantity" Type="Int32" />
+          <Property Name="RandomAutoSelection" Type="Boolean" />
+          <Property Name="CreateRSSChannel" Type="Boolean" />
+          <Property Name="NettingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SSLRequired" Type="Boolean" />
+          <Property Name="AbsoluteOrder" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FullTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TitleInH1Tag" Type="Boolean" />
+          <Property Name="NewWinWidth" Type="Int32" />
+          <Property Name="NewWinHeight" Type="Int32" />
+          <Property Name="PrintBreadcrumbs" Type="Boolean" />
+          <Property Name="EnableSearch" Type="Boolean" />
+          <Property Name="DisableDirectLink" Type="Boolean" />
+          <Property Name="EnableRatings" Type="Boolean" />
+          <Property Name="IsHorizontalCat" Type="Boolean" />
+          <Property Name="EnableComparison" Type="Boolean" />
+          <Property Name="Discount" Type="Byte" />
+          <Property Name="EnableParams" Type="Boolean" />
+          <Property Name="EnableSocial" Type="Boolean" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="dbsTemplates" Relationship="Self.FK_dbsCategories_dbsTemplates" FromRole="dbsCategories" ToRole="dbsTemplates" />
+          <NavigationProperty Name="dbsPhotoGallery" Relationship="Self.FK_dbsPhotoGallery_dbsCategories" FromRole="dbsCategories" ToRole="dbsPhotoGallery" />
+          <NavigationProperty Name="dbsSearch" Relationship="Self.FK_dbsSearch_dbsCategories" FromRole="dbsCategories" ToRole="dbsSearch" />
+        </EntityType>
+        <EntityType Name="dbsEvents">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventTitle" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TitleLink" Type="String" MaxLength="110" FixedLength="false" Unicode="true" />
+          <Property Name="Summary" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
+          <Property Name="DiaplaySummaryAtArticle" Type="Boolean" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EventStartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EventEndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FormLinkTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormID" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="TitleInH1Tag" Type="Boolean" />
+          <Property Name="DisplayInArch" Type="Boolean" />
+          <Property Name="EventConclusion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OrderKey" Type="Int32" />
+          <Property Name="Location" Type="String" MaxLength="180" FixedLength="false" Unicode="true" />
+          <Property Name="Organizer" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizerWWW" Type="String" MaxLength="110" FixedLength="false" Unicode="false" />
+          <Property Name="EventWWW" Type="String" MaxLength="110" FixedLength="false" Unicode="false" />
+          <Property Name="ExternalSubsrWWW" Type="String" MaxLength="110" FixedLength="false" Unicode="false" />
+          <Property Name="FormAsInfo" Type="Boolean" />
+          <Property Name="SummaryAsInfo" Type="Boolean" />
+          <Property Name="LocationAsInfo" Type="Boolean" />
+          <Property Name="OrganizerAsInfo" Type="Boolean" />
+          <Property Name="EventWWWAsInfo" Type="Boolean" />
+          <Property Name="ExternalSubsrWWWAsInfo" Type="Boolean" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsExtraImg">
+          <Key>
+            <PropertyRef Name="ExtraImgID" />
+          </Key>
+          <Property Name="ExtraImgID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleKey" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" />
+          <Property Name="FileName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsPhotoGallery">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Summary" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
+          <Property Name="MainImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartingDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderKey" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="MainImgSmall" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FullImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PrintTitle" Type="Boolean" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="dbsCategories" Relationship="Self.FK_dbsPhotoGallery_dbsCategories" FromRole="dbsPhotoGallery" ToRole="dbsCategories" />
+        </EntityType>
+        <EntityType Name="dbsSearch">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="600" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="SystemPg" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SourceCategoryID" Type="Int32" />
+          <Property Name="AutoKeyWords" Type="Boolean" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="dbsCategories" Relationship="Self.FK_dbsSearch_dbsCategories" FromRole="dbsSearch" ToRole="dbsCategories" />
+        </EntityType>
+        <EntityType Name="dbsTemplates">
+          <Key>
+            <PropertyRef Name="TemplateID" />
+          </Key>
+          <Property Name="TemplateID" Type="Int64" Nullable="false" />
+          <Property Name="TemplateTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TemplateTitleEng" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AdminPage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SiteIndexPage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SiteItemPage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TemplateTblName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TblIndexKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TblTitleKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsMultiple" Type="Boolean" Nullable="false" />
+          <Property Name="IsActiveTemplate" Type="Int32" Nullable="false" />
+          <Property Name="Searchable" Type="Boolean" Nullable="false" />
+          <Property Name="AutoImportIdentifier" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RSSChannelPage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UniqueID" Type="Int64" />
+          <NavigationProperty Name="dbsCategories" Relationship="Self.FK_dbsCategories_dbsTemplates" FromRole="dbsTemplates" ToRole="dbsCategories" />
+          <NavigationProperty Name="dbsTemplatesTrans" Relationship="Self.FK_dbsTemplatesTrans_dbsTemplates" FromRole="dbsTemplates" ToRole="dbsTemplatesTrans" />
+        </EntityType>
+        <EntityType Name="dbsTemplatesTrans">
+          <Key>
+            <PropertyRef Name="SourceTemplateID" />
+            <PropertyRef Name="TargetTemplateID" />
+          </Key>
+          <Property Name="SourceTemplateID" Type="Int64" Nullable="false" />
+          <Property Name="TargetTemplateID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="dbsTemplates" Relationship="Self.FK_dbsTemplatesTrans_dbsTemplates" FromRole="dbsTemplatesTrans" ToRole="dbsTemplates" />
+        </EntityType>
+        <EntityType Name="ImageGallerySubjects">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectTitle" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ImagesGallery" Relationship="Self.FK_ImagesGallery_ImageGallerySubjects" FromRole="ImageGallerySubjects" ToRole="ImagesGallery" />
+        </EntityType>
+        <EntityType Name="ImagesGallery">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageTitle" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="3200" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="ImgFileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SourceURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CaptionFileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CaptionURL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SourceWidth" Type="Int32" />
+          <Property Name="SourceHeight" Type="Int32" />
+          <Property Name="HiddenMedia" Type="Boolean" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ImageGallerySubjects" Relationship="Self.FK_ImagesGallery_ImageGallerySubjects" FromRole="ImagesGallery" ToRole="ImageGallerySubjects" />
+        </EntityType>
+        <EntityType Name="MetaTags">
+          <Key>
+            <PropertyRef Name="MetaTagID" />
+          </Key>
+          <Property Name="MetaTagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="ArticleID" Type="Int32" />
+          <Property Name="Content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dbsEvents_dbsCategories">
+          <Key>
+            <PropertyRef Name="EventID" />
+            <PropertyRef Name="HorizontalCatID" />
+          </Key>
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="HorizontalCatID" Type="Int32" Nullable="false" />
+          <Property Name="OrderNo" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_dbsCategories_dbsTemplates">
+          <End Role="dbsTemplates" Type="Self.dbsTemplates" Multiplicity="1" />
+          <End Role="dbsCategories" Type="Self.dbsCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbsTemplates">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="dbsCategories">
+              <PropertyRef Name="TemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbsPhotoGallery_dbsCategories">
+          <End Role="dbsCategories" Type="Self.dbsCategories" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="dbsPhotoGallery" Type="Self.dbsPhotoGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbsCategories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="dbsPhotoGallery">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbsSearch_dbsCategories">
+          <End Role="dbsCategories" Type="Self.dbsCategories" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="dbsSearch" Type="Self.dbsSearch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbsCategories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="dbsSearch">
+              <PropertyRef Name="SourceCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbsTemplatesTrans_dbsTemplates">
+          <End Role="dbsTemplates" Type="Self.dbsTemplates" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="dbsTemplatesTrans" Type="Self.dbsTemplatesTrans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dbsTemplates">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="dbsTemplatesTrans">
+              <PropertyRef Name="SourceTemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImagesGallery_ImageGallerySubjects">
+          <End Role="ImageGallerySubjects" Type="Self.ImageGallerySubjects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImagesGallery" Type="Self.ImagesGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageGallerySubjects">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="ImagesGallery">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OldDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Competitions" EntityType="Self.Competitions" />
+          <EntitySet Name="CompetitorPhotos" EntityType="Self.CompetitorPhotos" />
+          <EntitySet Name="Competitors" EntityType="Self.Competitors" />
+          <EntitySet Name="CompetitorVotes" EntityType="Self.CompetitorVotes" />
+          <EntitySet Name="dbsArticles" EntityType="Self.dbsArticles" />
+          <EntitySet Name="dbsArticlesAttached" EntityType="Self.dbsArticlesAttached" />
+          <EntitySet Name="dbsCategories" EntityType="Self.dbsCategories" />
+          <EntitySet Name="dbsEvents" EntityType="Self.dbsEvents" />
+          <EntitySet Name="dbsExtraImg" EntityType="Self.dbsExtraImg" />
+          <EntitySet Name="dbsPhotoGallery" EntityType="Self.dbsPhotoGallery" />
+          <EntitySet Name="dbsSearch" EntityType="Self.dbsSearch" />
+          <EntitySet Name="dbsTemplates" EntityType="Self.dbsTemplates" />
+          <EntitySet Name="dbsTemplatesTrans" EntityType="Self.dbsTemplatesTrans" />
+          <EntitySet Name="ImageGallerySubjects" EntityType="Self.ImageGallerySubjects" />
+          <EntitySet Name="ImagesGallery" EntityType="Self.ImagesGallery" />
+          <EntitySet Name="MetaTags" EntityType="Self.MetaTags" />
+          <EntitySet Name="dbsEvents_dbsCategories" EntityType="Self.dbsEvents_dbsCategories" />
+          <AssociationSet Name="FK_dbsCategories_dbsTemplates" Association="Self.FK_dbsCategories_dbsTemplates">
+            <End Role="dbsTemplates" EntitySet="dbsTemplates" />
+            <End Role="dbsCategories" EntitySet="dbsCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbsPhotoGallery_dbsCategories" Association="Self.FK_dbsPhotoGallery_dbsCategories">
+            <End Role="dbsCategories" EntitySet="dbsCategories" />
+            <End Role="dbsPhotoGallery" EntitySet="dbsPhotoGallery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbsSearch_dbsCategories" Association="Self.FK_dbsSearch_dbsCategories">
+            <End Role="dbsCategories" EntitySet="dbsCategories" />
+            <End Role="dbsSearch" EntitySet="dbsSearch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbsTemplatesTrans_dbsTemplates" Association="Self.FK_dbsTemplatesTrans_dbsTemplates">
+            <End Role="dbsTemplates" EntitySet="dbsTemplates" />
+            <End Role="dbsTemplatesTrans" EntitySet="dbsTemplatesTrans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImagesGallery_ImageGallerySubjects" Association="Self.FK_ImagesGallery_ImageGallerySubjects">
+            <End Role="ImageGallerySubjects" EntitySet="ImageGallerySubjects" />
+            <End Role="ImagesGallery" EntitySet="ImagesGallery" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OldDBModelStoreContainer" CdmEntityContainer="OldDB">
+          <EntitySetMapping Name="Competitions">
+            <EntityTypeMapping TypeName="OldDBModel.Competitions">
+              <MappingFragment StoreEntitySet="Competitions">
+                <ScalarProperty Name="CompetitionID" ColumnName="CompetitionID" />
+                <ScalarProperty Name="CompetitionTitle" ColumnName="CompetitionTitle" />
+                <ScalarProperty Name="CompetitionFileName" ColumnName="CompetitionFileName" />
+                <ScalarProperty Name="StartRegisterDate" ColumnName="StartRegisterDate" />
+                <ScalarProperty Name="EndRegisterDate" ColumnName="EndRegisterDate" />
+                <ScalarProperty Name="StartVotingDate" ColumnName="StartVotingDate" />
+                <ScalarProperty Name="EndVotingDate" ColumnName="EndVotingDate" />
+                <ScalarProperty Name="CompetitionShowWinnerDate" ColumnName="CompetitionShowWinnerDate" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EndMsg" ColumnName="EndMsg" />
+                <ScalarProperty Name="AfterVoteMsg" ColumnName="AfterVoteMsg" />
+                <ScalarProperty Name="AdminPercent" ColumnName="AdminPercent" />
+                <ScalarProperty Name="WinnerDescription" ColumnName="WinnerDescription" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompetitorPhotos">
+            <EntityTypeMapping TypeName="OldDBModel.CompetitorPhotos">
+              <MappingFragment StoreEntitySet="CompetitorPhotos">
+                <ScalarProperty Name="CompetitorPhotoID" ColumnName="CompetitorPhotoID" />
+                <ScalarProperty Name="PhotoText" ColumnName="PhotoText" />
+                <ScalarProperty Name="PhotoURL" ColumnName="PhotoURL" />
+                <ScalarProperty Name="CompetitorsID" ColumnName="CompetitorsID" />
+                <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CompetitionID" ColumnName="CompetitionID" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Competitors">
+            <EntityTypeMapping TypeName="OldDBModel.Competitors">
+              <MappingFragment StoreEntitySet="Competitors">
+                <ScalarProperty Name="CompetitorsID" ColumnName="CompetitorsID" />
+                <ScalarProperty Name="CompetitorNickname" ColumnName="CompetitorNickname" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CompetitionID" ColumnName="CompetitionID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsWinner" ColumnName="IsWinner" />
+                <ScalarProperty Name="NumberOfVotes" ColumnName="NumberOfVotes" />
+                <ScalarProperty Name="CarNumber" ColumnName="CarNumber" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhotographerName" ColumnName="PhotographerName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DiveSite" ColumnName="DiveSite" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="PhotographerComment" ColumnName="PhotographerComment" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompetitorVotes">
+            <EntityTypeMapping TypeName="OldDBModel.CompetitorVotes">
+              <MappingFragment StoreEntitySet="CompetitorVotes">
+                <ScalarProperty Name="CompetitorVoteID" ColumnName="CompetitorVoteID" />
+                <ScalarProperty Name="VoteTitle" ColumnName="VoteTitle" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CompetitorsID" ColumnName="CompetitorsID" />
+                <ScalarProperty Name="CompetitionID" ColumnName="CompetitionID" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsArticles">
+            <EntityTypeMapping TypeName="OldDBModel.dbsArticles">
+              <MappingFragment StoreEntitySet="dbsArticles">
+                <ScalarProperty Name="ArticleID" ColumnName="ArticleID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="ArticleDate" ColumnName="ArticleDate" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="TitleLink" ColumnName="TitleLink" />
+                <ScalarProperty Name="DisplayLink" ColumnName="DisplayLink" />
+                <ScalarProperty Name="MarketPrice" ColumnName="MarketPrice" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PriceWithDiscount" ColumnName="PriceWithDiscount" />
+                <ScalarProperty Name="SalePriceDesc" ColumnName="SalePriceDesc" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ShippingFee" ColumnName="ShippingFee" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
+                <ScalarProperty Name="FormLinkTitle" ColumnName="FormLinkTitle" />
+                <ScalarProperty Name="ArticleAuthor" ColumnName="ArticleAuthor" />
+                <ScalarProperty Name="DiaplaySummaryAtArticle" ColumnName="DiaplaySummaryAtArticle" />
+                <ScalarProperty Name="EnableQuantity" ColumnName="EnableQuantity" />
+                <ScalarProperty Name="FullImg" ColumnName="FullImg" />
+                <ScalarProperty Name="DisplayFullImgAsIs" ColumnName="DisplayFullImgAsIs" />
+                <ScalarProperty Name="FullImgCaption" ColumnName="FullImgCaption" />
+                <ScalarProperty Name="DisplayFullImgCaption" ColumnName="DisplayFullImgCaption" />
+                <ScalarProperty Name="AutoFullImgCaption" ColumnName="AutoFullImgCaption" />
+                <ScalarProperty Name="MainImg" ColumnName="MainImg" />
+                <ScalarProperty Name="DisplayMainImgAsIs" ColumnName="DisplayMainImgAsIs" />
+                <ScalarProperty Name="MainImgCaption" ColumnName="MainImgCaption" />
+                <ScalarProperty Name="DisplayMainImgCaption" ColumnName="DisplayMainImgCaption" />
+                <ScalarProperty Name="AutoMainImgCaption" ColumnName="AutoMainImgCaption" />
+                <ScalarProperty Name="MainImgSmall" ColumnName="MainImgSmall" />
+                <ScalarProperty Name="ListImgCaption" ColumnName="ListImgCaption" />
+                <ScalarProperty Name="DisplayListImgAsIs" ColumnName="DisplayListImgAsIs" />
+                <ScalarProperty Name="CreateMainImgSmall" ColumnName="CreateMainImgSmall" />
+                <ScalarProperty Name="AutoListImgCaption" ColumnName="AutoListImgCaption" />
+                <ScalarProperty Name="DisplayListImgCaption" ColumnName="DisplayListImgCaption" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DisplayDate" ColumnName="DisplayDate" />
+                <ScalarProperty Name="DisplayEndDate" ColumnName="DisplayEndDate" />
+                <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
+                <ScalarProperty Name="TitleInH1Tag" ColumnName="TitleInH1Tag" />
+                <ScalarProperty Name="CatalogNumber" ColumnName="CatalogNumber" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsArticlesAttached">
+            <EntityTypeMapping TypeName="OldDBModel.dbsArticlesAttached">
+              <MappingFragment StoreEntitySet="dbsArticlesAttached">
+                <ScalarProperty Name="ArticlesAttachedID" ColumnName="ArticlesAttachedID" />
+                <ScalarProperty Name="ArticlesAttachedTitle" ColumnName="ArticlesAttachedTitle" />
+                <ScalarProperty Name="AttchedFile" ColumnName="AttchedFile" />
+                <ScalarProperty Name="ArticleID" ColumnName="ArticleID" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="ParentType" ColumnName="ParentType" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsCategories">
+            <EntityTypeMapping TypeName="OldDBModel.dbsCategories">
+              <MappingFragment StoreEntitySet="dbsCategories">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryTitle" ColumnName="CategoryTitle" />
+                <ScalarProperty Name="CategoryShortDesc" ColumnName="CategoryShortDesc" />
+                <ScalarProperty Name="CategoryDesc" ColumnName="CategoryDesc" />
+                <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+                <ScalarProperty Name="TemplateConfig" ColumnName="TemplateConfig" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="CategoryLevel" ColumnName="CategoryLevel" />
+                <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDivisionCat" ColumnName="IsDivisionCat" />
+                <ScalarProperty Name="HideChilds" ColumnName="HideChilds" />
+                <ScalarProperty Name="CategoryURL" ColumnName="CategoryURL" />
+                <ScalarProperty Name="NewWin" ColumnName="NewWin" />
+                <ScalarProperty Name="MoreTitle" ColumnName="MoreTitle" />
+                <ScalarProperty Name="EmailTitle" ColumnName="EmailTitle" />
+                <ScalarProperty Name="LangID" ColumnName="LangID" />
+                <ScalarProperty Name="PageSize" ColumnName="PageSize" />
+                <ScalarProperty Name="EnableShoppingChart" ColumnName="EnableShoppingChart" />
+                <ScalarProperty Name="EnableResponses" ColumnName="EnableResponses" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
+                <ScalarProperty Name="GUIID" ColumnName="GUIID" />
+                <ScalarProperty Name="SystemPage" ColumnName="SystemPage" />
+                <ScalarProperty Name="EnableTicker" ColumnName="EnableTicker" />
+                <ScalarProperty Name="EnableQuickSurvey" ColumnName="EnableQuickSurvey" />
+                <ScalarProperty Name="IsRootCategory" ColumnName="IsRootCategory" />
+                <ScalarProperty Name="TickerTitle" ColumnName="TickerTitle" />
+                <ScalarProperty Name="QuickSurveyTitle" ColumnName="QuickSurveyTitle" />
+                <ScalarProperty Name="CategoryImgName" ColumnName="CategoryImgName" />
+                <ScalarProperty Name="AttachedFile" ColumnName="AttachedFile" />
+                <ScalarProperty Name="SourceCatDisplay" ColumnName="SourceCatDisplay" />
+                <ScalarProperty Name="OrderField" ColumnName="OrderField" />
+                <ScalarProperty Name="EnableMedia" ColumnName="EnableMedia" />
+                <ScalarProperty Name="EnableFreeBox" ColumnName="EnableFreeBox" />
+                <ScalarProperty Name="AutoSelectionType" ColumnName="AutoSelectionType" />
+                <ScalarProperty Name="AutoSelectionQuantity" ColumnName="AutoSelectionQuantity" />
+                <ScalarProperty Name="RandomAutoSelection" ColumnName="RandomAutoSelection" />
+                <ScalarProperty Name="CreateRSSChannel" ColumnName="CreateRSSChannel" />
+                <ScalarProperty Name="NettingCode" ColumnName="NettingCode" />
+                <ScalarProperty Name="SSLRequired" ColumnName="SSLRequired" />
+                <ScalarProperty Name="AbsoluteOrder" ColumnName="AbsoluteOrder" />
+                <ScalarProperty Name="FullTitle" ColumnName="FullTitle" />
+                <ScalarProperty Name="TitleInH1Tag" ColumnName="TitleInH1Tag" />
+                <ScalarProperty Name="NewWinWidth" ColumnName="NewWinWidth" />
+                <ScalarProperty Name="NewWinHeight" ColumnName="NewWinHeight" />
+                <ScalarProperty Name="PrintBreadcrumbs" ColumnName="PrintBreadcrumbs" />
+                <ScalarProperty Name="EnableSearch" ColumnName="EnableSearch" />
+                <ScalarProperty Name="DisableDirectLink" ColumnName="DisableDirectLink" />
+                <ScalarProperty Name="EnableRatings" ColumnName="EnableRatings" />
+                <ScalarProperty Name="IsHorizontalCat" ColumnName="IsHorizontalCat" />
+                <ScalarProperty Name="EnableComparison" ColumnName="EnableComparison" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="EnableParams" ColumnName="EnableParams" />
+                <ScalarProperty Name="EnableSocial" ColumnName="EnableSocial" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsEvents">
+            <EntityTypeMapping TypeName="OldDBModel.dbsEvents">
+              <MappingFragment StoreEntitySet="dbsEvents">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="TitleLink" ColumnName="TitleLink" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="DiaplaySummaryAtArticle" ColumnName="DiaplaySummaryAtArticle" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
+                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
+                <ScalarProperty Name="FormLinkTitle" ColumnName="FormLinkTitle" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TitleInH1Tag" ColumnName="TitleInH1Tag" />
+                <ScalarProperty Name="DisplayInArch" ColumnName="DisplayInArch" />
+                <ScalarProperty Name="EventConclusion" ColumnName="EventConclusion" />
+                <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Organizer" ColumnName="Organizer" />
+                <ScalarProperty Name="OrganizerWWW" ColumnName="OrganizerWWW" />
+                <ScalarProperty Name="EventWWW" ColumnName="EventWWW" />
+                <ScalarProperty Name="ExternalSubsrWWW" ColumnName="ExternalSubsrWWW" />
+                <ScalarProperty Name="FormAsInfo" ColumnName="FormAsInfo" />
+                <ScalarProperty Name="SummaryAsInfo" ColumnName="SummaryAsInfo" />
+                <ScalarProperty Name="LocationAsInfo" ColumnName="LocationAsInfo" />
+                <ScalarProperty Name="OrganizerAsInfo" ColumnName="OrganizerAsInfo" />
+                <ScalarProperty Name="EventWWWAsInfo" ColumnName="EventWWWAsInfo" />
+                <ScalarProperty Name="ExternalSubsrWWWAsInfo" ColumnName="ExternalSubsrWWWAsInfo" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsExtraImg">
+            <EntityTypeMapping TypeName="OldDBModel.dbsExtraImg">
+              <MappingFragment StoreEntitySet="dbsExtraImg">
+                <ScalarProperty Name="ExtraImgID" ColumnName="ExtraImgID" />
+                <ScalarProperty Name="ModuleKey" ColumnName="ModuleKey" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsPhotoGallery">
+            <EntityTypeMapping TypeName="OldDBModel.dbsPhotoGallery">
+              <MappingFragment StoreEntitySet="dbsPhotoGallery">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="MainImg" ColumnName="MainImg" />
+                <ScalarProperty Name="StartingDate" ColumnName="StartingDate" />
+                <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="MainImgSmall" ColumnName="MainImgSmall" />
+                <ScalarProperty Name="FullImg" ColumnName="FullImg" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PrintTitle" ColumnName="PrintTitle" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsSearch">
+            <EntityTypeMapping TypeName="OldDBModel.dbsSearch">
+              <MappingFragment StoreEntitySet="dbsSearch">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="SystemPg" ColumnName="SystemPg" />
+                <ScalarProperty Name="SourceCategoryID" ColumnName="SourceCategoryID" />
+                <ScalarProperty Name="AutoKeyWords" ColumnName="AutoKeyWords" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsTemplates">
+            <EntityTypeMapping TypeName="OldDBModel.dbsTemplates">
+              <MappingFragment StoreEntitySet="dbsTemplates">
+                <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+                <ScalarProperty Name="TemplateTitle" ColumnName="TemplateTitle" />
+                <ScalarProperty Name="TemplateTitleEng" ColumnName="TemplateTitleEng" />
+                <ScalarProperty Name="AdminPage" ColumnName="AdminPage" />
+                <ScalarProperty Name="SiteIndexPage" ColumnName="SiteIndexPage" />
+                <ScalarProperty Name="SiteItemPage" ColumnName="SiteItemPage" />
+                <ScalarProperty Name="TemplateTblName" ColumnName="TemplateTblName" />
+                <ScalarProperty Name="TblIndexKey" ColumnName="TblIndexKey" />
+                <ScalarProperty Name="TblTitleKey" ColumnName="TblTitleKey" />
+                <ScalarProperty Name="IsMultiple" ColumnName="IsMultiple" />
+                <ScalarProperty Name="IsActiveTemplate" ColumnName="IsActiveTemplate" />
+                <ScalarProperty Name="Searchable" ColumnName="Searchable" />
+                <ScalarProperty Name="AutoImportIdentifier" ColumnName="AutoImportIdentifier" />
+                <ScalarProperty Name="RSSChannelPage" ColumnName="RSSChannelPage" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsTemplatesTrans">
+            <EntityTypeMapping TypeName="OldDBModel.dbsTemplatesTrans">
+              <MappingFragment StoreEntitySet="dbsTemplatesTrans">
+                <ScalarProperty Name="SourceTemplateID" ColumnName="SourceTemplateID" />
+                <ScalarProperty Name="TargetTemplateID" ColumnName="TargetTemplateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageGallerySubjects">
+            <EntityTypeMapping TypeName="OldDBModel.ImageGallerySubjects">
+              <MappingFragment StoreEntitySet="ImageGallerySubjects">
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="SubjectTitle" ColumnName="SubjectTitle" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImagesGallery">
+            <EntityTypeMapping TypeName="OldDBModel.ImagesGallery">
+              <MappingFragment StoreEntitySet="ImagesGallery">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="ImageTitle" ColumnName="ImageTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="ImgFileName" ColumnName="ImgFileName" />
+                <ScalarProperty Name="SourceURL" ColumnName="SourceURL" />
+                <ScalarProperty Name="CaptionFileName" ColumnName="CaptionFileName" />
+                <ScalarProperty Name="CaptionURL" ColumnName="CaptionURL" />
+                <ScalarProperty Name="SourceWidth" ColumnName="SourceWidth" />
+                <ScalarProperty Name="SourceHeight" ColumnName="SourceHeight" />
+                <ScalarProperty Name="HiddenMedia" ColumnName="HiddenMedia" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MetaTags">
+            <EntityTypeMapping TypeName="OldDBModel.MetaTags">
+              <MappingFragment StoreEntitySet="MetaTags">
+                <ScalarProperty Name="MetaTagID" ColumnName="MetaTagID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="ArticleID" ColumnName="ArticleID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbsEvents_dbsCategories">
+            <EntityTypeMapping TypeName="OldDBModel.dbsEvents_dbsCategories">
+              <MappingFragment StoreEntitySet="dbsEvents_dbsCategories">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="HorizontalCatID" ColumnName="HorizontalCatID" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,74 @@
+﻿@using Uco.Models
+@model string
+@{
+    var Items = Json.Encode(System.Configuration.ConfigurationManager.AppSettings["MagazineArticleGroup"].Split(',').ToList().Select(x => new { text = x, value = x }));
+    var ID = Model.Replace("MagazineArticleGroupMapping_", string.Empty);
+}
+
+<style>
+    .mapping:not(:first-child) {
+        margin: 5px 181px;
+    }
+
+    .mapping:first-child {
+        margin-top: 20px;
+    }
+
+    .mapping p {
+        display: inline-block;
+        margin: 0 10px;
+    }
+</style>
+
+<div class="mappings">
+
+</div>
+
+<a id="save_mappings" class="k-button" href="javascript:;">@RP.T("Admin.SaveMappings", "Save mappings")</a>
+
+
+<script>
+    $(document).ready(function () {
+        $.post("@Url.Action("GetMagazineArticleMappings", "Magazine",new { ID = ID })", function (data) {
+            if (data && data.success) {
+                var mappings = data.mappings;
+                for (var i = 0; i < mappings.length; i++) {
+                    var id = mappings[i].ID;
+                    var title = mappings[i].Title;
+                    var group = mappings[i].Group;
+                    $(".mappings").append("<div class='mapping' data-id='" + id + "'><p>" + title + "</p><select id='groupmapping_" + id + "'></select></div>");
+                    $("#groupmapping_" + id).kendoDropDownList({
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: JSON.parse('@Html.Raw(Items)'),
+                        value: group,
+                        optionLabel: "----"
+                    });
+                }
+
+                if (mappings.length == 0) {
+                    $("#save_mappings").hide();
+                }
+            }
+        });
+    });
+
+    $("#save_mappings").click(function () {
+        var mappings = $(".mapping");
+        var mappingsToSend = [];
+        for (var i = 0; i < mappings.length; i++) {
+            var mapping = mappings[i];
+            var id = $(mapping).data("id");
+            var value = $("#groupmapping_" + id).data("kendoDropDownList").value();
+            mappingsToSend.push({ ID: id, Group: value });
+        }
+        $.post("@Url.Action("SaveMagazineArticleMappings", "Magazine")", { mappingsJson: JSON.stringify(mappingsToSend), id: "@ID" }, function (data) {
+            if (data && data.success) {
+                alert("Done!");
+            }
+            else {
+                alert("Unknown error!");
+            }
+        });
+    });
+</script>

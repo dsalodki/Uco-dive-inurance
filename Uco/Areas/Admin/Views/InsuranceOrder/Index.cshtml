@@ -1,0 +1,89 @@
+﻿@model Uco.Models.InsurancesFilter
+@{
+    ViewBag.Title = "הזמנות ביטוח ששולמו";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>הזמנות ביטוח ששולמו</h2>
+<div class="clear"></div>
+@using (Html.BeginForm())
+{
+    <div class="report_filter">
+        <div class=" report_filter_row">
+            <div class="report_filter_row_span">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="report_filter_row_date">
+                @Html.EditorFor(model => model.StartDate)
+            </div>
+        </div>
+        <div class=" report_filter_row">
+            <div class="report_filter_row_span">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="report_filter_row_date">
+                @Html.EditorFor(model => model.EndDate)
+            </div>
+        </div>
+        <div class=" report_filter_row report_filter_agents">
+            @Html.EditorFor(model => model.Insurance)
+        </div>
+        <div class=" report_filter_row report_filter_agents">
+            @Html.EditorFor(model => model.Agent)
+        </div>
+        <div class=" report_filter_button">
+            <input class="k-button" type="submit" value="חפש" />
+        </div>
+    </div>
+}
+<div class="clear"></div>
+
+@(Html.Kendo().Grid<Uco.Models.TravelInsurance>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource.Ajax()
+            .Model(model => { model.Id(item => item.ID); })
+                            .Sort(sort => sort.Add("SubmitDate").Descending())
+                                .Read(r => r.Action("_AjaxIndex", "InsuranceOrder", new { Agent = Model.Agent, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+                            .Destroy(r => r.Action("_AjaxDelete", "InsuranceOrder"))
+                                .PageSize(20)
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.ID).Width(20);
+        columns.Bound(r => r.InsuranceTypeName).Title("ש. ביטוח");
+        columns.Bound(r => r.SumForPay).Title("מחיר");
+        columns.Bound(r => r.IdNumber).Title("ת.ז");
+        columns.Bound(r => r.UserFname).Width(20).Title("ש.פ");
+        columns.Bound(r => r.UserLname).Width(20).Title("ש.מ");
+        columns.Bound(r => r.PayDate).Format("{0:dd/MM/yyyy}").Title("ת.רכישה");
+        columns.Bound(r => r.InsuranceDate).Format("{0:dd/MM/yyyy}").Title("ת.ת ביטוח");
+        columns.Bound(r => r.InsuranceDateEnd).Format("{0:dd/MM/yyyy}").Title("ס. ביטוח");
+        columns.Bound(r => r.AutorizationNum).Title("טרנז'");
+        columns.Bound(r => r.AgentName).Width(20).Title("סוכן");
+
+        columns.Template(r => r.ID).ClientTemplate(
+        "<a class='k-button open_insurance_send_popup' target='_blank' href='" + Url.Action("Index", "InsuranceSendEmail") + "?id=#= ID #'" + ">" + "שלח" + "</a>"
+       ).Width(100);
+
+        columns.Template(r => r.ID).ClientTemplate(
+         "<a class='k-button' target='_blank' href='" + Url.Action("PaymentSuccess", "Insurance", new { Area = "" }) + "?OrderID=#= ID #&IdNumber=#=IdNumber#&birthyear=#=YearBirth#'" + ">" + "הדפס" + "</a>"
+        ).Width(100);
+
+        columns.Template(r => r.ID).ClientTemplate(
+            "<a class='k-button' href='" + Url.Action("Edit", "InsuranceOrder") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+        ).Width(100);
+        columns.Command(commands =>
+        {
+            commands.Destroy();
+        }).Width(100);
+    })
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Groupable()
+         .ToolBar(commands => commands.Custom().Text("יצוא לאקסל").Action("CSVExportInsurances", "InsuranceOrder", new { Agent = Model.Agent, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+)
+
+<br />
+@Html.ActionLink(Html.R("Create"), "Create", null, new { @class = "k-button" })

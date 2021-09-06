@@ -1,0 +1,11 @@
+﻿<div class="block-cart-header">
+    <div class="block-cart-wrap">
+        <a href="/Cart/index">סל קניות:</a> @ViewBag.ProductNumber מוצרים - <span class="price">₪@ViewBag.TotalPrice</span>
+    </div>
+</div>
+@if((int)ViewBag.TotalPrice > 0 )
+{
+<ul class="links">
+    <li class=" last"><a href="/cart/index#payment" class="button"><span><span>לקופה</span></span></a></li>
+</ul>
+}

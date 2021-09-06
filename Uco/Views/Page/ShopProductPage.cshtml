@@ -1,0 +1,154 @@
+﻿@model Uco.Models.ShopProductPage
+@{
+    Layout = ViewBag.Layout;
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+}
+<div class="brdcms">
+    <ul>
+        <li>
+            <a href="/">@RP.T("Homepage.Breadcrumb")</a>
+        </li>
+        @foreach (var b in bradcrumbs)
+        {
+            <li>
+                <a href="@Url.Content(b.Url)">@b.Title</a>
+            </li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>
+
+<div class="page_main_heading">
+    <h2>@Model.Title</h2>
+</div>
+
+<div class="product_page_right">
+    <div class="product_gallery">
+        @Html.DisplayFor(m => m.ShopGallery, "GalleryProduct", new { Pic = Model.Pic })
+    </div>
+    <div class="clear"></div>
+    <div class="product_price">
+        @if (Model.ShopOldPrice > 0)
+        { <span class="strike-through">@Model.ShopOldPrice ₪</span> } @Model.ShopPrice ₪
+    </div>
+</div>
+<div class="product_page_left">
+@if (!string.IsNullOrEmpty(Model.Text))
+        {
+    <div class="product_page_Text">
+        <h2>@RP.T("Views.Page.ShopProductPage.TechnicalList"):</h2>
+     
+            @Html.Raw(Model.Text)
+       
+    </div>
+        }
+
+
+    @if (Model.ShopPrice > 0 && Model.ShopShowInStock)
+    {
+        <div class="product-inputs">
+            @using (Html.BeginForm("Index", "ShopCart", FormMethod.Get))
+            {
+                <div class="input-append">
+                    <label for="Quantity">@RP.T("Views.Page.ShopProductPage.Quantity"):</label>
+                    <input class="span2" type="text" name="Quantity" value="1" placeholder="@RP.TVL("Quantity")...">
+                    <input name="ID" value="@Model.ID" type="hidden" />
+                    <button type="submit" class="btn btn-primary">@RP.TVL("AddToCart")</button>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="product-inputs">
+            @RP.TVL("CallForPrice")
+        </div>
+    }
+
+
+</div>
+<div class="clear"></div>
+
+<div class="product_arrows_wrap">
+    @Html.Action("PrevAndNextOfProductPage", "ShopPagePart", new { id = Model.ID })
+</div>
+
+
+
+<div class="product_page_specials">
+    @Html.Action("ProductSpecials", "ShopPagePart", new { id = Model.ID })
+</div>
+
+
+
+
+
+@*<div class="row product-details-info">
+    <div class="">
+        <div class="row">
+            <div class="product-details clearfix">
+                <div class="span6">
+                    <div class="product-title">
+                        <h1>@Model.Title</h1>
+                    </div>
+
+                </div>
+                <div class="span3">
+                    <div class="product-set">
+                        <div class="product-price">
+                            <span>
+                                @if (Model.ShopOldPrice > 0)
+                                { <span class="strike-through">@Model.ShopOldPrice</span> } @Model.ShopPrice
+                            </span>
+                        </div>
+                        <div class="product-description">
+
+                        </div>
+                        <div class="product-info">
+                            <ul class="dl-horizontal">
+                                @if (Model.ShopShowInStock)
+                                {
+                                    <li><b>@RP.TVL("Stock"):</b> @RP.TVL("InStock")</li> }
+                                @if (!string.IsNullOrEmpty(Model.ShopSKU))
+                                {
+                                    <li><b>@RP.TVL("SKU"):</b> @Model.ShopSKU</li> }
+                                @if (!string.IsNullOrEmpty(Model.ShopBrand))
+                                {
+                                    <li><b>@RP.TVL("Brand"):</b> @Model.ShopBrand</li> }
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-tab">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#description" data-toggle="tab">תאור</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="description">
+                    @Html.Raw(Model.Text)
+                </div>
+            </div>
+        </div>
+        @if (ViewBag.Items1.Count > 0)
+        {
+            <div class="related-product">
+                <div class="titleHeader clearfix">
+                    <h3>@RP.TVL("RelatedProducts")</h3>
+                </div>
+                <div class="row">
+                    <ul class="hProductItems clearfix">
+                        @foreach (Uco.Models.ShopProductPage item in ViewBag.Items1)
+                        {
+                            @Html.Partial("_Product2", item)
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</div>*@

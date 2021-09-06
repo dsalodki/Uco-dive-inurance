@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = Html.R("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>@Html.R("Title")</h2>
+
+@(Html.Kendo().Grid<Uco.Models.User>()
+        .Name("Grid")
+        .DataSource(dataSource => dataSource.Ajax()
+            .Model(model => { model.Id(item => item.ID); })
+                .Read(r => r.Action("_AjaxIndex", "User"))
+                .Destroy(r => r.Action("_AjaxDelete", "User"))
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(r => r.CreationDate).Width(200).Format("{0:MM/dd/yyyy}");
+            columns.Bound(r => r.UserName);
+            columns.Bound(r => r.Email);
+            columns.Bound(r => r.Roles);
+            columns.Bound(r => r.Comment);
+            columns.Template(r => r.ID).ClientTemplate(
+                "<a class='k-button' href='" + Url.Action("Edit", "User") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+            ).Width(100);
+            columns.Command(commands =>
+            {
+                commands.Destroy();
+            }).Width(100);
+        })
+        .Pageable()
+        .Sortable()
+        .Filterable()
+)
+<br />
+@Html.ActionLink(@Html.R("Create"), "Create", null, new { @class = "k-button k-state-default" })

@@ -1,0 +1,14 @@
+﻿@model List<Uco.Models.MagazineBanner1>
+@foreach (var item in Model)
+{
+<style>
+        body.rtl .header.header-front {
+            background: url(@item.Image) 50% 0 no-repeat;
+            background-size: cover;
+        }
+</style>
+    <div class='intro'>
+        <div class='title'>@item.Title</div>
+        <div class='subtitle'>@Html.Raw(item.Description)</div>
+    </div>
+}

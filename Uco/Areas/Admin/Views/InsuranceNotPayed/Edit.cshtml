@@ -1,0 +1,25 @@
+﻿@model Uco.Models.TravelInsurance
+
+@{
+    ViewBag.Title = Html.R("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@Html.R("Title")</h2>
+<div class="insurance_edit">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.EditorForModel()
+        <p class="clear"></p>
+        <input type="submit" class="k-button" value="@Html.R("Save")" />
+
+    }
+    <div class="insurance_edit_delete">
+        @using (Html.BeginForm("Delete", "InsuranceNotPayed", FormMethod.Post, new { @class = "delte_insurance" }))
+        {
+            @Html.Hidden("OrderID", Model.ID)
+            <input type="submit" class="k-button" value="מחיקה" />
+        }
+    </div>
+    @Html.ActionLink(@Html.R("BackToList"), "Index")
+</div>

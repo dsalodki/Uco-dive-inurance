@@ -1,0 +1,44 @@
+@model Uco.Models.User
+
+@{
+    ViewBag.Title = RP.T("DivePage.Login.Title", "Login");
+
+    var error = (string)ViewBag.Error;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/Html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/semantic-ui-rtl/semantic.rtl.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/css/DivePage.css" />
+</head>
+<body style="direction: rtl;">
+    <div class="ui main text container">
+        <h1 class="ui header">@RP.T("DivePage.Login.LoginRegister", "כניסה / הרשמה")</h1>
+        @if (error != null)
+        {
+            <div class="ui negative message">
+                @error
+            </div>
+        }
+        @using (Html.BeginForm("Login", "DivePage", FormMethod.Post, new { @class = "ui form" }))
+        {
+            <div class="field">
+                <label>@RP.T("DivePage.Login.IdNumber", "מספר ת.ז:")</label>
+                @Html.TextBoxFor(m => m.IdNumber, new { @type = "number" })
+            </div>
+            <div class="field">
+                <label>@RP.T("DivePage.Login.YearOfBirth", "שנת לידה:")</label>
+                @Html.PasswordFor(m => m.Password, new { @type = "number" })
+            </div>
+            <button type="submit" class="ui primary fluid button">@RP.T("DivePage.Login.Submit", "כניסה / רישום")</button>
+        }
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Content/semantic-ui-rtl/semantic.min.js"></script>
+</body>
+</html>

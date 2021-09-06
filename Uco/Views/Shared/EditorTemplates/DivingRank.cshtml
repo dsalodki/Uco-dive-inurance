@@ -1,0 +1,12 @@
+﻿@model string
+@{
+    string DivingRanks = RP.GetCurrentSettings().DivingRank;
+    string DropDownChoose = RP.T("Dropdown.Choose").ToString();
+    List<SelectListItem> _list = new List<SelectListItem>();
+    _list.Add(new SelectListItem { Text = DropDownChoose, Value = "" });
+    foreach (var item in DivingRanks.Split(new Char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries))
+    {
+            _list.Add(new SelectListItem { Text = item, Value = item, Selected = item == Model });
+    }
+}
+@Html.DropDownListFor(model => model, _list, new { @class = "drop_down" })

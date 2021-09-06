@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+    <siteMapNode title="Home" controller="Home" action="Overview">
+      <siteMapNode title="Content" Resource="Content" ImageUrl="~/Areas/Admin/Content/icons/application.png">
+        <siteMapNode title="Pages" Resource="Pages" controller="Main" action="Index"  />
+        <siteMapNode title="TextComponent" Resource="TextComponent" controller="TextComponent" action="Index"  />
+        <siteMapNode title="גלריה מתחלפת ראשית" Resource="HomeBanner1" controller="HomeBanner" action="Index"  />
+        <siteMapNode title="באנר" Resource="Banner" controller="Banner" action="Index"  />
+        <siteMapNode title="MagazineBanners1" Resource="MagazineBanner1" controller="MagazineBanner1" action="Index"  />
+        <siteMapNode title="MagazineBanners2" Resource="MagazineBanner2" controller="MagazineBanner2" action="Index"  />
+      </siteMapNode>
+
+      <siteMapNode title="חנות" Resource="Shop" ImageUrl="~/Areas/Admin/Content/icons/application.png">
+        <siteMapNode title="הזמנות" Resource="ShopOrder" controller="ShopOrder" action="Index"  />
+        <siteMapNode title="מוצרים" Resource="ShopProducts" controller="ShopProducts" action="Index"  />
+        <siteMapNode title="קטגוריות" Resource="ShopCategorys" controller="ShopCategory" action="Index"  />
+        <siteMapNode title="מותגים" Resource="ShopBrands" controller="ShopBrand" action="Index"  />
+      </siteMapNode>
+
+      <siteMapNode title="Contact" Resource="Contact" ImageUrl="~/Areas/Admin/Content/icons/email_open.png" controller="Contact" action="Index"></siteMapNode>
+
+      <siteMapNode title="System" Resource="System" ImageUrl="~/Areas/Admin/Content/icons/cog.png">
+        <siteMapNode title="ClearCache" Resource="ClearCache" controller="Settings" action="AplicationClear" />
+        <siteMapNode title="Account" Resource="Account" controller="User" action="Index" />
+        <siteMapNode title="מועדון חברים" Resource="NewsletterClub" controller="Newsletter" action="Index" />
+        <siteMapNode title="שליחת ניוזלטר" Resource="NewsletterSend" controller="Newsletter" action="Send" />
+        <siteMapNode title="Role" Resource="Role" controller="Role" action="Index" />
+        <siteMapNode title="Domain" Resource="Domain" controller="Domain" action="Index"  />
+        <siteMapNode title="Errors" Resource="SystemErrors" controller="Errors" action="Index" />
+        <siteMapNode title="מנהל קבצים" Resource="FileManager" url="~/Scripts/ckfinder/ckfinder.html?langCode=he" />
+        <siteMapNode title="תרגום" Resource="Translation" controller="Translation" action="Index"  />
+      </siteMapNode>
+
+      <siteMapNode title="Help" Resource="Help" ImageUrl="~/Areas/Admin/Content/icons/information.png">
+          <siteMapNode title="Help topics" Resource="HelpTopics" url="http://daronet.com" />
+        </siteMapNode>
+    </siteMapNode>
+</siteMap>
+

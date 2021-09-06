@@ -1,0 +1,19 @@
+﻿@model Uco.Models.ShopProductOption
+
+@{
+    ViewBag.Title = "יצירת אפשרות מוצר";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(false)
+    @Html.EditorForModel()
+    @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
+    <p class="clear">
+        <input type="submit" class="k-button" value="שמור" />
+    </p>
+}
+
+<div class="clear">
+    @Html.ActionLink("חזרה לרשימה", "Index", new { ParentID = Model.ShopParentID, ReturnUrl = ViewBag.ReturnUrl })
+</div>

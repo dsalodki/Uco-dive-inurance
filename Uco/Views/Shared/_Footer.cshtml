@@ -1,0 +1,57 @@
+﻿<div class="footer">
+    <div class="footer_top1">
+        <div class="footer_links_part">
+            <div class="center_div">
+                @if (!string.IsNullOrEmpty(RP.Text("ContentFooter1").ToString()))
+                {
+                    <div class="footer_clm1">
+                        @RP.Text("ContentFooter1")
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(RP.Text("ContentFooter2").ToString()))
+                {
+                    <div class="footer_clm2">
+                        @RP.Text("ContentFooter2")
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(RP.Text("ContentFooter3").ToString()))
+                {
+                    <div class="footer_clm3">
+                        @RP.Text("ContentFooter3")
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(RP.Text("ContentFooter4").ToString()))
+                {
+                    <div class="footer_clm4">
+                        @RP.Text("ContentFooter4")
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(RP.Text("ContentFooter5").ToString()))
+                {
+                    <div class="footer_clm5">
+                        @RP.Text("ContentFooter5")
+                    </div>
+                }
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="footer_top2">
+            <div class="center_div">
+                @RP.Text("ContentFooterCenter")
+            </div>
+        </div>
+    </div>
+    <div class="footer_bott_strip">
+        <div class="center_div">
+            <div class="footer_bott_right">
+                @RP.Text("ContentFooterBottom1")
+                <div class="clear"></div>
+            </div>
+            <div class="footer_bott_left">
+                @RP.Text("ContentFooterBottom2")
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = Html.R("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>@Html.R("Title")</h2>
+
+@(Html.Kendo().Grid<Uco.Models.TextComponent>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource.Ajax()   
+            .Model(model => { model.Id(item => item.ID); })
+            .Read(r => r.Action("_AjaxIndex", "TextComponent"))
+            .Destroy(r => r.Action("_AjaxDelete", "TextComponent"))
+                 .PageSize(20)
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.ID).Width(20);
+        columns.Bound(r => r.SystemName);
+        columns.Bound(r => r.DisplayName);
+        columns.Bound(r => r.LangCode);
+        columns.Template(r => r.ID).ClientTemplate(
+            "<a class='k-button' href='" + Url.Action("Edit", "TextComponent") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+        ).Width(100);
+        columns.Command(commands =>
+        {
+            commands.Destroy();
+        }).Width(100);
+    })
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Groupable()
+)
+<br />
+@Html.ActionLink(Html.R("Create"), "Create", null, new { @class = "k-button" })

@@ -1,0 +1,10 @@
+﻿@model List<Uco.Models.TravelInsurancePeriodPage>
+@{
+}
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li><a href="@Url.Content(item.Url)">@item.Title</a></li>
+    } 
+</ul>

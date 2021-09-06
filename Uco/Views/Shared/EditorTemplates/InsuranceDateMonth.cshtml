@@ -1,0 +1,11 @@
+﻿@model int
+@{
+    List<SelectListItem> _list  = new List<SelectListItem>();
+    
+    for (int i = 1; i <= 12; i++)
+    {
+        _list.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = i == Model });
+    }
+}
+
+@Html.DropDownListFor(model => model, _list, new { @class = "drop_down" })

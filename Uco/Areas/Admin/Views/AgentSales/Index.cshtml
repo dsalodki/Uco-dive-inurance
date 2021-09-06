@@ -1,0 +1,95 @@
+﻿@model Uco.Models.InsurancesFilter
+@{
+    ViewBag.Title = "הזמנות ביטוח - " + ViewBag.TypeName;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<div class="agents_report">
+
+    <h2>דוח מכירות סוכנים</h2>
+    <div class="clear"></div>
+    @using (Html.BeginForm())
+    {
+        <div class="report_filter">
+            <div class=" report_filter_row">
+                <div class="report_filter_row_span">
+                    @Html.LabelFor(model => model.StartDate)
+                </div>
+                <div class="report_filter_row_date">
+                    @Html.EditorFor(model => model.StartDate)
+                </div>
+            </div>
+            <div class=" report_filter_row">
+                <div class="report_filter_row_span">
+                    @Html.LabelFor(model => model.EndDate)
+                </div>
+                <div class="report_filter_row_date">
+                    @Html.EditorFor(model => model.EndDate)
+                </div>
+            </div>
+            <div class=" report_filter_row report_filter_agents">
+                @Html.EditorFor(model => model.Insurance)
+            </div>
+            <div class=" report_filter_row report_filter_agents">
+                @Html.EditorFor(model => model.Agent)
+            </div>
+            <div class=" report_filter_button">
+                <input class="k-button" type="submit" value="חפש" />
+            </div>
+        </div>
+    }
+
+    <div class="clear"></div>
+    @*<div class="report_total_money">
+            סך הכל רווח לתקופה
+            @Html.Action("_GetTotalMoney", "AgentSales", new { Agent = Model.Agent, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) })
+            ש"ח
+        </div>*@
+    @if (Model.Agent == 0)
+    {
+        @(Html.Kendo().Grid<Uco.Models.AgentReport>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource.Ajax()
+            .Model(model => { model.Id(item => item.Name); })
+            //.Sort(sort => sort.Add("SubmitDate").Descending())
+                .Read(r => r.Action("_AjaxIndex", "AgentSales", new { Agent = Model.Agent, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+                    .PageSize(20)
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.Name).Title("שם הסוכן");
+        columns.Bound(r => r.Count).Format("{0:#,###0.#}").Title("כמות ביטוחים"); 
+        columns.Bound(r => r.Value).Format("{0:c0}").Title("סך הכל מכירות");
+    })
+
+    .Filterable()
+    .Groupable()
+    .ToolBar(commands => commands.Custom().Text("יצוא לאקסל").Action("CSVExportAgent", "AgentSales", new { Agent = Model.Agent, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+    .ToolBar(commands => commands.Custom().Text("יצוא דו\"ח אקסל לחב' הביטוח").Action("CSVExportAll", "AgentSales", new { Agent = 0, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+        )
+    }
+    else
+    {
+        @(Html.Kendo().Grid<Uco.Models.AgentReport>()
+        .Name("Grid")
+        .DataSource(dataSource =>
+            dataSource.Ajax()
+                .Model(model => { model.Id(item => item.Name); })
+                //.Sort(sort => sort.Add("SubmitDate").Descending())
+                    .Read(r => r.Action("_AjaxIndex", "AgentSales", new { Agent = Model.Agent, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(r => r.Name).Title("שם הביטוח");
+            columns.Bound(r => r.Count).Format("{0:#,###0.#}").Title("כמות ביטוחים");
+            columns.Bound(r => r.Value).Format("{0:c0}").Title("סך הכל מכירות");
+        })
+
+        .Filterable()
+        .Groupable()
+        .ToolBar(commands => commands.Custom().Text("יצוא לאקסל").Action("CSVExportAgent", "AgentSales", new { Agent = Model.Agent, Insurance = Model.Insurance, StartDate = (Model.StartDate.HasValue == true ? Model.StartDate.Value : DateTime.MinValue), EndDate = (Model.EndDate.HasValue == true ? Model.EndDate.Value : DateTime.MaxValue) }))
+        )
+    }
+    <br />
+</div>

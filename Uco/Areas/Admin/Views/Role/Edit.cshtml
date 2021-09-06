@@ -1,0 +1,33 @@
+﻿@model Uco.Models.Role
+@{
+    ViewBag.Title = Html.R("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>@Html.R("Title")</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(r => r.ID)
+    @Html.HiddenFor(r => r.IsSystem)
+    @Html.HiddenFor(r => r.Title)
+    <div class="editor-label">
+        @Html.LabelFor(r => r.Title)
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(r => r.Title)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(r => r.MenuPermissions)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(r => r.MenuPermissions)
+        @Html.ValidationMessageFor(r => r.MenuPermissions)
+    </div>
+    <p class="clear">
+        <input type="submit" class="k-button" value="@Html.R("Save")" /> @Html.ActionLink(@Html.R("BackToList"), "Index")
+    </p>
+}
+

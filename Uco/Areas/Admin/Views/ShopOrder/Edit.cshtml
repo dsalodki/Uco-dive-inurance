@@ -1,0 +1,66 @@
+﻿@model Uco.Models.ShopOrder
+@{
+    ViewBag.Title = "עריכת הזמנה";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+    Uco.Models.Settings CurentSettings = ViewBag.CurentSettings;
+}
+<h2>@ViewBag.Title</h2>
+<p class="clear">
+    @if (Model.ShopStatus == Uco.Models.ShopOrderStatusEnum.Placed)
+    {
+        if(CurentSettings.ShopPaymentCreditGuardUse){<a target="_blank" class="k-button" href="/Cart/PayCreditGuard/@Model.ID">שלם באשראי CreditGuard</a>}
+        if (CurentSettings.ShopPaymentZCreditUse)
+        {<a target="_blank" class="k-button" href="/Cart/PayZCredit/@Model.ID">שלם באשראי ZCredit</a>}
+        if (CurentSettings.ShopPaymentPayPalUse)
+        {<a target="_blank" class="k-button" href="/Cart/PayPaypal/@Model.ID">שלם ב PayPal</a>}
+        <a class="k-button" href="/Admin/Order/SendPayData/@Model.ID">שלח אפשריות תשלום</a>
+    }
+    else if(Model.ShopStatus == Uco.Models.ShopOrderStatusEnum.Payed)
+    {
+        if(CurentSettings.ShopInvoiceUse){<a class="k-button" href="/Admin/Order/SendInvoice/@Model.ID">שלח חשבונית</a>}
+    }
+</p>
+
+@(Html.Kendo().Grid<Uco.Models.ShopCartItem>()
+        .Name("Grid")
+        .DataSource(dataSource =>
+            dataSource.Ajax()
+                .Model(model => { model.Id(item => item.ID); })
+                        .Read(r => r.Action("_AjaxOrderIndex", "ShopOrder", new { id = Model.ID }))
+                //.Destroy(r => r.Action("_AjaxDelete", "Order"))
+                     .PageSize(20)
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(r => r.ID).Width(50);
+            columns.Bound(r => r.ShopProductTitle);
+            columns.Bound(r => r.ShopQuantity);
+            columns.Bound(r => r.ShopPrice);
+            columns.Bound(r => r.ShopPriceShipping);
+            columns.Template(r => r.ID).ClientTemplate(
+                "<a class='k-button' href='" + Url.Action("Edit", "ShopProducts") + "?ID=#= ID #'" + ">" + RP.T("Edit") + "</a>"
+            )
+            .Width(100);
+            columns.Command(commands =>
+            {
+            }).Width(100);
+        })
+        .Pageable()
+        .Sortable()
+        .Filterable()
+        .Groupable()
+)
+<br />
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(false)
+    @Html.EditorForModel()
+   
+    <p class="clear">
+        <input type="submit" class="k-button" value="שמור" />
+    </p>
+}
+
+<div class="clear">
+    @Html.ActionLink("חזרה לרשימה", "Index")
+</div>

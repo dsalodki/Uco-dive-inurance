@@ -1,0 +1,105 @@
+﻿@media print {
+    .edit2_top1_second {
+        display: none;
+    }
+
+    .logo {
+        display: block !important;
+        width: 350px;
+        height: 73px !important;
+        text-align: right;
+        float: none !important;
+    }
+
+        .logo img {
+            width: 250px !important;
+        }
+
+    .midd_edit1_inner {
+        margin: 0 0 0 !important;
+    }
+
+    .midd_inner_top1 .inner_h1, .midd_inner_top1 .edit2_top1 {
+        display: none;
+    }
+
+
+
+    /*.header_main, .edit2_top1, .three_steps ul li, .footer  {
+        display: none !important;
+    }*/
+    .header_main {
+        display: none !important;
+    }
+
+    .nav, .header_phne, .brdcms, .three_steps, .headr_couple, .footer {
+        display: none !important;
+    }
+
+    .center_div {
+        max-width: 100% !important;
+    }
+
+    .this_dcmnt {
+        font-size: 14px !important;
+        margin-top: 0px !important;
+        padding-top: 0px !important;
+        margin-bottom: 0px !important;
+        padding-bottom: 0px !important;
+    }
+
+    .insurance_text p {
+        color: #222222;
+        font-size: 13.5px;
+        line-height: 17px;
+        margin: 0 0 20px;
+        padding: 5px 0 0;
+    }
+
+    .edit3_tab_text {
+        height: 22px !important;
+    }
+
+        .edit3_tab_text.dark_bg {
+            background: initial !important;
+        }
+
+        .edit3_tab_text td {
+            border: 1px solid #000000 !important;
+            height: 18px !important;
+        }
+
+        .edit3_tab_text table {
+            border-left: 1px solid #000000 !important;
+        }
+
+    .logo {
+        display: none !important;
+    }
+
+    .print_logos {
+        display: block !important;
+        width: 100%;
+        height: 73px;
+    }
+
+    .print_logos_right {
+        float: right;
+        width: 124px;
+        height: 73px;
+    }
+
+    .print_logos_left {
+        float: left;
+        width: 150px;
+        height: 73px;
+    }
+
+    .edit3_tab_head td, .edit3_tab_head {
+        height: 32px;
+    }
+
+    .insurance_text.center_div a img {
+        display: none;
+    }
+}

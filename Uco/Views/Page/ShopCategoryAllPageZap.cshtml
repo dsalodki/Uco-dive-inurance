@@ -1,0 +1,17 @@
+﻿@model Uco.Models.ShopCategoryAllPage
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<ul>
+		@foreach(Uco.Models.ShopCategoryPage item in ViewBag.Items)
+		{
+			<li><a href="@Url.Content(item.Url)?xml=1">@item.Title</a></li>
+		}
+	</ul>
+</body>
+</html>

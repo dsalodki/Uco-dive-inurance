@@ -1,0 +1,7 @@
+@model DateTime?
+<text>
+    @if(Model!= null)
+    {
+        <span>@(String.Format("{0:d/M/yyyy  -  HH:mm:ss}", Model))</span>
+    }
+</text>

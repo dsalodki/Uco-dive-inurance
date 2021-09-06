@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <meta content="@ViewBag.Keywords" name="keywords" />
+    <meta content="@ViewBag.Description" name="description" />
+    <link href="http://@(Request.ServerVariables["HTTP_HOST"])@(Url.Content(ViewBag.Url))" rel="canonical" />
+    @Styles.Render("~/Content/front")
+    @Html.Action("_HeaderScripts", "PagePart")
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!--[if lt IE 7]><div class="ie67"><p style='font-weight:bold; font-size:20px; padding:0 10px; text-align:center; margin:20px 0 20px; color:red;'>Your using old and unsuported browser. Upgrade you browser!<br/><a href='http://www.microsoft.com/windows/internet-explorer/default.aspx'>Click here to upgrade.</a></p></div><![endif]-->
+    <div class="@(RP.GetCurrentSettings().LanguageRTL ? "t-rtl" : "t-ltr")">
+        @RenderBody()
+    </div>
+    @Html.Partial("_EditIcon")
+    @Scripts.Render("~/Scripts/front")
+    @RenderSection("scripts", required: false)
+    @Html.Action("_FooterScripts", "PagePart")
+</body>
+</html>

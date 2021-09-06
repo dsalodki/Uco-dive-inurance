@@ -1,0 +1,19 @@
+﻿@model List<Uco.Models.MagazineBanner2>
+<section class="section-3-blocks">
+    @foreach (var item in Model)
+    {
+    <div class='item'>
+        <div class='img'>
+            <a href='@item.PreLink' @(item.NewWindow ? " target='_blank' " : " ")>
+                <img src='@item.Image' alt='@item.Title'>
+            </a>
+        </div>
+        <div class='info'>
+            <a href='@item.PreLink'>
+                <span class='title'>@item.Title</span>
+                <span class='teaser'>@Html.Raw(item.Description)</span>
+            </a>
+        </div>
+    </div>
+    }
+</section>

@@ -1,0 +1,256 @@
+﻿@model List<Uco.Models.HomeBanner>
+
+<div id="banner" style="overflow: hidden;">
+    @if (Model.Count > 0)
+    {
+        <div class="slider3_holder">
+            <div class="slider3">
+                <div class="slider3_in" style="left: -682px;">
+
+                    <a class="slider3_a" href="javascript:void(0)">
+                        <img alt="" src="@Url.Content(SF.GetImageUrl(Model.Skip(Model.Count - 2).Take(1).FirstOrDefault().Pic, 1024, 474, true, true))">
+                        <div class="mask"></div>
+                    </a>
+
+                    <a class="slider3_a workArea" href="@(String.IsNullOrEmpty(Model.LastOrDefault().Url) ? "#" : Url.Content(Model.LastOrDefault().Url))">
+                        <img alt="" src="@Url.Content(SF.GetImageUrl(Model.LastOrDefault().Pic, 1024, 474, false, true))">
+                        <div class="mask" @(Model.LastOrDefault().ID == Model.LastOrDefault().ID ? "" : "")></div>
+                    </a>
+                    @foreach (var banner in Model)
+                    {
+                        <a class="slider3_a workArea" href="@(String.IsNullOrEmpty(banner.Url) ? "#" : Url.Content(banner.Url))">
+                            <img alt="" src="@Url.Content(SF.GetImageUrl(banner.Pic, 1024, 474, false, true))">
+                            <div class="mask" @(Model.FirstOrDefault().ID == banner.ID ? "style=opacity:0" : "")></div>
+                        </a>
+                    }
+
+                    <a class="slider3_a workArea" href="@(String.IsNullOrEmpty(Model.FirstOrDefault().Url) ? "#" : Url.Content(Model.FirstOrDefault().Url))">
+                        <img alt="" src="@Url.Content(SF.GetImageUrl(Model.FirstOrDefault().Pic, 1024, 474, false, true))">
+                        <div class="mask" @(Model.FirstOrDefault().ID == Model.FirstOrDefault().ID ? "" : "")></div>
+                    </a>
+
+                    <a class="slider3_a" href="javascript:void(0)">
+                        <img alt="" src="@Url.Content(SF.GetImageUrl(Model.Skip(1).FirstOrDefault().Pic, 1024, 474, false, true))">
+                        <div class="mask"></div>
+                    </a>
+
+                </div>
+                <div class="banner_text_part">
+                    @{int curr = 0;}
+                    @foreach (var banner in Model)
+                    {
+                        <a href="@(String.IsNullOrEmpty(banner.Url) ? "#" : Url.Content(banner.Url))">
+                            <span class="@(curr != 0 ? "dn" : "") bannerText" data-id="@curr">
+                                <span class="banner_text1">@banner.Title</span>
+                                <span class="banner_text2">@Html.Raw(banner.ShortDescription.Replace(Environment.NewLine, "<br/>"))</span>
+                                @if (!string.IsNullOrEmpty(banner.Credit))
+                                {
+                                    <span class="banner_text3">@banner.Credit</span>
+                                }
+                            </span>
+                        </a>
+                                curr++;
+                    }
+                    <div class="banner_dots">
+                        <ul>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <li data-num="@(Model.Count - i - 1)"></li>
+                            }
+                        </ul>
+                        <div class="cache_form3"></div>
+                    </div>
+                </div>
+            </div>
+            <a class="slider3_right" href="#" style=""></a>
+            <a class="slider3_left" href="#" style="left: 0; right: 1004px; margin-left: auto; margin-right: auto;"></a>
+        </div>
+    }
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($("a.slider3_a").length <= 3) {
+                $(".slider3_left").css('display', 'none');
+                $('.slider3_right').css('display', 'none');
+            }
+
+            var maxWidth = $('.slider3_holder').width();
+            var singleWidth = 1024;
+            var visibleSide = ((maxWidth - singleWidth) / 2) - singleWidth;
+            var startLeft = -(singleWidth - visibleSide);
+            var currentLeft = startLeft;
+            var slideSpeed = 500;
+            var uniqueImgCount = $(".workArea").length - 2;
+            $(".slider3_in").width($("a.slider3_a").length * 1024);
+            var sliderInWidth = $(".slider3_in").width();
+            $('.slider3_in').css('left', startLeft);
+            $(".banner_dots ul li:last").addClass("current");
+
+            window.onresize = function (event) {
+                maxWidth = $('.slider3_holder').width();
+                singleWidth = 1024;
+                visibleSide = ((maxWidth - singleWidth) / 2) - singleWidth;
+                startLeft = -(singleWidth - visibleSide);
+                currentLeft = startLeft;
+                $('.slider3_in').css('left', startLeft);
+                //checkShadow($this.data("num") + 1);
+            }
+
+            var timerId = setTimeout(function slideGo() {
+                sliderRightClick(false, false);
+                timerId = setTimeout(slideGo, 4000);
+
+            }, 4000);
+
+
+            $(".slider3_left").click(function () {
+                if (!$(".slider3").hasClass("isAnimating")) {
+                    if (timerId) {
+                        clearInterval(timerId);
+                    }
+                    var $slider = $(this).parent().children(".slider3");
+                    var $sliderIn = $(this).parent().children(".slider3").children(".slider3_in");
+                    var leftPositionLastImage = -(uniqueImgCount * singleWidth - (startLeft + singleWidth));//6821
+                    if (currentLeft == startLeft) {
+                        $(".slider3").addClass("isAnimating");
+
+                        $(".banner_dots ul li:first").addClass("current");
+                        $sliderIn.animate({ left: (startLeft + singleWidth) }, slideSpeed, function () {
+                            setTimeout(function () {
+                                $(".slider3_in").css("left", leftPositionLastImage);
+                            }, 0);
+                            $(".slider3").removeClass("isAnimating");
+                        });
+                        checkShadow(0);
+                        currentLeft = leftPositionLastImage;
+                    }
+                    else {
+                        currentLeft = currentLeft + singleWidth;
+                        $(".slider3").addClass("isAnimating");
+                        $sliderIn.animate({ left: currentLeft }, slideSpeed, function () {
+                            $(".slider3").removeClass("isAnimating");
+                        });
+                    }
+                    var eq = ($sliderIn.width() - visibleSide - (-currentLeft) - singleWidth * 2) / singleWidth;
+
+                    $(".banner_text_part").stop(true, false);
+                    slideBannerText(eq, "100%", 450, "60%", "50%", 1100, 2, 1);
+                    checkShadow(-(eq));
+                }
+                return false;
+            });
+            $('.slider3_right').click(function (e) {
+                if (!$(".slider3").hasClass("isAnimating")) {
+                    sliderRightClick(true, true);
+                }
+                return false;
+            });
+
+            function sliderRightClick(stop, manualClick) {
+                if (manualClick) {
+                    clearInterval(timerId);
+                }
+                if (!stop || manualClick) {
+                    var $slider = $('.slider3_right').parent().children(".slider3");
+                    var $sliderIn = $('.slider3_right').parent().children(".slider3").children(".slider3_in");
+                    if (currentLeft <= -(sliderInWidth - singleWidth * 2 - visibleSide)) {
+                        currentLeft = startLeft;
+                    }
+                    else {
+                        currentLeft = currentLeft - singleWidth;
+                    }
+                    if (currentLeft == -(singleWidth * uniqueImgCount - startLeft)) {
+                        $(".slider3").addClass("isAnimating");
+                        $(".banner_dots ul li:last").addClass("current");
+                        $sliderIn.animate({ left: currentLeft }, slideSpeed, function () {
+                            setTimeout(function () {
+                                $(".slider3_in").css("left", startLeft);
+                            }, 0);
+                            $(".slider3").removeClass("isAnimating");
+                        });
+                        checkShadow($(".slider3 .workArea").length - 1);
+                        currentLeft = startLeft;
+                    }
+                    else {
+                        $(".slider3").addClass("isAnimating");
+                        $sliderIn.animate({ left: currentLeft }, slideSpeed, function () {
+                            $(".slider3").removeClass("isAnimating");
+                        });
+                    }
+
+
+                    var eq = ($sliderIn.width() - visibleSide - (-currentLeft) - singleWidth * 2) / singleWidth;
+                    if (manualClick) {
+                        $(".banner_text_part").stop(true, false);
+                        slideBannerText(eq, "0%", 450, "60%", "50%", 1200, 2, 1);
+                    }
+                    else {
+                        slideBannerText(eq, "0%", 450, "60%", "50%", 1500, 2, 1);
+                    }
+                    checkShadow(-(eq));
+
+                    return false;
+                }
+                clearInterval(timerId);
+            }
+
+            function checkShadow(eq) {
+                $(".workArea div").each(function () {
+                    if ($(this).css("opacity") < 1) {
+                        !$(this).animate({ opacity: 1 }, 800);
+                    }
+                })
+                $(".workArea div").eq(eq).animate({ opacity: 0 }, 800);
+
+            }
+
+            function slideBannerText(eq, firstActionAnimateLeft, firstActionAnimateSpeed, secondActionStartLeft, secondActionAnimateLeft, secondActionAnimateSpeed, param1, param2, _this) {
+                $(".banner_text_part").animate({ left: firstActionAnimateLeft, opacity: 0.1 }, firstActionAnimateSpeed, function () {
+
+                    $(".banner_dots ul li").removeClass("current");
+                    if (param2 != 0) {
+                        $(".banner_dots ul li").eq(eq - param1).addClass("current");
+                    }
+                    else {
+                        _this.addClass("current");
+                    }
+                    $(".bannerText").hide();
+                    if (param2 != 0) {
+                        $(".bannerText").eq(-(eq - param2)).show();
+                    }
+                    else {
+                        $(".bannerText").eq(_this.data("num")).show();
+                    }
+                    $(".banner_text_part").css("left", secondActionStartLeft).animate({ left: secondActionAnimateLeft, opacity: 1 }, secondActionAnimateSpeed);
+                });
+            }
+
+            $('.banner_dots ul li').click(function () {
+                sliderRightClick(true, false);
+                var prev = $(".banner_dots ul li.current");
+                $this = $(this);
+                if ($this.hasClass("current")) {
+                } else {
+                    checkShadow($this.data("num") + 1);
+
+                    var $sliderIn = $(".slider3_in");
+                    currentLeft = -($this.data("num") * singleWidth + singleWidth) + visibleSide;
+                    $(".slider3").addClass("isAnimating");
+                    $sliderIn.animate({ left: currentLeft }, slideSpeed, function () {
+                        $(".slider3").removeClass("isAnimating");
+                    });
+
+                    if (prev.data("num") > $this.data("num")) {
+                        slideBannerText($this.data("num"), "100%", 450, "60%", "50%", 1500, 0, 0, $this);
+                    }
+                    else {
+                        slideBannerText($this.data("num"), "0%", 450, "60%", "50%", 1500, 0, 0, $this);
+                    }
+                }
+                return false;
+            });
+        });
+
+    </script>
+</div>

@@ -1,0 +1,49 @@
+﻿@model Uco.Models.TravelInsurancePeriodListPage
+@{
+    Layout = "~/Views/Shared/_LayoutInsuranceHomepage.cshtml";
+    List<Uco.Models.TravelInsurancePeriodPage> travelInsurances = ViewBag.InsurancesList;
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+}
+
+<h1 class="heading_main"><span>@Html.Raw(Model.Title)</span></h1>
+<div class="text1">@Html.Raw(Model.Text)</div>
+
+@{
+    int counter = 0;
+}
+<div class="boxes_part">
+    <div class="boxes_part">
+        @for (int i = 0; i <= 3; i++)
+        {
+            counter++;
+            <div class="@(counter % 2 == 1 ? "float_right" : "float_left") box1">
+                <a href="@Url.Content(travelInsurances[i].Url)">
+                    <div class="box1_right">@(counter < 10 ? "0" : "")@counter</div>
+                    <div class="box_center">@Html.Raw(!string.IsNullOrEmpty(travelInsurances[i].DisplayName) ? travelInsurances[i].DisplayName.Replace("\n", "<br />") : "")</div>
+                    <div class="box_left_bg @(counter >= 5 ? "green_price" : "")">@travelInsurances[i].Price ₪</div>
+                    <div class="clear"></div>
+                </a>
+            </div>
+        }
+    </div>
+    @if (travelInsurances.Count > 4)
+    {
+        <h2 class="heading_second">
+            <span>@Html.Raw(RP.GetTextComponent("עמוד הבית - טקסט לפני הביטוח החמישי"))</span>
+        </h2>
+    }
+    <div class="boxes_part">
+        @for (int i = 4; i < travelInsurances.Count; i++)
+        {
+            counter++;
+            <div class="@(counter % 2 == 1 ? "float_right" : "float_left") box1">
+                <a href="@Url.Content(travelInsurances[i].Url)">
+                    <div class="box1_right">@(counter < 10 ? "0" : "")@counter</div>
+                    <div class="box_center">@Html.Raw(!string.IsNullOrEmpty(travelInsurances[i].DisplayName) ? travelInsurances[i].DisplayName.Replace("\n", "<br />") : "")</div>
+                    <div class="box_left_bg @(counter >= 5 ? "green_price" : "")">@travelInsurances[i].Price ₪</div>
+                    <div class="clear"></div>
+                </a>
+            </div>
+        }
+    </div>
+</div>

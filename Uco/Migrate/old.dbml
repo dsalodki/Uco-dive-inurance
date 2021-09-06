@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="iDive_HE_V1" Class="oldDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=COL\SQLEXPRESS;Initial Catalog=iDive_HE_V1;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="iDive_HE_V1ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.dbsCategories" Member="dbsCategories">
+    <Type Name="dbsCategory">
+      <Column Name="CategoryID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CategoryTitle" Type="System.String" DbType="NVarChar(300) NOT NULL" CanBeNull="false" />
+      <Column Name="CategoryShortDesc" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="CategoryDesc" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="TemplateID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="TemplateConfig" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ParentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CategoryLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderKey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsDivisionCat" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="HideChilds" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CategoryURL" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="NewWin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MoreTitle" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="EmailTitle" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LangID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PageSize" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="EnableShoppingChart" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EnableResponses" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FormID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GUIID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SystemPage" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EnableTicker" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EnableQuickSurvey" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsRootCategory" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TickerTitle" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="QuickSurveyTitle" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CategoryImgName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AttachedFile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SourceCatDisplay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderField" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnableMedia" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EnableFreeBox" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AutoSelectionType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AutoSelectionQuantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RandomAutoSelection" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CreateRSSChannel" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NettingCode" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="SSLRequired" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AbsoluteOrder" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FullTitle" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="TitleInH1Tag" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="NewWinWidth" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NewWinHeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PrintBreadcrumbs" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EnableSearch" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DisableDirectLink" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EnableRatings" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsHorizontalCat" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EnableComparison" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Discount" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="EnableParams" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EnableSocial" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dbsArticles" Member="dbsArticles">
+    <Type Name="dbsArticle">
+      <Column Name="ArticleID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(260) NOT NULL" CanBeNull="false" />
+      <Column Name="Summary" Type="System.String" DbType="NVarChar(3000)" CanBeNull="true" />
+      <Column Name="Body" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ArticleDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CategoryID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TitleLink" Type="System.String" DbType="VarChar(140)" CanBeNull="true" />
+      <Column Name="DisplayLink" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MarketPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="SalePrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="PriceWithDiscount" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="SalePriceDesc" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="SupplierID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ShippingFee" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="FormID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FormLinkTitle" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ArticleAuthor" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DiaplaySummaryAtArticle" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EnableQuantity" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FullImg" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DisplayFullImgAsIs" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FullImgCaption" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DisplayFullImgCaption" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AutoFullImgCaption" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MainImg" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DisplayMainImgAsIs" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MainImgCaption" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DisplayMainImgCaption" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AutoMainImgCaption" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MainImgSmall" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ListImgCaption" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DisplayListImgAsIs" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CreateMainImgSmall" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AutoListImgCaption" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DisplayListImgCaption" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DisplayDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DisplayEndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OrderKey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TitleInH1Tag" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CatalogNumber" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="LastUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dbsArticles_dbsCategories" Member="dbsArticles_dbsCategories">
+    <Type Name="dbsArticles_dbsCategory">
+      <Column Name="ArticleID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="HorizontalCatID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="OrderNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

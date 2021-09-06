@@ -1,0 +1,66 @@
+﻿@model Uco.Models.GalleryListPage
+@{
+    Layout = ViewBag.Layout;
+    Uco.Models.Pagination paging = ViewBag.Pagination;
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+    string link = Request.Url.Scheme + "://" + Request.Url.Authority + Request.RawUrl;
+}
+<div class="brdcms">
+    <ul>
+        <li>
+            <a href="/">@RP.T("Homepage.Breadcrumb")</a>
+        </li>
+        @foreach (var b in bradcrumbs)
+        {
+            <li>
+                <a href="@Url.Content(b.Url)">@b.Title</a>
+            </li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>
+
+<div class="page_main_heading"><h2>@ViewBag.H1</h2></div>
+<div class="topic1_text1 no_border">@Html.Raw(Model.Text)</div>
+<div class="topics2_listing">
+    <ul>
+
+        @{
+            int i = 0;
+        }
+        @foreach (var item in ViewBag.Items)
+        {
+            i++;
+            <li class="@(i % 3 == 0 ? "dfrnt_color" : "") @(i > 3 ? "padding_top_box" : "")" style="height: 195px;">
+                <div class="topics2_lstng_img1">
+                    @if (!string.IsNullOrEmpty(item.Pic))
+                    {
+                        <a href="@Url.Content(item.Url)"><img src="@Url.Content(SF.GetImageUrl(item.Pic, 202, 123, false, true))" alt=""></a>
+
+                    }
+                </div>
+                <div class="topics2_lstng_head"><a href="@Url.Content(item.Url)">@item.Title</a></div>
+            </li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>
+@Html.Partial("_Pagination", paging)
+
+<div class="cmptns_srch1_bott">
+    <ul>
+        <li>
+            <a href="mailto:?subject=Idive - @(Model.Title)&body=@(link)"><img src="/Content/DesignFiles/Idive/user_icon1.png" alt=""></a>
+        </li>
+        <li>
+            <a href="https://twitter.com/share" @(SF.GetLangCodeThreading() == "he-IL" ? "data-lang=he" : "") class="twitter-share-button">Tweet</a>
+            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+        </li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="topic1_load_more">
+    @Html.Action("_Banner", "PagePart", new { Num = 1, BannerGroup = "באנר בתחתית עמודי התוכן", pageId = ViewBag.ID })
+</div>
+
+

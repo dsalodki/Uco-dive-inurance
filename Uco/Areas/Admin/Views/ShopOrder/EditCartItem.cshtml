@@ -1,0 +1,20 @@
+﻿@model Uco.Models.ShopCartItem
+@{
+    ViewBag.Title = "הזמנות";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<h2>הזמנה מספר @ViewBag.OrderID עריכת מוצר</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.EditorForModel()
+    <p class="clear">
+        @Html.Hidden("OrderID", (int)ViewBag.OrderID)
+        <input type="submit" class="k-button" value="שמור" />
+    </p>
+}
+
+<div class="clear">
+    @Html.ActionLink("חזרה להזמנה", "Edit", new { ID = ViewBag.OrderID })
+</div>

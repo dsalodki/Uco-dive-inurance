@@ -1,0 +1,12 @@
+﻿@model int
+@{
+    List<SelectListItem> _list  = new List<SelectListItem>();
+    int endYear = DateTime.Now.Year + 4;
+    int startYear = DateTime.Now.Year;
+
+    for (int i = startYear; i < endYear; i++)
+    {
+        _list.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = i == Model });
+    }
+}
+@Html.DropDownListFor(model => model, _list, new { @class = "drop_down" })

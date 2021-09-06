@@ -1,0 +1,133 @@
+﻿@using System.Web.Mvc;
+
+@model Uco.Models.Certificate
+
+@{
+    ViewBag.Title = RP.T("DivePage.CertificateEdit.Title");
+    Layout = "~/Views/Shared/_LayoutDivePage.cshtml";
+
+    var error = (string)ViewBag.Error;
+}
+
+<div class="ui main text container">
+    <h1 class="ui header">
+        @RP.T("DivePage.CertificateEdit.Edit", "עריכת תעודה")
+        <a class="float" href="@Url.Action("CertificateList", "DivePage")" data-tooltip="@RP.T("DivePage.CertificateEdit.Back", "חזרה")" data-position="bottom center"><i class="arrow alternate left icon"></i></a>
+    </h1>
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <div class="ui negative message">@error</div>
+    }
+    @using (Html.BeginForm("CertificateEdit", "DivePage", FormMethod.Post, new { @class = "ui form", enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.ID)
+        <div class="field">
+            <label>@RP.T("DivePage.CertificateEdit.Type", "תעודת הסמכה לדרגה *")</label>
+            @Html.DropDownListFor(model => model.TypeOfCertificate, (SelectList)ViewBag.TypesOfCertificate, new { @class = "ui fluid dropdown" })
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.CertificateEdit.FrontPicture", "סריקה /תמונה צד חזית *")</label>
+            <!-- for validation because val() of <input type="file" always null-->
+            <input type="hidden" id="ImageFront" />
+            <img class="ui fluid image" src="@Model.CertificateImageFront" />
+            <div class="ui message" id="messageCertificateImageFront" style="display: none">
+                <div class="header">
+                    @RP.T("DivePage.CertificateEdit.FileSelected", "קובץ שנבחר")
+                </div>
+                <p id="nameCertificateImageFront"></p>
+            </div>
+            @Html.TextBoxFor(model => model.CertificateImageFront, null, new { type = "file", @class = "input-file-hidden", accept = "image/*" })
+            <label for="CertificateImageFront" class="text-centered fluid ui button basic">@RP.T("DivePage.CertificateEdit.UploadPrimaryImage", "העלאה סריקה /תמונה צד חזית")</label>
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.CertificateEdit.BackPicture", "סריקה / תמונה צד אחורי")</label>
+            <img class="ui fluid image" src="@Model.CertificateImageBack" />
+            <div class="ui message" id="messageCertificateImageBack" style="display: none">
+                <div class="header">
+                    @RP.T("DivePage.CertificateEdit.FileSelected", "קובץ שנבחר")
+                </div>
+                <p id="nameCertificateImageBack"></p>
+            </div>
+            @Html.TextBoxFor(model => model.CertificateImageBack, null, new { type = "file", @class = "input-file-hidden", accept = "image/*" })
+            <label for="CertificateImageBack" class="text-centered fluid ui button basic">@RP.T("DivePage.CertificateEdit.UploadBackImage", "העלאה סריקה / תמונה צד אחורי")</label>
+        </div>
+        <div class="ui error message"></div>
+    }
+    @if (Model.ID > 0)
+    {
+        <div class="ui stackable two column grid top-padding">
+            <div class="column">
+                <button onclick="submit()" class="ui primary fluid button button-marging">@RP.T("DivePage.CertificateEdit.Update", "עדכן")</button>
+            </div>
+            <div class="column">
+                <button class="ui fluid button button-marging" onclick="DeleteCertificate()">@RP.T("DivePage.CertificateEdit.Delete", "מחק")</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <button onclick="submit()" class="ui primary fluid button button-marging">@RP.T("DivePage.CertificateEdit.Update", "עדכן")</button>
+    }
+</div>
+
+<div class="ui modal" id="confirm">
+    <div class="header">@RP.T("DivePage.CertificateEdit.ConfirmDelete", "אשר מחיקה")</div>
+    <div class="content">
+        <p>@RP.T("DivePage.CertificateEdit.ConfirmDelete", "אשר מחיקה")</p>
+    </div>
+    <div class="actions">
+        <div class="ui approve button">@RP.T("DivePage.CertificateEdit.Approve", "מחק")</div>
+        <div class="ui cancel button">@RP.T("DivePage.CertificateEdit.Cancel", "בטל")</div>
+    </div>
+</div>
+
+
+<div class="ui modal">
+    <div class="header"></div>
+</div>
+@section Scripts {
+    <script>
+        (function () {
+            $('.ui.form')
+                .form({
+                    fields: {
+                        TypeOfCertificate: 'empty',
+                        ImageFront: 'empty',
+                    }
+                });
+
+            $('.approve').click(function () {
+                $('#confirm').modal('hide');
+                var id = $('#ID').val();
+                window.location.href = '@Url.Action("DeleteCertificate","DivePage", new { id = Model.ID })';
+            });
+
+            $('.cancel').click(function () {
+                $('#confirm').modal('hide');
+            });
+
+            $('#CertificateImageFront').change(function () {
+                var fileName = $(this).val();
+                $('#messageCertificateImageFront').show();
+                $('#nameCertificateImageFront').text(fileName);
+                $('#ImageFront').val(fileName);
+            });
+
+            $('#CertificateImageBack').change(function () {
+                var fileName = $(this).val();
+                $('#messageCertificateImageBack').show();
+                $('#nameCertificateImageBack').text(fileName);
+            });
+
+            $('#ImageFront').val('@Model.CertificateImageFront');
+        })(jQuery)
+
+        function DeleteCertificate() {
+            $('#confirm').modal('show');
+        }
+
+        function submit(){
+            $('form').submit();
+        }
+    </script>
+}

@@ -1,0 +1,93 @@
+﻿@{
+    int id = ViewBag.id;
+    ViewBag.Title = "הזמנות ביטוח ששולמו";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+    int count = 1;
+}
+<ul class="flow">
+    <li><a class="k-button" href="~/Admin/InsuranceCards/Index/-1">הכל</a></li>
+    <li class="sep">>></li>
+    @foreach (Uco.Models.InsuranceCardProgram program in Enum.GetValues(typeof(Uco.Models.InsuranceCardProgram)))
+    {
+
+        if ((int)program != 0)
+        {
+            count++;
+            <li><a class="k-button" href="~/Admin/InsuranceCards/Index/@((int)program)">@(UcoString.GetDescription((Uco.Models.InsuranceCardProgram)program))</a></li>
+            if(count != Enum.GetValues(typeof(Uco.Models.InsuranceCardProgram)).Length)
+            {
+                <li class="sep">>></li>
+                }
+
+        }
+    }
+
+
+</ul>
+@Html.ScriptBundle(
+        "~/Scripts/Custum/InsuranceCards.js"
+    )
+
+@if (id != -1)
+{
+    <h2>@UcoString.GetDescription((Uco.Models.InsuranceCardProgram)id)</h2>
+}
+else
+{
+    <h2>הכל</h2>
+}
+
+
+@using (Html.BeginForm("CSVCardExport", "InsuranceCards", FormMethod.Post, new { style = "display: inline;" }))
+{
+    @Html.Hidden("CSVCardExportText", "")
+    <input type="submit" value="יצוא דוח הטבעת כרטיסים(יצוא מסמן כהודפס)" class="k-button" />
+}
+@using (Html.BeginForm("CSVAddressExport", "InsuranceCards", FormMethod.Post, new { style = "display: inline;" }))
+{
+    @Html.Hidden("CSVAddressExportText", "")
+    <input type="submit" value="יצוא דוח כתובות" class="k-button" />
+}
+<div class="clear"></div>
+<br />
+
+
+@(Html.Kendo().Grid<Uco.Models.TravelInsurance>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource.Ajax()
+            .Model(model => { model.Id(item => item.ID); })
+            .Sort(sort => sort.Add("SubmitDate").Descending())
+            .Read(r => r.Action("_AjaxIndex", "InsuranceCards", new { Program = id }))
+            .Destroy(r => r.Action("_AjaxDelete", "InsuranceCards"))
+            .PageSize(100)
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.ID).Title("<input type='checkbox' class='ads_select_checkbox_all' />").ClientTemplate("<input type='checkbox' class='ads_select_checkbox' data-id='#= ID #' />").Sortable(false);
+        columns.Bound(r => r.ID).Width(20);
+        columns.Bound(r => r.SumForPay).Title("תשלום");
+        columns.Bound(r => r.Phone).Title("טל'");
+        columns.Bound(r => r.Mail).Title("דואל");
+        columns.Bound(r => r.IdNumber).Title("ת.ז");
+        columns.Bound(r => r.UserFname).Width(20).Title("ש.פ"); ;
+        columns.Bound(r => r.UserLname).Width(20).Title("ש.מ");
+        columns.Bound(r => r.SubmitDate).Format("{0:dd/MM/yyyy}").Title("ת.הזמנה");
+        columns.Bound(r => r.InsuranceDate).Format("{0:dd/MM/yyyy}").Title("ת.ת ביטוח");
+        columns.Bound(r => r.InsuranceDateEnd).Format("{0:dd/MM/yyyy}").Title("ס. ביטוח");
+        //columns.Bound(r => r.AgentID).ClientTemplate("# if (AgentID != 0) { # #= AgentID # # } #").Width(20);
+        columns.Bound(r => r.AutorizationNum).Title("טרנז'"); ;
+
+        columns.Template(r => r.ID).ClientTemplate(
+            "<a class='k-button' href='" + Url.Action("Edit", "InsuranceCards") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+        ).Width(100);
+        columns.Command(commands =>
+        {
+            commands.Destroy();
+        }).Width(100);
+    })
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Groupable()
+)

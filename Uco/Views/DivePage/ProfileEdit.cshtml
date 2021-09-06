@@ -1,0 +1,110 @@
+﻿@using Uco.Models;
+
+@model User
+
+@{
+    ViewBag.Title = RP.T("DivePage.ProfileEdit.Title");
+    Layout = "~/Views/Shared/_LayoutDivePage.cshtml";
+
+    var error = (string)ViewBag.Error;
+}
+
+
+<div class="ui main text container">
+    <h1 class="ui header">
+        @RP.T("DivePage.ProfileEdit.Edit", "עידכון פרופיל משתמש")
+        <a class="float" href="@Url.Action("Index", "DivePage")#page_4" data-tooltip="@RP.T("DivePage.ProfileEdit.Back", "חזרה")" data-position="bottom center"><i class="arrow alternate left icon"></i></a>
+    </h1>
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <div class="ui negative message">@error</div>
+    }
+    @using (Html.BeginForm("ProfileEdit", "DivePage", FormMethod.Post, new { @class = "ui form", enctype = "multipart/form-data" }))
+    {
+        <div class="field">
+            <label>@RP.T("DivePage.ProfileEdit.FirstName", "שם פרטי *")</label>
+            @Html.TextBoxFor(m => m.FirstName)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.ProfileEdit.LastName", "שם משפיה *")</label>
+            @Html.TextBoxFor(m => m.LastName)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.ProfileEdit.FullNameEnglish", "שם מלא באנגלית *")</label>
+            @Html.TextBoxFor(m => m.FullNameEnglish)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.ProfileEdit.Email", @"דוא""ל *")</label>
+            @Html.TextBoxFor(m => m.Email)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.ProfileEdit.Mobile", "נייד *")</label>
+            @Html.TextBoxFor(m => m.Phone)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.ProfileEdit.City", "עיר")</label>
+            @Html.DropDownListFor(model => model.City, (SelectList)ViewBag.Cities, new { @class = "ui fluid dropdown search selection" })
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.ProfileEdit.ProfileImage", "תמונת פרופיל")</label>
+            <img class="ui fluid image" src="@Model.UserImage" />
+            <div class="ui message" id="messageUserImage" style="display: none">
+                <div class="header">
+                    @RP.T("DivePage.DiveAdd.FileSelected", "קובץ שנבחר")
+                </div>
+                <p id="nameUserImage"></p>
+            </div>
+            @Html.TextBoxFor(model => model.UserImage, null, new { type = "file", @class = "input-file-hidden", accept = "image/*" })
+            <label for="UserImage" class="text-centered fluid ui button basic">@RP.T("DivePage.ProfileEdit.UserImage", "העלאה תמונת פרופיל")</label>
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.ProfileEdit.BannerImage", "תמונת באנר")</label>
+            <img class="ui fluid image" src="@Model.UserBanner" />
+            <div class="ui message" id="messageUserBanner" style="display: none">
+                <div class="header">
+                    @RP.T("DivePage.ProfileEdit.FileSelected", "קובץ שנבחר")
+                </div>
+                <p id="nameUserBanner"></p>
+            </div>
+            @Html.TextBoxFor(model => model.UserBanner, null, new { type = "file", @class = "input-file-hidden", accept = "image/*" })
+            <label for="UserBanner" class="text-centered fluid ui button basic">@RP.T("DivePage.ProfileEdit.UserBanner", "העלאה תמונת באנר")</label>
+        </div>
+        <div class="ui error message" id="errorsMessage"></div>
+        <div class="field">
+            <button type="submit" class="ui primary button fluid button-marging">@RP.T("DivePage.ProfileEdit.Update", "עדכן")</button>
+        </div>
+    }
+</div>
+@section Scripts{
+    <script>
+        (function () {
+
+            $('.ui.form')
+                .form({
+                    fields: {
+                        FirstName: 'empty',
+                        LastName: 'empty',
+                        FullNameEnglish: 'empty',
+                        Email: ['empty', 'email'],
+                        Phone: 'empty',
+                        City: 'empty',
+                    }
+                });
+
+            $('#UserImage').change(function () {
+                var fileName = $(this).val();
+                $('#messageUserImage').show();
+                $('#nameUserImage').text(fileName);
+            });
+            $('#UserBanner').change(function () {
+                var fileName = $(this).val();
+                $('#messageUserBanner').show();
+                $('#nameUserBanner').text(fileName);
+            });
+
+            $('#City').dropdown({
+                match: "text"
+            });
+        })(jQuery)
+    </script>
+}

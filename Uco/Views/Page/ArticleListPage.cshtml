@@ -1,0 +1,67 @@
+﻿@model Uco.Models.ArticleListPage
+@{
+    Layout = ViewBag.Layout;
+    string link = Request.Url.Scheme + "://" + Request.Url.Authority + Request.RawUrl;
+}
+
+@if (Model.AddingFacebookComments == true)
+{
+
+    @section BodyStart
+    {
+        @*facebook comments*@
+        <div id="fb-root"></div>
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v2.3&appId=203720779674228";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        @*facebook comments*@
+    }
+}
+
+
+@if (!string.IsNullOrEmpty(Model.PageTemplate) && Model.PageTemplate != "ArticleListPage.cshtml")
+{
+    @Html.Partial("~/Views/Page/" + Model.PageTemplate, Model)
+
+    string PageType = Model.PageTemplate.ToLower().Replace(".cshtml", "").Replace("article", "article_").Replace("listpage", "");
+    Page.PageType = PageType;
+
+}
+
+else
+{
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+    <div class="brdcms">
+    <ul>
+        <li>
+            <a href="/">@RP.T("Homepage.Breadcrumb")</a>
+        </li>
+        @foreach (var b in bradcrumbs)
+        {
+            <li>
+                <a href="@Url.Content(b.Url)">@b.Title</a>
+            </li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>
+    <div class="clear"></div>
+    <div id="content">
+        <div class="page_main_heading"><h1>@ViewBag.H1</h1></div>
+        <div class="editor_html">
+            @Html.Raw(Model.Text)
+        </div>
+        <div class="clear"></div>
+        <ul>
+            @foreach (Uco.Models.AbstractPage item  in ViewBag.Items)
+            {
+                <li><a href="@Url.Content(item.Url)">@item.Title</a></li>
+            }
+        </ul>
+    </div>
+}

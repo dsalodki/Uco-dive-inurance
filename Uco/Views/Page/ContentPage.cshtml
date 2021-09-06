@@ -1,0 +1,36 @@
+﻿@model Uco.Models.ContentPage
+@{
+    Layout = ViewBag.Layout;
+    var bradcrumbs = SF.GetBradcrumbs(Model);
+}
+<div class="brdcms">
+    <ul>
+        <li>
+            <a href="/">@RP.T("Homepage.Breadcrumb")</a>
+        </li>
+        @foreach (var b in bradcrumbs)
+        {
+            <li>
+                <a href="@Url.Content(b.Url)">@b.Title</a>
+            </li>
+        }
+    </ul>
+    <div class="clear"></div>
+</div>
+
+<div id="content">
+    <div class="page_main_heading"><h1>@ViewBag.H1</h1></div>
+    <div class="editor_html">
+        @if (string.IsNullOrEmpty(Model.Text))
+        {
+            @Html.Raw(Model.Text)
+        }
+        else
+        {
+            @Html.Raw(Model.Text.Replace("&lt;", "<").Replace("&gt;", ">")) ;
+        }
+    </div>
+    <div class="clear"></div>
+    @Html.DisplayFor(model => model.Gallery)
+    <div class="clear"></div>
+</div>

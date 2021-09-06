@@ -1,0 +1,185 @@
+﻿@using Uco.Models;
+
+@model Dive
+
+@{
+    ViewBag.Title = RP.T("Admin.DivePage.DiveAdd.Title");
+    Layout = "~/Views/Shared/_LayoutDivePage.cshtml";
+
+    var error = (string)ViewBag.Error;
+}
+
+<div class="ui main text container">
+    <h1 class="ui header">
+        @RP.T("DivePage.DiveAdd.Add", "הוסף צלילה")
+        <a class="float" href="@Url.Action("Index", "DivePage")#page_3" data-tooltip="@RP.T("DivePage.DiveAdd.Back", "חזרה")" data-position="bottom center"><i class="arrow alternate left icon"></i></a>
+    </h1>
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <div class="ui negative message">@error</div>
+    }
+    @using (Html.BeginForm("DiveAdd", "DivePage", FormMethod.Post, new { @class = "ui form", enctype = "multipart/form-data" }))
+    {
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.Date", "תאריך צלילה *")</label>
+            <div class="ui calendar" id="date">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    @Html.TextBoxFor(model => model.DiveDate, new { @Value = Model.DiveDate.ToString("dd/MM/yyyy") })
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.Time", "שעת צלילה *")</label>
+            <div class="ui calendar" id="time">
+                <div class="ui input left icon">
+                    <i class="clock icon"></i>
+                    @Html.TextBoxFor(model => model.DiveTime)
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.Location", "מיקום *")</label>
+            @Html.TextBoxFor(m => m.DivePlace)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.Site", "אתר צלילה *")</label>
+            @Html.TextBoxFor(m => m.DivingSite)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.ClubShip", "מועדון צלילה / ספינת צוללים *")</label>
+            @Html.TextBoxFor(m => m.Organization)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.AirTank", "מיכל אוויר 10/ 15/ 20")</label>
+            @Html.DropDownListFor(model => model.AirTank, (SelectList)ViewBag.AirTanks, new { @class = "ui fluid dropdown" })
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.AirDiveOrNitrox", "צלילת אוויר או נייטרוקס")</label>
+            @Html.DropDownListFor(model => model.AirDiveOrNitrox, (SelectList)ViewBag.AirDiveOrNitrox, new { @class = "ui fluid dropdown" })
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.MaximumDivingDepth", "עומק צלילה מקסימלי")</label>
+            <div class="ui right labeled input">
+                @Html.TextBoxFor(model => model.MaximumDivingDepthMeter, new { @type = "number", min = "0" })
+                <div class="ui basic label">
+                    @RP.T("DivePage.DiveAdd.Metres", "מטר")
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.DiveTimeMinutes", "זמן צלילה")</label>
+            <div class="ui right labeled input">
+                @Html.TextBoxFor(model => model.DiveTimeMinutes, new { @type = "number", min = "0" })
+                <div class="ui basic label">
+                    @RP.T("DivePage.DiveAdd.Minutes", "דקות")
+                </div>
+            </div>
+
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.Partner", "בן זוג לצלילה")</label>
+            @Html.TextBoxFor(m => m.DivingPartner)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.Impressions", "רשמים מהצלילה")</label>
+            @Html.TextAreaFor(m => m.ImpressionsFromDive)
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.ValidateType", "בחר סוג אימות *")</label>
+            @Html.DropDownListFor(model => model.ValidateType, (SelectList)ViewBag.ValidateTypes, new { @class = "ui fluid dropdown" })
+        </div>
+        <div class="field">
+            <label id="validate">@RP.T("DivePage.DiveAdd.Image", "קבלה של מועדון צלילה *")</label>
+            <img class="ui fluid image" src="@Model.ValidateImage" />
+            <div class="ui message" id="messageValidateImage" style="display: none">
+                <div class="header">
+                    @RP.T("DivePage.DiveAdd.FileSelected", "קובץ שנבחר")
+                </div>
+                <p id="nameValidateImage"></p>
+            </div>
+            @Html.TextBoxFor(model => model.ValidateImage, null, new { type = "file", @class = "input-file-hidden", accept = "image/*" })
+            <label for="ValidateImage" class="text-centered fluid ui button basic">@RP.T("DivePage.DiveAdd.ValidateImage", "העלאה")</label>
+        </div>
+        <div class="field ui checked checkbox">
+            @Html.CheckBoxFor(model => model.AcceptTerms)
+            <label for="AcceptTerms">@RP.T("DivePage.DiveAdd.AcceptTerms", "אני מצהיר כי כל הפרטים בטופס זה נכונים והועלו על ידי ואני אחראי לתוכנם")</label>
+        </div>
+        <div class="field">
+            <label>@RP.T("DivePage.DiveAdd.Signature", "חתימת הצולל *")</label>
+            <div id="sigDiv" class="border"></div>
+            @Html.HiddenFor(m => m.SignatureData)
+        </div>
+        <div class="ui error message"></div>
+        <div class="field">
+            <button type="submit" class="ui primary button fluid button-marging">@RP.T("DivePage.DiveAdd.AddDiving", "הוסף צלילה")</button>
+        </div>
+    }
+</div>
+@section Scripts{
+    <script src="~/Scripts/jSignature/jSignature.min.js"></script>
+    <script src="~/Scripts/jSignature/modernizr.js"></script>
+    <script>
+        (function () {
+            var signature = $("#sigDiv").jSignature({ 'UndoButton': true });
+
+            var maxDate = new Date();
+            $('#date').calendar({
+                type: 'date',
+                maxDate: maxDate,
+                monthFirst: false,
+            });
+
+            $('#time').calendar({
+                type: 'time',
+                ampm: false
+            });
+
+            $('option[value="0"]').prop('disabled', true);
+            $('option[value="0"]').prop("selected", true);
+
+            $('#ValidateType').change(function () {
+                var type = $(this).val();
+                switch (type) {
+                    case "@((int)ValidateType.Receipt)":
+                        $('#validate').text('@RP.T("DivePage.DiveAdd.Receipt", "צילום   קבלה לשרותי המועדון")');
+                        break;
+                    case "@((int)ValidateType.Selfie)":
+                        $('#validate').text('@RP.T("DivePage.DiveAdd.Selfie", "צילום סלפי על רקע שלט מועדון")');
+                        break;
+                    case "@((int)ValidateType.ExternalPage)":
+                        $('#validate').text('@RP.T("DivePage.DiveAdd.ExternalPage", "יומן צלילות מודפס")');
+                        break;
+                }
+            });
+
+            $('#sigDiv').change(function () {
+                if (signature.jSignature('getData', 'native').length == 0) {
+                    $('#SignatureData').val('');
+                } else {
+                    $('#SignatureData').val(signature.jSignature('getData'));
+                }
+            });
+
+            $('.ui.form')
+                .form({
+                    fields: {
+                        DateOfDive: 'empty',
+                        DivePlace: 'empty',
+                        DivingSite: 'empty',
+                        Organization: 'empty',
+                        ValidateType: 'empty',
+                        ValidateImage: 'empty',
+                        AcceptTerms: 'checked',
+                        SignatureData: 'empty'
+                    }
+                });
+
+            $('#ValidateImage').change(function () {
+                var fileName = $(this).val();
+                $('#messageValidateImage').show();
+                $('#nameValidateImage').text(fileName);
+            });
+        })(jQuery)
+    </script>
+}

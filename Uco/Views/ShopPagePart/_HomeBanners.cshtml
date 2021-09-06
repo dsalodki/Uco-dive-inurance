@@ -1,0 +1,13 @@
+﻿@model List<Uco.Models.HomeBanner>
+<div class="top_left_part dn">
+    <div class="top_left_fixd">
+        <div class="top_left_text"></div>
+        <div class="orange_left_btn"><a href="#"><img src="/Content/DesignFiles/top_left_orange_btn.png" alt=""></a></div>
+    </div>
+    <ul class="bg_ul">
+    @foreach(Uco.Models.HomeBanner item in Model)
+    {
+        <li data-id="@item.ID" data-img="@Html.Encode(item.Pic)" data-title="@Html.Encode(item.Title)" data-url="@Html.Encode(item.Url)"></li>
+    }
+    </ul>
+</div>

@@ -1,0 +1,40 @@
+﻿Localization.
+
+Use web.config key <add key="AutoAddTranslations" value="true|false" /> to swith betwen auto creation and regular mode.
+In regular mode values taken from localization default values. If where is no default value - key name used.
+In auto creation mode values taken from database translation table. If no value in translation table - from default value. If where is no default value - key name used.
+
+Doing development use AutoAddTranslations = false to make shure you have default values.
+Doing testing use AutoAddTranslations = true.
+
+Doing development translate default values using google translate.
+
+1. Views
+
+	a. For 1 view only use @RP.TVL("Title").
+	    It will localize text same as @RP.T("Areas.Admin.Views.Domain.Title")
+		Where "Areas.Admin.Views" - is path to View, "Domain" - View name, "Title" - localized value.
+
+	b. For global values use @RP.TVG("Title") in Area.
+	    It will localize text same as @RP.T("Areas.Admin.Views.Global.Title")
+
+		Where "~/Areas/Admin/Views/Domain" path to view and "Domain.resx" view name.
+	    Store view default values in "~/Areas/Admin/Views/Domain/LocalResources/Domain.resx".
+		Store global default falues in "~/Areas/Admin/Views/Domain/LocalResources/Global.resx".
+
+2. Model
+
+	a. Models localized automaticly.
+		Names - "Models.ModelName.Name"
+		Prompt - "Models.Prompt.Name" 
+		ValidationAttribute - "Models.ModelName.FieldName.ValidationType" 
+
+	b. Default values stored in "~/Models/Resources/" folder as .resx files.
+
+3. Controler
+
+	a. To localize controller text use @RP.TC("Title")
+		Where "Areas.Admin.Controller" - path to controller, "Domain" - controller name, "Title" - localized value.
+
+	b. Store default falues in "~/Areas/Admin/Views/Domain/LocalResources/Controller.resx"
+		Where "~/Areas/Admin/Views/Domain" path to controller views.

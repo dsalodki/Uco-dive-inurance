@@ -1,0 +1,104 @@
+﻿@using Kendo.Mvc.UI;
+@using Kendo.Mvc;
+@{
+    bool RTL = SF.AdminIsRTL();
+
+    string Skin = System.Configuration.ConfigurationManager.AppSettings["SkinDefault"];
+    if (Session["SkinSelectList"] != null) { Skin = Session["SkinSelectList"] as string; }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin | @ViewBag.Title</title>
+    <meta charset="utf-8" />
+    @if (RTL)
+    {
+        @Html.CssBundle(
+            "~/Content/Kendo/2014.1.318/kendo.common.min.css",
+            "~/Content/kendo/2014.1.318/kendo." + Skin + ".min.css",
+            "~/Areas/Admin/Content/uco.css",
+            "~/Content/Kendo/2014.1.318/kendo.rtl.min.css",
+                  "~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css",    
+            "~/Areas/Admin/Content/uco.rtl.css"
+        )
+    }
+    else
+    {
+        @Html.CssBundle(
+            "~/Content/Kendo/2014.1.318/kendo.common.min.css",
+            "~/Content/kendo/2014.1.318/kendo." + Skin + ".min.css",
+            "~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css",            
+            "~/Areas/Admin/Content/uco.css"
+        )
+    }
+    @Html.ScriptBundle(
+        "~/Scripts/Kendo/2014.1.318/jquery.min.js",
+        "~/Scripts/Kendo/2014.1.318/kendo.web.min.js",
+        "~/Scripts/ckeditor/ckeditor.js",
+        "~/Scripts/ckfinder/ckfinder.js",
+        "~/Scripts/Kendo/2014.1.318/kendo.aspnetmvc.min.js",
+        "~/Scripts/kendo/2014.1.318/cultures/kendo.culture." + SF.GetLangCodeThreading() + ".min.js",
+        "~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.js",
+        "~/Areas/Admin/Content/admin.js"
+    )
+
+    <script type="text/javascript">
+        kendo.culture("@(SF.GetLangCodeThreading())");
+    </script>
+    @RenderSection("scripts", required: false)
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+</head>
+<body class="@(RTL ? "k-rtl" : "k-ltr")">
+    <!--[if lt IE 8]><div class="ie67"><p style='font-weight:bold; font-size:20px; padding:0 10px; text-align:center; margin:20px 0 20px; color:red;'>Your using old and unsuported browser. Upgrade you browser!<br/><a href='http://www.microsoft.com/windows/internet-explorer/default.aspx'>Click here to upgrade.</a></p></div><![endif]-->
+    <div id="page">
+        <div id="header">@Html.Partial("_Menu")<div id="header_logof">@Html.Partial("_LogOnPartial")</div></div>
+        <div id="content">
+            @if (!string.IsNullOrEmpty(ViewBag.MessageRed))
+            {
+                <div class="message_red">
+                    @ViewBag.MessageRed
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(ViewBag.MessageYellow))
+            {
+                <div class="message_yellow">
+                    @ViewBag.MessageYellow
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(ViewBag.MessageGreen))
+            {
+                <div class="message_green">
+                    @ViewBag.MessageGreen
+                </div>
+            }
+            <div class="in_content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>	
+	<script>
+		var sessionTimeout;
+		sessionTimeout = window.setTimeout(function () {
+			alert("Session of @(Session.Timeout) min end. You will be redirected to login page.");
+			window.location.href = '/Admin/Main/LogOut';
+		}, @(Session.Timeout) * 1000 * 60);
+		$("body").click(function() {
+			clearTimeout(sessionTimeout);
+			sessionTimeout = window.setTimeout(function () {
+				alert("Session of @(Session.Timeout) min end. You will be redirected to login page.");
+				window.location.href = '/Admin/Main/LogOut';
+			}, @(Session.Timeout) * 1000 * 60);
+		});
+		$("body").keypress(function(){
+			clearTimeout(sessionTimeout);
+			sessionTimeout = window.setTimeout(function () {
+				alert("Session of @(Session.Timeout) min end. You will be redirected to login page.");
+				window.location.href = '/Admin/Main/LogOut';
+			}, @(Session.Timeout) * 1000 * 60);
+		});
+	</script>
+</body>
+</html>

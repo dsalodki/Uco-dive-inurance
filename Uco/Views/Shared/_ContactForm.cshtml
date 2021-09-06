@@ -1,0 +1,98 @@
+﻿@{
+    Uco.Models.ContactSmallForm2 csf = new Uco.Models.ContactSmallForm2();
+}
+
+<style>
+    .g-recaptcha-div {
+    transform: scale(0.8);
+    transform-origin: 107% 20%;
+}
+</style>
+
+@if (RP.GetCurrentSettings().ShowHomepageContactBox)
+{
+    <div class="right_sec_form">
+        <div class="heading">@RP.T("View.Shared._ContactForm.Title")</div>
+        @using (Ajax.BeginForm("_SmallFormAdd2", "PagePart", null, new AjaxOptions
+        {
+            UpdateTargetId = "smal_form_update_2",
+            InsertionMode = InsertionMode.Replace,
+            LoadingElementId = "smal_form_loading_2",
+            OnFailure = "handleError_smallformadd2",
+            HttpMethod = "POST"
+
+        }, new { @class = "form1" }))
+        {       <div id="smal_form_update_2">
+
+            <div class="form_text1">
+                @RP.Text("אתר תוכן - טופס צור קשר - טקסט 1")
+            </div>
+            <div class="form_text2">
+                @RP.Text("אתר תוכן - טופס צור קשר - טקסט 2")
+            </div>
+
+            <div class="row">
+                <div class="editor-label">@RP.T("View.Shared._ContactForm.Form.Name"):</div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => csf.ContactName, new { @class = "single-line" })
+                    @Html.ValidationMessageFor(model => csf.ContactName)
+                </div>
+                <div class="clear"></div>
+
+            </div>
+            <div class="row">
+                <div class="editor-label">@RP.T("View.Shared._ContactForm.Form.Phone"):</div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => csf.ContactPhone, new { @class = "single-line" })
+                    @Html.ValidationMessageFor(model => csf.ContactPhone)
+                </div>
+                <div class="clear"></div>
+                <span class="field-validation-error" data-valmsg-for="name"></span>
+            </div>
+            <div class="row">
+                <div class="editor-label">@RP.T("View.Shared._ContactForm.Form.Price"):</div>
+                <div class="editor-field">
+                    @Html.EditorFor(m => csf.ContactCommentField1, "ContactSubjects")
+                </div>
+                <div class="clear"></div>
+                <span class="field-validation-error" data-valmsg-for="name"></span>
+            </div>
+            <div class="row">
+                <div class="editor-label">@RP.T("View.Shared._ContactForm.Form.Email"):</div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => csf.ContactEmail, new { @class = "single-line" })
+                    @Html.ValidationMessageFor(model => csf.ContactEmail)
+                </div>
+                <div class="clear"></div>
+                <span class="field-validation-error" data-valmsg-for="name"></span>
+            </div>
+            <div class="row">
+                <div class="editor-label">@RP.T("View.Shared._ContactForm.Form.Comments"):</div>
+                <div class="editor-field">
+                    @Html.TextAreaFor(m => csf.ContactCommentField2, new { @class = "multi-line" })
+                </div>
+                <div class="clear"></div>
+                <span class="field-validation-error" data-valmsg-for="name"></span>
+            </div>
+            <div class="row">
+                <label type="text" name="message" id="error_message_smallformadd2" style="display:none; color: red;"> </label>
+                <div class="g-recaptcha g-recaptcha-div" data-sitekey="6LfGNLwUAAAAAF8T4QinVWsOqgU6VE15mhGZNDZk"></div>
+            </div>
+            <div id="smal_form_loading_2" style="text-align: center;" class="dn">...@RP.T("View.Shared._ContactForm.Loading")...</div>
+            <div class="send">
+                <input type="image" src="/Content/DesignFiles/Idive/form1_btn.png" width="79" height="27" alt="Send">
+            </div>
+        </div>
+        }
+    </div>
+}
+
+<script>
+        function handleError_smallformadd2(error) {
+            if (error && error.responseText != '') {
+                var errorInput = document.getElementById("error_message_smallformadd2");
+                errorInput.innerHTML = JSON.parse(error.responseText).errors;
+                errorInput.style.display = "block";
+            }
+        }
+</script>

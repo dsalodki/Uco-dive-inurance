@@ -1,0 +1,10 @@
+﻿@model Uco.Models.Captcha
+<div class="editor-label">
+    @Html.LabelFor(model => model.CaptchaValue)
+</div>
+<div class="editor-field">    
+    @Html.TextBoxFor(m => m.CaptchaValue, new { @class = "captcha_input" })
+    @Html.ValidationMessageFor(model => model.CaptchaValue)
+    <div class="clear"></div>
+    <img src='@Url.Content("~/Captcha/Show")' alt="" class="captcha_img" />
+</div>

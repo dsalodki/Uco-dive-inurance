@@ -1,0 +1,6 @@
+﻿@model int
+@{
+    List<SelectListItem> _list = SF.TravelInsurancePeriodListWithPrices(Model.ToString());
+}
+
+@Html.DropDownListFor(model => model, _list, new { @class = "drop_down" })

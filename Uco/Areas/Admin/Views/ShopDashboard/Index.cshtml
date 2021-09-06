@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+<style  type="text/css">
+    .in_content { padding: 0 !important; }
+</style>
+@if(!string.IsNullOrEmpty(ViewBag.M))
+{
+<div class="allert" style="background-color:#eed0d0; padding:3px 15px; color:red; font-weight:bold;">
+    @ViewBag.M
+</div>
+}
+<div class="dashboard_wrap">
+    <div class="dashboard_h"><img alt="" src="/Areas/Admin/Content/images/ico-dashboard.png" /> לוח בקרה</div>
+    @*<div class="dashboard_block">@Html.Partial("_Upgrade")</div>*@
+    @*@Html.Action("_SettingsWarnings","ShopDashboard")*@
+    <div class="dashboard_side_right"><div class="dashboard_wrap">
+        <div class="dashboard_table_h"><img alt="" src="/Areas/Admin/Content/images/calculator.png" /> ממתין לטיפול</div>
+        <div class="dashboard_block">
+            <div class="dashboard_block_h">פניות ממתינות לטיפול</div>
+            @(Html.Kendo().Grid<Uco.Models.Contact>()
+                .Name("ContactGrid")
+                        .DataSource(dataSource =>
+                                dataSource.Ajax()
+                                    .Model(model => { model.Id(item => item.ID); })
+                                                                            .Read(r => r.Action("_AjaxContactNotDone", "ShopDashboard"))
+                            )                
+                .Columns(columns =>
+                {
+                    columns.Bound(r => r.ID).Title("ID").Width(50);
+                    columns.Bound(r => r.ContactDate);
+                    columns.Bound(r => r.ContactName);
+                    columns.Bound(r => r.ContactEmail);
+                    columns.Bound(r => r.ContactPhone);
+                    columns.Command(commands =>
+                    {
+                        commands.Edit();
+                        commands.Destroy();
+                        //commands.Custom("edit").ButtonType(GridButtonType.BareImage).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("Details", "Contact");
+                        //commands.Custom("update").ButtonType(GridButtonType.BareImage).Ajax(true).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("_AjaxContactNotDoneMark", "ShopDashboard");
+                    })
+                    .Title("פרטים").Width(30);
+                })
+                .Pageable(r => r.PageSizes(new int[] { 5 }))
+                //.Events(events => events.OnComplete("onContactGridComplete"))
+            )
+            @{ <text> 
+            function onContactGridComplete(e) {
+               if (e.name == "update") {
+                    var $grid = $("#ContactGrid").data("tGrid");
+                    $grid.rebind();
+               }
+            }
+            </text> }
+        </div>
+        <div class="dashboard_block">
+            <div class="dashboard_block_h">הזמנות ממתינות לתשלום</div>
+            @(Html.Kendo().Grid<Uco.Models.ShopOrder>()
+                .Name("OrderNotPayedOrder")
+                        .DataSource(dataSource =>
+                        dataSource.Ajax()
+                            .Model(model => { model.Id(item => item.ID); })
+                                                    .Read(r => r.Action("_AjaxOrderNotPayed", "ShopDashboard"))
+                    )
+                    .Columns(columns =>
+                {
+                    columns.Bound(r => r.ID).Title("ID").Width(50);
+                    columns.Bound(r => r.ShopTotal).Title("סכום");
+                    columns.Bound(r => r.ShopFirstName).Title("שם פרטי");
+                    columns.Bound(r => r.ShopLastName).Title("שם משפחה");
+                    columns.Template(r => r.ID).ClientTemplate(
+                        "<a class='k-button' href='" + Url.Action("_AjaxOrderNotPayedMark", "ShopDashboard") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+                    ).Width(100);
+                    columns.Command(commands =>
+                    {
+                        commands.Edit();
+                        commands.Destroy();
+                        //commands.Custom("update").ButtonType(GridButtonType.BareImage).Ajax(true).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("_AjaxOrderNotPayedMark", "ShopDashboard");
+                        //commands.Custom("delete").ButtonType(GridButtonType.BareImage).Ajax(true).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("_AjaxOrderCancelMark", "ShopDashboard");
+                        //commands.Custom("edit").ButtonType(GridButtonType.BareImage).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("Edit", "Contact");
+                    })
+                    .Title("פרטים").Width(110);
+                })
+                .Pageable(r => r.PageSizes(new int[] {5}))
+                //.Events(events => events.OnComplete("onOrderNotPayedOrderComplete"))
+            )
+            @{ <text> 
+            function onOrderNotPayedOrderComplete(e) {
+               if (e.name == "update") {
+                    $("#OrderNotPayedOrder").data("tGrid").rebind();
+                    $("#OrderNotShipedOrder").data("tGrid").rebind();
+               }
+               if (e.name == "delete") {
+                    $("#OrderNotPayedOrder").data("tGrid").rebind();
+               }
+            }
+            </text> }
+        </div>
+        <div class="dashboard_block">
+            <div class="dashboard_block_h">הזמנות ממתינים למשלוח</div>
+            @(Html.Kendo().Grid<Uco.Models.ShopOrder>()
+                .Name("OrderNotShipedOrder")
+                        .DataSource(dataSource =>
+                dataSource.Ajax()
+                    .Model(model => { model.Id(item => item.ID); })
+                                    .Read(r => r.Action("_AjaxOrderNotShipped", "ShopDashboard"))                    
+            ) 
+                .Columns(columns =>
+                {
+                    columns.Bound(r => r.ID).Title("ID").Width(50);
+                    columns.Bound(r => r.ShopTotal).Title("סכום");
+                    columns.Bound(r => r.ShopFirstName).Title("שם פרטי");
+                    columns.Bound(r => r.ShopLastName).Title("שם משפחה");
+                    columns.Template(r => r.ID).ClientTemplate(
+                       "<a class='k-button' href='" + Url.Action("_AjaxOrderNotShipped", "ShopDashboard") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+                   ).Width(100);
+                    columns.Command(commands =>
+                    {
+                        commands.Edit();
+                        commands.Destroy();
+                        //commands.Custom("update").ButtonType(GridButtonType.BareImage).Ajax(true).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("_AjaxOrderNotShippedMark", "ShopDashboard");
+                        //commands.Custom("delete").ButtonType(GridButtonType.BareImage).Ajax(true).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("_AjaxOrderCancelMark", "ShopDashboard");
+                        //commands.Custom("edit").ButtonType(GridButtonType.BareImage).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("Edit", "Order");
+                    })
+                    .Title("פרטים").Width(110);
+                })
+                .Pageable(r => r.PageSizes(new int[] {5}))
+                //.Events(events => events.OnComplete("onOrderNotShipedOrderComplete"))
+            )
+            @{ <text> 
+            function onOrderNotShipedOrderComplete(e) {
+               if (e.name == "update") {
+                    $("#OrderNotShipedOrder").data("tGrid").rebind();
+                    $("#OrderNotShipApprovedOrder").data("tGrid").rebind();
+               }
+               if (e.name == "delete") {
+                    $("#OrderNotShipedOrder").data("tGrid").rebind();
+               }
+            }
+            </text> }
+        </div>
+        <div class="dashboard_block">
+            <div class="dashboard_block_h">הזמנות ממתינות לאישור משלוח</div>
+            @(Html.Kendo().Grid<Uco.Models.ShopOrder>()
+                .Name("OrderNotShipApprovedOrder")
+             .DataSource(dataSource =>
+                    dataSource.Ajax()
+                        .Model(model => { model.Id(item => item.ID); })
+                        .Read(r => r.Action("_AjaxOrderNotReceived", "ShopDashboard"))
+                             .PageSize(20)
+                )               
+                .Columns(columns =>
+                {
+                    columns.Bound(r => r.ID).Title("ID").Width(50);
+                    columns.Bound(r => r.ShopTotal).Title("סכום");
+                    columns.Bound(r => r.ShopFirstName).Title("שם פרטי");
+                    columns.Bound(r => r.ShopLastName).Title("שם משפחה");
+                    columns.Template(r => r.ID).ClientTemplate(
+                      "<a class='k-button' href='" + Url.Action("_AjaxOrderNotReceived", "ShopDashboard") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+                  ).Width(100);
+                    columns.Command(commands =>
+                    {
+                        commands.Edit();
+                        commands.Destroy();
+                        //commands.Custom("update").ButtonType(GridButtonType.BareImage).Ajax(true).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("_AjaxOrderNotReceivedMark", "ShopDashboard");
+                        //commands.Custom("delete").ButtonType(GridButtonType.BareImage).Ajax(true).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("_AjaxOrderCancelMark", "ShopDashboard");
+                        //commands.Custom("edit").ButtonType(GridButtonType.BareImage).DataRouteValues(route => route.Add(r => r.ID).RouteKey("ID")).Action("Edit", "Order");
+                    })
+                    .Title("פרטים").Width(110);
+                })
+                .Pageable(r => r.PageSizes(new int[] {5}))
+                //.Events(events => events.OnComplete("onOrderNotShipApprovedOrderComplete"))
+            )
+            @{ <text> 
+            function onOrderNotShipApprovedOrderComplete(e) {
+               if (e.name == "update") {
+                    var $grid = $("#OrderNotShipApprovedOrder").data("tGrid");
+                    $grid.rebind();
+               }
+               if (e.name == "delete") {
+                    var $grid = $("#OrderNotShipApprovedOrder").data("tGrid");
+                    $grid.rebind();
+               }
+            }
+            </text> }
+        </div>
+    </div></div>
+    <div class="dashboard_side_left"><div class="dashboard_wrap">
+        <div class="dashboard_table_h"><img alt="" src="/Areas/Admin/Content/images/ico-stat1.gif" /> סטטיסטיקה</div>
+        <div class="dashboard_block">
+            @Html.Action("_Statistics","ShopDashboard")
+        </div>
+        <div class="dashboard_block">
+        <div class="dashboard_block_h">סטטיסטיקת רכישת מוצרים</div>
+            @(Html.Kendo().Grid<Uco.Models.ShopAnaliticsData>()
+                .Name("AnaliticsDataGrid")
+                        .DataSource(dataSource =>
+                    dataSource.Ajax()
+                        .Model(model => { model.Id(item => item.ID); })
+                                .Read(r => r.Action("_AjaxProductsStatistic", "ShopDashboard"))
+                            .Destroy(r => r.Action("_AjaxProductsStatisticDelete", "ShopDashboard"))
+                             .PageSize(20)
+                )
+                
+                .Columns(columns =>
+                {
+                    columns.Bound(r => r.ID).Title("");
+                    columns.Bound(r => r.ShopPageTitle).Title("מוצר");
+                    columns.Bound(r => r.ShopUnic).Title("כניסות");
+                    columns.Bound(r => r.ShopShow).Title("חשיפות");
+                    columns.Bound(r => r.ShopContact).Title("פניות");
+                    columns.Bound(r => r.ShopBuy).Title("רכישות");
+                    columns.Template(r => r.ID).ClientTemplate(
+                    "<a class='k-button' href='" + Url.Action("_AjaxProductsStatistic", "ShopDashboard") + "?ID=#= ID #'" + ">" + Html.R("Edit") + "</a>"
+                ).Width(100);
+                    columns.Command(commands =>
+                    {
+                        commands.Destroy();
+                    })
+                    .Title("");
+                })
+                .Pageable(r => r.PageSizes(new int[] {10}))
+                .Sortable()
+                .ToolBar(commands => commands.Custom().Text("מחק כל הסטטיסטיקה").Action("_ProductsStatisticDelete", "ShopDashboard"))
+            )
+        </div>
+    </div></div>
+    <div class="clear"></div>
+</div>

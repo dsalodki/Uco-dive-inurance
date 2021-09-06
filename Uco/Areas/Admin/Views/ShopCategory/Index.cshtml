@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = RP.TVL("Title");
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutNoTree.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    <label for="startsWith">@RP.TVL("Search")</label>
+    @Html.TextBox("SearchBox", "")
+    <button class="k-button k-state-default" type="submit">@RP.TVL("SearchButton")</button>
+    @Html.ActionLink(RP.TVG("Cancel"), "Index", new { SearchBox = "" }, new { @class = "k-button k-state-default" })
+}
+<br />
+
+@(Html.Kendo().Grid<Uco.Models.ShopCategoryPage>()
+    .Name("Grid")
+    .DataSource(dataSource =>
+        dataSource.Ajax()
+        .Model(model => { model.Id(item => item.ID); })
+        .Read(r => r.Action("_AjaxIndex", "ShopCategory", new { SearchBox = ViewData["SearchBox"] as string }))
+        .Destroy(r => r.Action("_AjaxDelete", "ShopCategory"))
+        .PageSize(20)
+    )
+    .Columns(columns =>
+    {
+        columns.Bound(r => r.ID).Width(50);
+        columns.Bound(r => r.Title);
+        columns.Template(r => r.ID).ClientTemplate(
+            "<a class='k-button' href='" + Url.Action("Edit", "ShopCategory") + "?ID=#= ID #'" + ">" + RP.TVG("Edit") + "</a>"
+        ).Width(100);
+        columns.Command(commands =>
+        {
+            commands.Destroy();
+        })
+        .Width(100);
+    })
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .Groupable()
+)
+
+<br />
+@Html.ActionLink(RP.TVG("Create"), "Create", null, new { @class = "k-button k-state-default" })

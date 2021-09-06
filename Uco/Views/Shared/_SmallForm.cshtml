@@ -1,0 +1,78 @@
+﻿@{
+    Uco.Models.ContactSmallForm csf = new Uco.Models.ContactSmallForm();
+}
+    <style>
+        .g-recaptcha-div-smallform {
+            transform: scale(0.65);
+            transform-origin: 107% 20%;
+        }
+    </style>
+@using (Ajax.BeginForm("_SmallFormAdd", "PagePart", new AjaxOptions
+{
+    UpdateTargetId = "smal_form_update",
+    InsertionMode = InsertionMode.Replace,
+    LoadingElementId = "smal_form_loading",
+            OnFailure = "handleError_smallform",
+    HttpMethod = "POST"
+
+}))
+{
+    <div class="newletterbox_right">
+
+    </div>
+    <div class="newletterbox_left">
+        <div class="newletterbox_left_top"></div>
+        <div class="newletterbox_left_middle">
+            <div class="contact_top" id="smal_form_update">
+                <div class="row">
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => csf.ContactName, new { @Placeholder = RP.T("View.Shared._SmallForm.Name") })
+                        @Html.ValidationMessageFor(model => csf.ContactName)
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => csf.ContactPhone, new { @Placeholder = RP.T("View.Shared._SmallForm.Phone") })
+                        @Html.ValidationMessageFor(model => csf.ContactPhone)
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => csf.ContactEmail, new { @Placeholder = RP.T("View.Shared._SmallForm.Email") })
+                        @Html.ValidationMessageFor(model => csf.ContactEmail)
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => csf.ContactComment, new { @Placeholder = RP.T("View.Shared._SmallForm.Comment") })
+                        @Html.ValidationMessageFor(model => csf.ContactComment)
+                    </div>
+                </div>
+                <div class="row">
+                    <label type="text" name="message" id="error_message_smallform" style="display:none; color: red;"> </label>
+                    <div class="g-recaptcha g-recaptcha-div-smallform" data-sitekey="6LfGNLwUAAAAAF8T4QinVWsOqgU6VE15mhGZNDZk"></div>
+                </div>
+                <div class="contact_top_submit">
+                    @Html.Partial("_InvisibleCaptcha", new Uco.Models.InvisibleCaptcha())
+                    <input type="image" alt="" class="submit_ajax_button" src="@Url.Content("~/Content/DesignFiles/newletterbox_left_button.png")" />
+                    <span id="smal_form_loading" class="dn">...@RP.T("View.Shared._SmallForm.Loading")...</span>
+                </div>
+            </div>
+        </div>
+        <div class="newletterbox_left_bottom"></div>
+    </div>
+}
+
+<script>
+    function handleError_smallform(error) {
+        if (error && error.responseText != '') {
+            var errorInput = document.getElementById("error_message_smallform");
+            errorInput.innerHTML = JSON.parse(error.responseText).errors;
+            errorInput.style.display = "block";
+        }
+    }
+</script>

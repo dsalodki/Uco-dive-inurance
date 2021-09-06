@@ -1,0 +1,58 @@
+﻿@model string
+@{
+    string Pic = ViewData["Pic"].ToString();
+
+    string GalleryPath = Server.MapPath(string.Format("~/Content/UserFiles/{0}", Model));
+    List<Uco.Models.ImageGalleryItem> allImages = new List<Uco.Models.ImageGalleryItem>();
+    List<Uco.Models.ImageGalleryItem> allImagesBigger = new List<Uco.Models.ImageGalleryItem>();
+
+    if (!string.IsNullOrEmpty(Pic))
+    {
+        allImages.Add(new Uco.Models.ImageGalleryItem() { BigImageUrl = Pic, SmallImageUrl = SF.GetImageUrl(Pic, 60, 60, false, false), Order = 0, Title = "" });
+        allImagesBigger.Add(new Uco.Models.ImageGalleryItem() { BigImageUrl = Pic, SmallImageUrl = SF.GetImageUrl(Pic, 283, 233, false, false), Order = 0, Title = "" });
+
+    }
+    allImages.AddRange(SF.GalleryFile2List(GalleryPath, 60, 60, false, false));
+    allImagesBigger.AddRange(SF.GalleryFile2List(GalleryPath, 283, 233, false, false));
+}
+
+@if (allImages.Count > 1)
+{
+
+    <div class="product_big_image">
+        <a class="fancybox" href="@Url.Content(allImages[0].BigImageUrl)"><img src="@Url.Content(allImagesBigger[0].SmallImageUrl)" alt="@allImages[0].Title"></a>
+    </div>
+
+    <div class="product-img-thumb-floated product_small">
+        @for (int i = 0; i < allImages.Count; i++)
+        {
+            <text>
+                <a class="fancybox" href="@Url.Content(allImagesBigger[i].BigImageUrl)"><img src="@Url.Content(allImages[i].SmallImageUrl)" alt="@allImages[i].Title"></a>
+            </text>
+        }
+    </div>
+}
+else if (!String.IsNullOrEmpty(Pic) && Pic != "/Content/DesignFiles/default.png")
+{
+    <div class="product_big_image">
+        <a class="fancybox" href="@Url.Content(allImages[0].BigImageUrl)"><img src="@Url.Content(allImages[0].BigImageUrl)" alt="@allImages[0].Title"></a>
+    </div>
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/Fancyapps-fancyBox-2.1.5/source/jquery.fancybox.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/Fancyapps-fancyBox-2.1.5/source/jquery.fancybox.js"></script>
+<script type="text/javascript">
+
+    function productFancyBox() {
+        $(".fancybox").fancybox({
+            openEffect: 'none',
+            closeEffect: 'none'
+        });
+    }
+
+    $(document).ready(function () {
+        productFancyBox();
+    });
+</script>

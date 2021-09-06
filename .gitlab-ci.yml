@@ -1,0 +1,5 @@
+test:
+  stage: test
+  script:
+    - sh /etc/sonarscanner/bin/sonar-scanner -Dsonar.projectKey=${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}
+  tags: [linux-shell]

@@ -1,0 +1,30 @@
+﻿@model List<Uco.Models.ProductPage>
+@{
+    Layout = ViewBag.Layout;
+    ViewBag.Url = "/cart/search/" + ViewBag.Title;
+    ViewBag.Title = ViewBag.Title;
+    ViewBag.ID = 0;
+    ViewBag.LanguageRTL = true;
+}
+<div class="page_box">
+    <div class="page_title"><span class="block_title_arrow"><span></span></span>
+        <h1>@ViewBag.Title</h1>
+    </div>
+    <div class="page_content">
+        @if(Model.Count > 0)
+        {
+            <ul class="products_grid2">
+                @foreach(Uco.Models.ProductPage item in Model)
+                {
+                <li class="item">
+                    @Html.Partial("_Product2",item)
+                </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <text>לא נמצאו מוצרים</text>   
+        }
+    </div>
+</div>

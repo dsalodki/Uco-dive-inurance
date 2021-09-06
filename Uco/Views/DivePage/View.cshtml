@@ -1,0 +1,169 @@
+@using Uco.Models;
+
+@{
+    ViewBag.Title = RP.T("DivePage.View.Title");
+    Layout = null;
+
+    var user = ViewBag.User == null ? null : (User)ViewBag.User;
+    var certificates = ViewBag.Certificates == null ? new Certificate[] { } : (Certificate[])ViewBag.Certificates;
+    var insurance = ViewBag.Insurance == null ? null : (Insurance)ViewBag.Insurance;
+    var lastDive = ViewBag.LastDive == null ? null : (Dive)ViewBag.LastDive;
+
+    var today = DateTime.UtcNow.Date;
+
+    var isValidLastDive = (bool)ViewBag.IsValidLastDive;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/Html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>@ViewBag.Title</title>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .primary {
+            background-color: cornflowerblue;
+            color: white;
+        }
+
+        .inline {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body dir="rtl">
+    <div>
+        @if (user != null)
+        {
+            if (!string.IsNullOrEmpty(user.UserBanner))
+            {
+                <img src="@user.UserBanner" alt="banner" />
+            }
+            if (!string.IsNullOrEmpty(user.UserImage))
+            {
+                <img src="@user.UserImage" alt="photo" />
+            }
+            <div>@user.FullNameEnglish</div>
+        }
+        <div>
+            <!-- Have certificate -->
+            <div class="inline">
+                <div>תעודת צולל</div>
+                @if (certificates.Length > 0)
+                {
+                    <div class="green">V</div>
+                }
+                else
+                {
+                    <div class="red">X</div>
+                }
+            </div>
+            <!-- Have valid insurance -->
+            <div class="inline">
+                <div>ביטוח צלילה</div>
+                @if (insurance != null && insurance.InsuranceEndDate >= today)
+                {
+                    <div class="green">V</div>
+                }
+                else
+                {
+                    <div class="red">X</div>
+                }
+            </div>
+            <!-- Need refresh dive  -->
+            <div class="inline">
+                <div>צלילת ריענון</div>
+                @if (isValidLastDive)
+                {
+                    <div class="green">V</div>
+                }
+                else
+                {
+                    <div class="red">X</div>
+                }
+            </div>
+        </div>
+
+        <h2>תעודת צלילה / הסמכה</h2>
+
+        <div class="certificates">
+            @foreach (var certificate in certificates)
+            {
+                <div class="certificate_item">
+                    <div class="certificate_item_name">@certificate.TypeOfCertificate</div>
+                    <img src="@certificate.CertificateImageFront" alt="Front" />
+                    @if (!string.IsNullOrEmpty(certificate.CertificateImageBack))
+                    {
+                        <img src="@certificate.CertificateImageBack" alt="Back" />
+                    }
+                </div>
+            }
+        </div>
+
+        <h2>ביטוח צלילה</h2>
+
+        <!-- if valid -->
+        @if (insurance != null && insurance.InsuranceEndDate >= today)
+        {
+            <div class="insurance">
+                <ul class="insurance_list">
+                    <li>סוג ביטות צלילה: @insurance.TypeOfInsurance</li>
+                    <li>מבוטח ב: @insurance.Organization</li>
+                    <li>מבוטח מתאריך: @insurance.InsuranceStartDate</li>
+                    <li>פג תוקף: @insurance.InsuranceEndDate</li>
+                </ul>
+
+                <div class="insurance_valid">ביטוח הצלילה שלך בתוקף</div>
+                @if (insurance.FileType != FileType.None && !string.IsNullOrEmpty(insurance.FilePath))
+                {
+                    <a class="insurance_download" href="@insurance.FilePath" target="_blank">הורדת תעודת ביטוח</a>
+                }
+            </div>
+        }
+        else
+        {
+        <!-- if not valid -->
+        <div class="insurance">
+            @if (insurance == null || string.IsNullOrEmpty(insurance.FilePath))
+            {
+                <div class="insurance_not_valid_title">לא נמצא ביטוח צלילה בתוקף</div>
+                <div class="insurance_not_valid_text">
+                    אין לך ביטוח בתוקף?
+                    מעונין לקבל הצעה לביטוח צלילה מבית הפניקס/סעוס!
+                </div>
+                <a class="insurance_not_valid_link" href="https://insurance.idive.co.il/" target="_blank" class="primary">לקבלת ההצעה לחץ כאן</a>
+            }
+        </div>
+        }
+        <h2>צלילה אחרונה</h2>
+        <div class="last_dive">
+            @if (isValidLastDive)
+            {
+                <ul class="last_dive_list">
+                    <li>צלילה אחרונה: @lastDive.DateOfDive</li>
+                    <li>מועדון/ספינת צוללים: @lastDive.Organization</li>
+                    <li>מיקום: @lastDive.DivePlace</li>
+                    <li>אתד צלילה: @lastDive.DivingSite</li>
+                </ul>
+                <div class="last_dive_verification">
+                    <label>רישום צלילה אחרונה מסוג: @lastDive.ValidateType</label>
+                    <img src="@lastDive.ValidateImage" alt="@lastDive.ValidateType" />
+                </div>
+            }
+            else
+            {
+                <div class="last_dive_none">לא מעודכנת צלילה אחרונה</div>
+            }
+        </div>
+    </div>
+</body>
+</html>
